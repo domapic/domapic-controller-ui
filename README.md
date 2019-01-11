@@ -1,2 +1,3 @@
-# domapic-controller-ui
-Web user interface for Domapic Controller
+# Domapic Controller UI
+
+> Web user interface for Domapic Controller
