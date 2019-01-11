@@ -1,5 +1,5 @@
 {
-  "name": "domapic-service",
+  "name": "domapic-controller-ui",
   "version": "1.0.0-beta.1",
   "description": "Web user interface for Domapic Controller",
   "main": "index.js",
