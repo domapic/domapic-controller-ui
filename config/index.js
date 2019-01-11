@@ -3,7 +3,7 @@ const baseConfig = require("./base/config");
 const parseForWebpackDefinePlugin = envVars => {
   const finalConfig = {};
 
-  Object.keys(envVars).map(envVarKey => {
+  Object.keys(envVars).forEach(envVarKey => {
     finalConfig[`process.env.${envVarKey}`] = JSON.stringify(envVars[envVarKey]);
   });
   return finalConfig;
