@@ -34,6 +34,6 @@ script:
   - npm run lint
   - npm run test-ci
   - npm run build
-  - npm run test-acceptance -- --logLevel=trace
+  - npm run test-acceptance -- --logLevel=log
   - npm run coveralls
   - sonar-scanner
