@@ -1,0 +1,50 @@
+docker-images:
+  - name: headless-chrome-image
+    from: javierbrea/node-headless-chrome:1.0.0
+    add:
+      - package.json
+      - package-lock.json
+    install: test/commands/install.sh
+  - name: node-image
+    from: node:8.11.1
+    expose:
+      - 3000
+    add:
+      - package.json
+      - package-lock.json
+    install: test/commands/install.sh
+docker-containers:
+  - name: application-container
+    build: node-image
+    bind:
+      - dist
+  - name: test-container
+    build: headless-chrome-image
+    bind:
+      - test
+standard:
+  directories:
+    - "avoid-standard/**/*.js"
+suites:
+  acceptance:
+    - name: app
+      describe: Application acceptance tests
+      before:
+        docker:
+          down-volumes: true
+      services:
+        - name: application
+          docker: 
+            container: application-container
+            command: test/commands/start-app.sh
+          local:
+            command: test/commands/start-app.sh
+      test:
+        specs: test/specs
+        docker:
+          container: test-container
+          wait-on: tcp:application-container:3000
+        local:
+          wait-on: tcp:localhost:3000
+      coverage:
+        enabled: false

@@ -1,0 +1,86 @@
+{
+  "version": "3.5",
+  "volumes": {
+    "shared": {}
+  },
+  "services": {
+    "application-container": {
+      "build": {
+        "context": "./node-image"
+      },
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "shared",
+          "target": "/narval/.shared"
+        },
+        {
+          "type": "bind",
+          "source": "../../.coverage",
+          "target": "/narval/.coverage"
+        },
+        {
+          "type": "bind",
+          "source": "../../.narval/logs",
+          "target": "/narval/.narval/logs"
+        },
+        {
+          "type": "bind",
+          "source": "../../dist",
+          "target": "/narval/dist"
+        }
+      ],
+      "environment": {
+        "command_to_run": "${application_container_command}",
+        "command_params": "${application_container_command_params}",
+        "coverage_options": "${coverage_options}",
+        "coverage_enabled": "${application_container_coverage_enabled}",
+        "wait_on": "${application_container_wait_on}",
+        "exit_after": "${application_container_exit_after}",
+        "narval_suite_type": "${application_container_narval_suite_type}",
+        "narval_suite": "${application_container_narval_suite}",
+        "narval_service": "${application_container_narval_service}",
+        "narval_is_docker": "${application_container_narval_is_docker}"
+      }
+    },
+    "test-container": {
+      "build": {
+        "context": "./headless-chrome-image"
+      },
+      "volumes": [
+        {
+          "type": "volume",
+          "source": "shared",
+          "target": "/narval/.shared"
+        },
+        {
+          "type": "bind",
+          "source": "../../.coverage",
+          "target": "/narval/.coverage"
+        },
+        {
+          "type": "bind",
+          "source": "../../.narval/logs",
+          "target": "/narval/.narval/logs"
+        },
+        {
+          "type": "bind",
+          "source": "../../test",
+          "target": "/narval/test"
+        }
+      ],
+      "environment": {
+        "command_to_run": "${test_container_command}",
+        "command_params": "${test_container_command_params}",
+        "coverage_options": "${coverage_options}",
+        "coverage_enabled": "${test_container_coverage_enabled}",
+        "wait_on": "${test_container_wait_on}",
+        "exit_after": "${test_container_exit_after}",
+        "narval_suite_type": "${test_container_narval_suite_type}",
+        "narval_suite": "${test_container_narval_suite}",
+        "narval_service": "${test_container_narval_service}",
+        "narval_is_docker": "${test_container_narval_is_docker}"
+      }
+    }
+  }
+}
