@@ -1,4 +1,8 @@
-const applicationHost = process.env.narval_is_docker === "true" ? "application" : "localhost";
+const DOCKER_HOST = "application-container";
+const LOCAL_HOST = "localhost";
+const IS_DOCKER = process.env.narval_is_docker === "true";
+
+const applicationHost = IS_DOCKER ? DOCKER_HOST : LOCAL_HOST;
 
 module.exports = {
   urls: {
