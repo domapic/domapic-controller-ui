@@ -25,8 +25,8 @@ module.exports = {
   },
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   moduleNameMapper: {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/__mocks__/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/config/__mocks__/styleMock.js"
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/unit/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/mocks/unit/styleMock.js"
   },
   setupFiles: [
     "<rootDir>/src/config/setupTests.js"

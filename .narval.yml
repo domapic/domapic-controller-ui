@@ -9,6 +9,7 @@ docker-images:
     from: node:8.11.1
     expose:
       - 3000
+      - 3100
     add:
       - package.json
       - package-lock.json
@@ -19,6 +20,12 @@ docker-containers:
     bind:
       - dist
       - test
+  - name: mocks-container
+    build: node-image
+    bind:
+      - dist
+      - test
+      - mocks
   - name: test-container
     build: headless-chrome-image
     bind:
@@ -34,13 +41,22 @@ suites:
         docker:
           down-volumes: true
       services:
+        - name: mocks
+          abort-on-error: true
+          docker: 
+            container: mocks-container
+            command: test/commands/start-mocks.sh
+          local:
+            command: test/commands/start-mocks.sh
         - name: application
           abort-on-error: true
           docker: 
             container: application-container
             command: test/commands/start-app.sh
+            wait-on: tcp:mocks-container:3100
           local:
             command: test/commands/start-app.sh
+            wait-on: tcp:localhost:3100
       test:
         specs: test/specs
         docker:

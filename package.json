@@ -14,9 +14,10 @@
     "test-acceptance": "narval",
     "dev": "webpack-dev-server --env.NODE_ENV=development",
     "build": "webpack --env.NODE_ENV=production",
-    "lint": "eslint src config webpack.config.js test",
+    "lint": "eslint src config webpack.config.js test mocks",
     "coveralls": "cat ./.coverage/lcov.info | coveralls",
-    "serve": "serve dist -l 3000"
+    "serve": "serve dist -l 3000",
+    "mocks": "node mocks/server/bin.js --features=mocks/features"
   },
   "files": [
     "/dist"
@@ -57,7 +58,23 @@
     "underscore-template-loader": "^1.0.0",
     "webpack": "^4.28.1",
     "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-server": "^3.1.14",
+    "body-parser": "1.18.3",
+    "boom": "7.2.0",
+    "commander": "2.17.1",
+    "cors": "2.8.4",
+    "express": "4.16.3",
+    "express-request-id": "1.4.0",
+    "lodash": "^4.17.11",
+    "node-watch": "0.5.8",
+    "require-all": "3.0.0",
+    "route-parser": "0.0.5",
+    "winston": "3.0.0",
+    "chalk": "^2.4.1",
+    "inquirer": "^6.2.0",
+    "inquirer-autocomplete-prompt": "^1.0.1",
+    "strip-ansi": "^4.0.0",
+    "tree-kill-sync": "^1.0.0"
   },
   "author": {
     "name": "Javier Brea",
