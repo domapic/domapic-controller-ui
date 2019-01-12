@@ -18,6 +18,7 @@ docker-containers:
     build: node-image
     bind:
       - dist
+      - test
   - name: test-container
     build: headless-chrome-image
     bind:
