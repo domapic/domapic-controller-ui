@@ -1,5 +1,5 @@
 import { Dashboard } from "src/components/dashboard/Dashboard";
-import { Modules } from "src/components/modules/Modules";
+import { ConnectedModules } from "src/components/modules/Modules";
 
 export const sections = {
   dashboard: {
@@ -10,7 +10,7 @@ export const sections = {
   modules: {
     name: "Modules",
     route: "/modules",
-    component: Modules
+    component: ConnectedModules
   }
 };
 

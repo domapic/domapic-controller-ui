@@ -12,7 +12,8 @@ module.exports = {
   coverageDirectory: ".coverage",
   // An object that configures minimum threshold enforcement for coverage results
   coveragePathIgnorePatterns: [
-    "<rootDir>/src/index.js"
+    "<rootDir>/src/index.js",
+    "<rootDir>/src/data-sources/bases"
   ],
 
   coverageThreshold: {

@@ -10,7 +10,7 @@ module.exports = env => {
   const configuration = config(environment);
 
   return {
-    entry: "./src/index.js",
+    entry: ["@babel/polyfill", "./src/index.js"],
     mode: environment,
     module: {
       rules: [

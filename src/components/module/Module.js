@@ -8,8 +8,8 @@ export class Module extends Component {
     const id = this.props.id || this.props.match.params.id;
     return (
       <div>
-        Module
-        {id}
+        <h2> Module </h2>
+        <p>Id: {id}</p>
       </div>
     );
   }

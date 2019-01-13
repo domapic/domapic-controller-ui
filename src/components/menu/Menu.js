@@ -11,9 +11,13 @@ MenuLink.propTypes = {
 
 export const Menu = ({ sections = [] }) => (
   <nav>
-    {sections.map(section => (
-      <MenuLink key={section.route} name={section.name} route={section.route} />
-    ))}
+    <ul>
+      {sections.map(section => (
+        <li key={section.route}>
+          <MenuLink name={section.name} route={section.route} />
+        </li>
+      ))}
+    </ul>
   </nav>
 );
 
