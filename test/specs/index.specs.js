@@ -25,10 +25,10 @@ test.describe("Home page", function() {
     return browser.close();
   });
 
-  test.it("should render hello world", async () => {
-    const helloContainer = ".app h1";
+  test.it("should render dashboard", async () => {
+    const helloContainer = "body h2";
     await page.waitForSelector(helloContainer);
     const elementText = await page.$eval(helloContainer, element => element.textContent);
-    return test.expect(elementText).to.contain("Hello World!");
+    return test.expect(elementText).to.contain("Dashboard");
   });
 });

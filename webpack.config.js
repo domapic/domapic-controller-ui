@@ -41,7 +41,8 @@ module.exports = env => {
       contentBase: path.join(__dirname, "public/"),
       port: 3000,
       publicPath: "http://localhost:3000/",
-      hot: true
+      hot: true,
+      historyApiFallback: true
     },
     plugins: [
       new webpack.DefinePlugin(configuration.webpackDefinePlugin),
@@ -54,7 +55,6 @@ module.exports = env => {
         }
       ]),
       new HtmlWebpackPlugin({
-        title: "TEST",
         template: "public/index.html",
         inject: false,
         minify: {
