@@ -15,6 +15,7 @@ export class Modules extends Component {
     const modulesLoading = this.props.modules.loading;
     const modulesError = this.props.modules.error;
     const baseRoute = this.props.match || {};
+
     if (modulesError) {
       return <div>ERROR</div>;
     }
