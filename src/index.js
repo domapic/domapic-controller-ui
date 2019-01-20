@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { hot } from "react-hot-loader";
 
-import { MainRouter } from "src/router/MainRouter.js";
+import { App } from "src/app/App.js";
 
-const HotApp = hot(module)(MainRouter);
+const HotApp = hot(module)(App);
 
 ReactDOM.render(<HotApp />, document.getElementById("root"));
