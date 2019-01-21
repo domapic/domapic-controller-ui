@@ -29,3 +29,10 @@ export const modules = new Selector(
   },
   servicesResults => servicesResults
 );
+
+const socket = window.io("http://localhost:3100");
+
+socket.on("service:created", data => {
+  console.log(data);
+  servicesCollection.type("module").clean();
+});

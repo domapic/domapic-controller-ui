@@ -17,6 +17,8 @@ const middlewares = require("./middlewares");
 const { defaultOptions } = require("./common/options");
 const { FUNCTION_TYPE, WATCH_RELOAD } = require("./common/constants");
 
+const socketIo = require("socket.io");
+
 class ServerEmitter extends EventEmitter {}
 
 class Server {
@@ -69,6 +71,18 @@ class Server {
 
     // Create server
     this._server = http.createServer(this._app);
+
+    // Socket io mocks
+    this._io = socketIo(this._server);
+
+    this._io.on("connection", function(socket) {
+      console.log("a user connected");
+      setInterval(() => {
+        socket.emit("service:created", {
+          type: "module"
+        });
+      }, 5000);
+    });
   }
 
   resolveFolder(folder) {
