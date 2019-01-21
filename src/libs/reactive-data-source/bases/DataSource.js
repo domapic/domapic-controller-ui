@@ -5,7 +5,7 @@ import { Cache } from "./Cache";
 import { VALID_METHODS, actions } from "./helpers";
 
 export class DataSource extends Base {
-  constructor(methods = {}, id) {
+  constructor(methods = {}, id = "") {
     super();
     this._cache = new Cache(this._eventEmitter, id);
     this._id = id;

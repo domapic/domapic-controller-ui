@@ -31,7 +31,7 @@ const DATA_SOURCE_DELETE_DISPATCH = `${DATA_SOURCE_PREFIX}_${DELETE}_${DISPATCH}
 
 const DATA_SOURCE_CLEAN = `${DATA_SOURCE_PREFIX}_${CLEAN}`;
 
-export const reducer = (state = {}, action) => {
+export const reducer = (state = {}, action = {}) => {
   const getCurrentMethodData = method => ({
     [method]:
       method === action.payload.method

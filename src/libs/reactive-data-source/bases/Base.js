@@ -1,5 +1,6 @@
 import isFunction from "lodash.isfunction";
 import merge from "lodash.merge";
+import cloneDeep from "lodash.cloneDeep";
 
 import { EventEmitter } from "./EventEmitter";
 import {
@@ -62,7 +63,8 @@ export class Base {
     this._eventEmitter.removeListener(CLEAN_ANY_EVENT_NAME, listener);
   }
 
-  filter(filter) {
+  filter(originalFilter) {
+    const filter = cloneDeep(originalFilter);
     const filterUniqueId = filterId(filter);
     if (this.filters[filterUniqueId]) {
       return this.filters[filterUniqueId];
@@ -114,7 +116,10 @@ export class Base {
   addCustomFilters(customFilters) {
     Object.keys(customFilters).forEach(filterKey => {
       this.customFilters[filterKey] = customFilters[filterKey];
-      this[filterKey] = filter => this.filter(customFilters[filterKey](filter));
+      this[filterKey] = originalFilter => {
+        const filter = cloneDeep(originalFilter);
+        return this.filter(customFilters[filterKey](filter))
+      };
     });
   }
 
