@@ -22,7 +22,7 @@ servicesCollection.addCustomFilter({
 
 // SELECTORS
 
-export const modules = new Selector(
+export const modulesCollection = new Selector(
   {
     source: servicesCollection,
     filter: () => typeFilter("module")
@@ -33,6 +33,5 @@ export const modules = new Selector(
 const socket = window.io("http://localhost:3100");
 
 socket.on("service:created", data => {
-  console.log(data);
-  servicesCollection.type("module").clean();
+  servicesCollection.type(data.type).clean();
 });
