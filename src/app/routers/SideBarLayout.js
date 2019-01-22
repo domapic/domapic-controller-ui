@@ -3,23 +3,16 @@ import { Route } from "react-router";
 import { Switch } from "react-router-dom";
 
 import { SideBarLayout } from "src/ui-kit/layouts/sidebar/SideBarLayout";
-import { Header } from "src/components/header/Header";
 import { Menu } from "src/components/menu/Menu";
 
 import { sectionsAsArray } from "../routes";
 
-export const SideBarRouter = () => (
-  <Switch>
-    {sectionsAsArray.map(section => (
-      <Route key={section.route} path={section.route} component={section.component} />
-    ))}
-  </Switch>
-);
-
 export const SideBarLayoutRouter = () => (
-  <SideBarLayout
-    header={<Header />}
-    menu={<Menu sections={sectionsAsArray} />}
-    content={<SideBarRouter />}
-  />
+  <SideBarLayout menu={<Menu sections={sectionsAsArray} />}>
+    <Switch>
+      {sectionsAsArray.map(section => (
+        <Route key={section.route} path={section.route} component={section.component} />
+      ))}
+    </Switch>
+  </SideBarLayout>
 );

@@ -28,6 +28,16 @@ module.exports = env => {
           test: /\.(js|jsx)?$/,
           include: /node_modules/,
           use: ["react-hot-loader/webpack"]
+        },
+        {
+          test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+          include: /node_modules/,
+          use: {
+            loader: "url-loader",
+            options: {
+              limit: 100000
+            }
+          }
         }
       ]
     },

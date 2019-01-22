@@ -30,8 +30,12 @@ export const modulesCollection = new Selector(
   servicesResults => servicesResults
 );
 
-const socket = window.io("http://localhost:3100");
+try {
+  const socket = window.io("http://localhost:3100");
 
-socket.on("service:created", data => {
-  servicesCollection.type(data.type).clean();
-});
+  socket.on("service:created", data => {
+    servicesCollection.type(data.type).clean();
+  });
+} catch (error) {
+  console.log("Error connecting to socket");
+}

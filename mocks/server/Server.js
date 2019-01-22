@@ -81,7 +81,7 @@ class Server {
         socket.emit("service:created", {
           type: "module"
         });
-      }, 5000);
+      }, 30000);
     });
   }
 

@@ -3,7 +3,6 @@ import { Route } from "react-router";
 import { Switch } from "react-router-dom";
 
 import { SimpleLayout } from "src/ui-kit/layouts/simple/SimpleLayout";
-import { Header } from "src/components/header/Header";
 
 import { routes } from "../routes";
 
@@ -14,6 +13,4 @@ export const SimpleRouter = () => (
   </Switch>
 );
 
-export const SimpleLayoutRouter = () => (
-  <SimpleLayout header={<Header />} content={<SimpleRouter />} />
-);
+export const SimpleLayoutRouter = () => <SimpleLayout content={<SimpleRouter />} />;

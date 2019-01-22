@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+import { Menu as SemanticMenu } from "semantic-ui-react";
+
 export const MenuLink = ({ name, route }) => <Link to={route}>{name}</Link>;
 
 MenuLink.propTypes = {
@@ -10,15 +12,13 @@ MenuLink.propTypes = {
 };
 
 export const Menu = ({ sections = [] }) => (
-  <nav>
-    <ul>
-      {sections.map(section => (
-        <li key={section.route}>
-          <MenuLink name={section.name} route={section.route} />
-        </li>
-      ))}
-    </ul>
-  </nav>
+  <React.Fragment>
+    {sections.map(section => (
+      <SemanticMenu.Item key={section.route}>
+        <Link to={section.route}>{section.name}</Link>
+      </SemanticMenu.Item>
+    ))}
+  </React.Fragment>
 );
 
 Menu.propTypes = {

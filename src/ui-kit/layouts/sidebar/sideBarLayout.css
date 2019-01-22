@@ -1,0 +1,11 @@
+.sidebar {
+  height:100vh;
+}
+
+.ui.segment.main-menu {
+  padding:0.1em 0;
+}
+
+.main-container {
+  padding:1em;
+}
