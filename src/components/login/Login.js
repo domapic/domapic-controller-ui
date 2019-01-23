@@ -5,9 +5,9 @@ import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 import "./login.css";
 
 export const Login = () => (
-  <div className="login-form">
-    <Grid textAlign="center" style={{ height: "100%" }} verticalAlign="middle">
-      <Grid.Column style={{ maxWidth: 450 }}>
+  <div className="login-form-container">
+    <Grid textAlign="center" className="login-form" verticalAlign="middle">
+      <Grid.Column className="login-column">
         <Header as="h2" color="grey" textAlign="center">
           <Image src="assets/logo.png" /> Log-in to your account
         </Header>

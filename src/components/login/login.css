@@ -1,4 +1,12 @@
-.login-form {
+.login-form-container {
   height:60vh;
   margin-top:100px;
+}
+
+.login-form {
+  height:100%;
+}
+
+.login-column {
+  max-width: 450px;
 }
