@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
 import {
   Container,
   Icon,
@@ -12,10 +11,9 @@ import {
 } from "semantic-ui-react";
 
 import { Component as MainContainer } from "src/components/container-main";
+import { windowInnerWidth } from "src/helpers/responsive"
 
 import "./sideBarLayout.css";
-
-const getWidth = () => window.innerWidth; // TODO, move to helpers
 
 class DesktopContainer extends Component {
   constructor() {
@@ -38,7 +36,7 @@ class DesktopContainer extends Component {
     const { fixed } = this.state;
 
     return (
-      <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
+      <Responsive getWidth={windowInnerWidth} minWidth={Responsive.onlyTablet.minWidth}>
         <Visibility
           once={false}
           onBottomPassed={this.showFixedMenu}
@@ -94,7 +92,7 @@ class MobileContainer extends Component {
     return (
       <Responsive
         as={Sidebar.Pushable}
-        getWidth={getWidth}
+        getWidth={windowInnerWidth}
         maxWidth={Responsive.onlyMobile.maxWidth}
       >
         <Sidebar
