@@ -16,6 +16,8 @@ export const reactConnect = mapDataSourcesToProps => {
         this._unmounted = false;
         this.dataSourcePropsListeners = {};
         this.dataSourcePropsReaders = {};
+        this.dataSourcePropsKeys = [];
+        this.dataSourcePropsGetters = {};
         this.getDataSourcesProps();
         this.state = {
           dataSourceProps: this.getDataSourcesPropsValues()
@@ -45,28 +47,40 @@ export const reactConnect = mapDataSourcesToProps => {
         this.dispatchAllReads();
       }
 
-      cleanDataSourceProps(dataSourceProps) {
-        return {
-          dispatch: data =>
-            dataSourceProps.dispatch(data).catch(error => {
-              this.logError(dataSourceProps._source._id, error.message);
-            }),
-          error: dataSourceProps.error,
-          loading: dataSourceProps.loading,
-          value: dataSourceProps.value
-        };
+      cleanDataSourceProps(dataSourceProps, propName) {
+        const dispatch = data =>
+          dataSourceProps.dispatch(data).catch(error => {
+            this.logError(dataSourceProps._source._id, error.message);
+          });
+        if (!propName) {
+          return {
+            dispatch,
+            error: dataSourceProps.error,
+            loading: dataSourceProps.loading,
+            value: dataSourceProps.value
+          };
+        }
+        return propName === "dispatch" ? dispatch : dataSourceProps[propName];
       }
 
       getDataSourcesProps() {
         this.dataSourceProps = mapDataSourcesToProps(this.props);
         this.dataSourcePropsKeys = Object.keys(this.dataSourceProps);
+        // Define getters
+        this.dataSourcePropsKeys.forEach(dataSourceKey => {
+          if (this.dataSourceProps[dataSourceKey].isGetter) {
+            this.dataSourcePropsGetters[dataSourceKey] = this.dataSourceProps[dataSourceKey].prop;
+            this.dataSourceProps[dataSourceKey] = this.dataSourceProps[dataSourceKey]._method;
+          }
+        });
       }
 
       getDataSourcesPropsValues() {
         const dataSourcesProps = {};
         this.dataSourcePropsKeys.forEach(dataSourceKey => {
           dataSourcesProps[dataSourceKey] = this.cleanDataSourceProps(
-            this.dataSourceProps[dataSourceKey]
+            this.dataSourceProps[dataSourceKey],
+            this.dataSourcePropsGetters[dataSourceKey]
           );
         });
         return dataSourcesProps;

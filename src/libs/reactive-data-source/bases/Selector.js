@@ -1,5 +1,6 @@
 import once from "lodash.once";
 import isEqual from "lodash.isequal";
+import isFunction from "lodash.isfunction";
 
 import { Base } from "./Base";
 import { Cache } from "./Cache";
@@ -10,7 +11,16 @@ export class Selector extends Base {
     super();
 
     const args = Array.from(arguments);
-    const lastIndex = args.length - 1;
+    let lastIndex = args.length - 1;
+
+    this._defaultValue = null;
+
+    // Check if last argument is default value
+    if (!isFunction(args[lastIndex])) {
+      this._defaultValue = args[lastIndex];
+      lastIndex = args.length - 2;
+    }
+
     this.dataSources = args.slice(0, lastIndex);
     this.resultsParser = args[lastIndex];
     this._id = "select-";
@@ -122,11 +132,22 @@ export class Selector extends Base {
 
     methods[READ_METHOD] = dispatchMethod;
     methods[READ_METHOD].dispatch = () => this._read(filter, methods, filterUniqueId);
-    methods[READ_METHOD].value = null;
+    methods[READ_METHOD].value = this._defaultValue;
     methods[READ_METHOD].error = null;
     methods[READ_METHOD].loading = false;
     methods[READ_METHOD]._source = methods;
     methods[READ_METHOD]._methodName = READ_METHOD;
+
+    methods[READ_METHOD].get = prop => ({
+      isGetter: true,
+      prop,
+      _method: methods[READ_METHOD]
+    });
+
+    methods[READ_METHOD].getError = () => methods[READ_METHOD].get("error");
+    methods[READ_METHOD].getValue = () => methods[READ_METHOD].get("value");
+    methods[READ_METHOD].getLoading = () => methods[READ_METHOD].get("loading");
+    methods[READ_METHOD].getDispatch = () => methods[READ_METHOD].get("dispatch");
 
     return methods;
   }

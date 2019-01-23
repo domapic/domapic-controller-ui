@@ -118,7 +118,7 @@ export class Base {
       this.customFilters[filterKey] = customFilters[filterKey];
       this[filterKey] = originalFilter => {
         const filter = cloneDeep(originalFilter);
-        return this.filter(customFilters[filterKey](filter))
+        return this.filter(customFilters[filterKey](filter));
       };
     });
   }

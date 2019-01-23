@@ -33,12 +33,19 @@ const defaultConfig = {
 export class Api extends DataSource {
   constructor(url, methods = {}, config = {}) {
     const id = `api-${url}`;
-    super({ ...defaultMethods, ...methods }, id);
+    super({ ...defaultMethods, ...methods }, id, config && config.defaultValue);
     this._id = id;
-
-    const configuration = { ...defaultConfig, ...config };
+    this._url = url;
 
     this._headers = {};
+
+    const configuration = { ...defaultConfig, ...config };
+    this._config(configuration);
+  }
+
+  _config(configuration) {
+    this._configuration = { ...configuration };
+
     this._readMethod = configuration.readMethod;
     this._updateMethod = configuration.updateMethod;
     this._createMethod = configuration.createMethod;
@@ -49,17 +56,26 @@ export class Api extends DataSource {
     this._fullResponse = configuration.fullResponse;
     this._validateStatus = configuration.validateStatus;
     this._errorHandler = configuration.errorHandler;
+    this._baseUrl = configuration.baseUrl || "";
 
     this.client = axios.create();
     axiosRetry(this.client, {
       retries: configuration.retries
     });
 
+    if (this.cleanInterval) {
+      clearInterval(this.cleanInterval);
+    }
+
     if (configuration.expirationTime > 0) {
       this.cleanInterval = setInterval(() => this.clean(), configuration.expirationTime);
     }
-    // TODO, optimistic?
-    this._setUrl(url);
+
+    this._setUrl(this._baseUrl + this._url);
+  }
+
+  config(configuration) {
+    this._config({ ...this._configuration, ...configuration });
   }
 
   _getQueryString(query) {

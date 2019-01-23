@@ -1,15 +1,17 @@
 import isEqual from "lodash.isequal";
+import cloneDeep from "lodash.clonedeep";
 
 import { Base } from "./Base";
 import { Cache } from "./Cache";
 import { VALID_METHODS, actions } from "./helpers";
 
 export class DataSource extends Base {
-  constructor(methods = {}, id = "") {
+  constructor(methods = {}, id = "", defaultValue = null) {
     super();
     this._cache = new Cache(this._eventEmitter, id);
     this._id = id;
     this._methods = methods;
+    this._defaultValue = cloneDeep(defaultValue);
     this._createBaseMethods();
   }
 
@@ -98,11 +100,22 @@ export class DataSource extends Base {
 
         methods[methodName] = dispatchMethod;
         methods[methodName].dispatch = dispatchMethod;
-        methods[methodName].value = null;
+        methods[methodName].value = this._defaultValue;
         methods[methodName].error = null;
         methods[methodName].loading = false;
         methods[methodName]._source = methods;
         methods[methodName]._methodName = methodName;
+
+        methods[methodName].get = prop => ({
+          isGetter: true,
+          prop,
+          _method: methods[methodName]
+        });
+
+        methods[methodName].getError = () => methods[methodName].get("error");
+        methods[methodName].getValue = () => methods[methodName].get("value");
+        methods[methodName].getLoading = () => methods[methodName].get("loading");
+        methods[methodName].getDispatch = () => methods[methodName].get("dispatch");
       }
     });
     return methods;

@@ -8,8 +8,8 @@ const defaultMethods = {
 };
 
 export class Storage extends DataSource {
-  constructor(namespace, storage, id) {
-    super(defaultMethods, id);
+  constructor(namespace, storage, id, config) {
+    super(defaultMethods, id, config && config.defaultValue);
     this._id = id;
     this._namespace = namespace;
     this._storage = storage;
