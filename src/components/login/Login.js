@@ -9,7 +9,7 @@ export const Login = () => (
     <Grid textAlign="center" className="login-form" verticalAlign="middle">
       <Grid.Column className="login-column">
         <Header as="h2" color="grey" textAlign="center">
-          <Image src="assets/logo.png" /> Log-in to your account
+          <Image src="assets/logo.png" /> Domapic Controller
         </Header>
         <Form size="large">
           <Segment stacked>

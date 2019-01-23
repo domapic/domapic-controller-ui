@@ -27,13 +27,3 @@ export const modulesCollection = new Selector(
   },
   servicesResults => servicesResults
 );
-
-try {
-  const socket = window.io("http://localhost:3100");
-
-  socket.on("service:created", data => {
-    servicesCollection.type(data.type).clean();
-  });
-} catch (error) {
-  console.log("Error connecting to socket");
-}
