@@ -1,9 +1,9 @@
-import { Main as Dashboard } from "src/modules/dashboard/Main";
-import { Main as Modules } from "src/modules/modules/Main";
-import { NotFound } from "src/components/not-found/NotFound";
-// import { Login } from "src/modules/login/Login";
+import { Module as Dashboard } from "src/modules/dashboard";
+import { Module as Modules } from "src/modules/modules";
+import { Component as NotFound } from "src/components/not-found";
+import { Component as Login } from "src/components/login";
 
-import { config } from "../config";
+import { config } from "./config";
 
 export const sections = {
   dashboard: {
@@ -24,8 +24,8 @@ export const routes = {
     redirectTo: sections.dashboard.route
   },
   login: {
-    route: "/login" /*,
-    component: Login */
+    route: "/login",
+    component: Login
   },
   notFound: {
     component: NotFound

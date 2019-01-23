@@ -11,6 +11,8 @@ import {
   Visibility
 } from "semantic-ui-react";
 
+import { Component as MainContainer } from "src/components/container-main";
+
 import "./sideBarLayout.css";
 
 const getWidth = () => window.innerWidth; // TODO, move to helpers
@@ -42,7 +44,7 @@ class DesktopContainer extends Component {
           onBottomPassed={this.showFixedMenu}
           onBottomPassedReverse={this.hideFixedMenu}
         >
-          <Segment inverted textAlign="center" vertical className="main-menu">
+          <Segment inverted textAlign="center" vertical className="sidebar-desktop-menu">
             <Menu
               fixed={fixed ? "top" : null}
               inverted={!fixed}
@@ -143,7 +145,7 @@ ResponsiveContainer.propTypes = {
 
 export const SideBarLayout = ({ menu, children }) => (
   <ResponsiveContainer menu={menu}>
-    <Container className="main-container">{children}</Container>
+    <MainContainer>{children}</MainContainer>
   </ResponsiveContainer>
 );
 

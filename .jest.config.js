@@ -30,7 +30,7 @@ module.exports = {
       "\\.(css|less)$": "<rootDir>/mocks/unit/styleMock.js"
   },
   setupFiles: [
-    "<rootDir>/src/config/setupTests.js"
+    "<rootDir>/src/app/config/setupTests.js"
   ],
   snapshotSerializers: [
     "enzyme-to-json/serializer"

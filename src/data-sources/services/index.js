@@ -1,10 +1,8 @@
 import { origins, Selector } from "reactive-data-source";
 
-import { config } from "../config";
-
 // SERVICES COLLECTION
 
-export const servicesCollection = new origins.Api(`${config.baseApi}/services`);
+export const servicesCollection = new origins.Api("/services");
 
 const typeFilter = serviceType => {
   if (serviceType && serviceType.length) {

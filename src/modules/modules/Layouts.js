@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Module } from "src/components/module/Module";
+import { Component as Module } from "src/components/module";
 import { Modules } from "./views/Modules";
 
 export const ModulesLayout = ({ match }) => <Modules baseUrl={match.url} />;

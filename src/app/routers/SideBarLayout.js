@@ -2,8 +2,8 @@ import React from "react";
 import { Route } from "react-router";
 import { Switch } from "react-router-dom";
 
-import { SideBarLayout } from "src/ui-kit/layouts/sidebar/SideBarLayout";
-import { Menu } from "src/components/menu/Menu";
+import { Component as SideBarLayout } from "src/components/layout-sidebar";
+import { Component as Menu } from "src/components/menu";
 
 import { sectionsAsArray } from "../routes";
 

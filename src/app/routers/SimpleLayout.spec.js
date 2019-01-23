@@ -4,8 +4,8 @@ import { shallow } from "enzyme";
 
 import { SimpleLayoutRouter, SimpleRouter } from "./SimpleLayoutRouter";
 
-import { Login } from "src/components/login/Login";
-import { NotFound } from "src/components/not-found/NotFound";
+import { Login } from "src/components/login";
+import { NotFound } from "src/components/not-found";
 
 import { routes } from "../routes";
 
