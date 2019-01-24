@@ -9,3 +9,7 @@
 .main-container {
   padding:1em;
 }
+
+.ui.secondary.pointing.menu .user-menu-item.item {
+  padding: 0px 0px 4px 0px;
+}

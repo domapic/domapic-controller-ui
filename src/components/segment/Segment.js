@@ -19,6 +19,6 @@ export const Segment = ({ children, loading, header }) => {
 
 Segment.propTypes = {
   children: PropTypes.node,
-  loading: PropTypes.bool,
-  header: PropTypes.string
+  header: PropTypes.string,
+  loading: PropTypes.bool
 };
