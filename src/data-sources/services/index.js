@@ -2,8 +2,6 @@ import { origins, Selector } from "reactive-data-source";
 
 // SERVICES COLLECTION
 
-export const servicesCollection = new origins.Api("/services");
-
 const typeFilter = serviceType => {
   if (serviceType && serviceType.length) {
     return {
@@ -13,6 +11,8 @@ const typeFilter = serviceType => {
     };
   }
 };
+
+export const servicesCollection = new origins.Api("/services");
 
 servicesCollection.addCustomFilter({
   type: typeFilter
@@ -27,3 +27,27 @@ export const modulesCollection = new Selector(
   },
   servicesResults => servicesResults
 );
+
+// SERVICE MODEL
+
+const byIdFilter = id => {
+  if (id) {
+    return {
+      params: {
+        id
+      }
+    };
+  }
+};
+
+export const servicesModel = new origins.Api(
+  "/services/:id",
+  {},
+  {
+    defaultValue: {}
+  }
+);
+
+servicesModel.addCustomFilter({
+  byId: byIdFilter
+});

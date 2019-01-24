@@ -8,7 +8,7 @@ class Socket {
   }
 
   init(url) {
-    this._socket = window && window.io(url);
+    this._socket = window && window.io && window.io(url);
     if (this._socket) {
       this._handleDataSources();
     } else {

@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react";
 
 import { Component as MainContainer } from "src/components/container-main";
-import { windowInnerWidth } from "src/helpers/responsive"
+import { windowInnerWidth } from "src/helpers/responsive";
 
 import "./sideBarLayout.css";
 

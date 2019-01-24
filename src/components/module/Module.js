@@ -1,13 +1,47 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Placeholder } from "semantic-ui-react";
 
-export const Module = ({ id }) => (
-  <div>
-    <h2> Module </h2>
-    <p>Id: {id}</p>
-  </div>
+import { Component as ErrorComponent } from "src/components/error";
+import { Component as Segment } from "src/components/segment";
+
+const ModuleLoading = () => (
+  <Placeholder>
+    <Placeholder.Paragraph>
+      <Placeholder.Line />
+      <Placeholder.Line />
+    </Placeholder.Paragraph>
+  </Placeholder>
 );
 
-Module.propTypes = {
-  id: PropTypes.string
+const ModuleContent = ({ module, loading, error }) => {
+  if (loading) {
+    return <ModuleLoading />;
+  } else if (error) {
+    return <ErrorComponent message={error.message} />;
+  }
+  return (
+    <React.Fragment>
+      <p>Id: {module._id}</p>
+      <p>Name: {module.name}</p>
+    </React.Fragment>
+  );
 };
+
+const propTypes = {
+  error: PropTypes.instanceOf(Error),
+  loading: PropTypes.bool,
+  module: PropTypes.object
+};
+
+ModuleContent.propTypes = propTypes;
+
+export const Module = ({ module, loading, error }) => {
+  return (
+    <Segment loading={loading} header="Module">
+      <ModuleContent module={module} loading={loading} error={error} />
+    </Segment>
+  );
+};
+
+Module.propTypes = propTypes;
