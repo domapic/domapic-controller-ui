@@ -12,6 +12,7 @@ const defaultMethods = {
 };
 
 const defaultConfig = {
+  baseUrl: "",
   readMethod: "get",
   updateMethod: "patch",
   createMethod: "post",
@@ -56,9 +57,10 @@ export class Api extends DataSource {
     this._fullResponse = configuration.fullResponse;
     this._validateStatus = configuration.validateStatus;
     this._errorHandler = configuration.errorHandler;
-    this._baseUrl = configuration.baseUrl || "";
+    this._baseUrl = configuration.baseUrl;
 
     this.client = axios.create();
+
     axiosRetry(this.client, {
       retries: configuration.retries
     });
@@ -91,17 +93,26 @@ export class Api extends DataSource {
   }
 
   _getUrl(filter = {}) {
-    return `${this.url.base}/${this.url.segment(filter.params)}${this._getQueryString(
-      filter.query
-    )}`;
+    if (filter.params) {
+      return `${this.url.base}/${this.url.segment(filter.params)}${this._getQueryString(
+        filter.query
+      )}`;
+    }
+    return `${this.url.full}${this._getQueryString(filter.query)}`;
   }
 
   _setUrl(baseUrl) {
-    const splittedUrl = baseUrl.split(PATH_SEP);
+    const splittedUrl = baseUrl.split(PATH_SEP).filter(pathPortion => pathPortion !== "");
+    const hasProtocol = splittedUrl[0].indexOf("http") > -1;
 
     this.url = {
-      base: `${splittedUrl[0]}//${splittedUrl[2]}`,
-      segment: pathToRegexp.compile(splittedUrl.slice(3, splittedUrl.length).join(PATH_SEP))
+      base: hasProtocol ? `${splittedUrl[0]}//${splittedUrl[1]}` : "",
+      full: baseUrl,
+      segment: pathToRegexp.compile(
+        hasProtocol
+          ? splittedUrl.slice(2, splittedUrl.length).join(PATH_SEP)
+          : splittedUrl.join(PATH_SEP)
+      )
     };
   }
 

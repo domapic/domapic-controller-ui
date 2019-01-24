@@ -138,16 +138,20 @@ export class Selector extends Base {
     methods[READ_METHOD]._source = methods;
     methods[READ_METHOD]._methodName = READ_METHOD;
 
-    methods[READ_METHOD].get = prop => ({
-      isGetter: true,
-      prop,
-      _method: methods[READ_METHOD]
-    });
+    const createGetter = prop => {
+      const getter = () => methods[READ_METHOD][prop];
+      getter.isGetter = true;
+      getter.prop = prop;
+      getter._method = methods[READ_METHOD];
+      return getter;
+    };
 
-    methods[READ_METHOD].getError = () => methods[READ_METHOD].get("error");
-    methods[READ_METHOD].getValue = () => methods[READ_METHOD].get("value");
-    methods[READ_METHOD].getLoading = () => methods[READ_METHOD].get("loading");
-    methods[READ_METHOD].getDispatch = () => methods[READ_METHOD].get("dispatch");
+    methods[READ_METHOD].getters = {
+      error: createGetter("error"),
+      loading: createGetter("loading"),
+      value: createGetter("value"),
+      dispatch: createGetter("dispatch")
+    };
 
     return methods;
   }

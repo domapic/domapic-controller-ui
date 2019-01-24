@@ -20,9 +20,7 @@ export class DataSource extends Base {
   }
 
   _clean(filter) {
-    if (this._cache) {
-      this._cache.clean(filter);
-    }
+    this._cache.clean(filter);
   }
 
   _createFilteredMethods(filter, filterId) {
@@ -73,7 +71,7 @@ export class DataSource extends Base {
               updateData(
                 {
                   loading: false,
-                  error: false,
+                  error: null,
                   value: result
                 },
                 methodName,
@@ -106,16 +104,20 @@ export class DataSource extends Base {
         methods[methodName]._source = methods;
         methods[methodName]._methodName = methodName;
 
-        methods[methodName].get = prop => ({
-          isGetter: true,
-          prop,
-          _method: methods[methodName]
-        });
+        const createGetter = prop => {
+          const getter = () => methods[methodName][prop];
+          getter.isGetter = true;
+          getter.prop = prop;
+          getter._method = methods[methodName];
+          return getter;
+        };
 
-        methods[methodName].getError = () => methods[methodName].get("error");
-        methods[methodName].getValue = () => methods[methodName].get("value");
-        methods[methodName].getLoading = () => methods[methodName].get("loading");
-        methods[methodName].getDispatch = () => methods[methodName].get("dispatch");
+        methods[methodName].getters = {
+          error: createGetter("error"),
+          loading: createGetter("loading"),
+          value: createGetter("value"),
+          dispatch: createGetter("dispatch")
+        };
       }
     });
     return methods;
