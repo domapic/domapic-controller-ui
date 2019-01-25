@@ -1,6 +1,5 @@
 import { Module as Dashboard } from "src/modules/dashboard";
 import { Module as Modules } from "src/modules/modules";
-import { Component as NotFound } from "src/components/not-found";
 import { Component as Login } from "src/components/login";
 
 import { config } from "./config";
@@ -26,9 +25,6 @@ export const routes = {
   login: {
     route: "/login",
     component: Login
-  },
-  notFound: {
-    component: NotFound
   }
 };
 

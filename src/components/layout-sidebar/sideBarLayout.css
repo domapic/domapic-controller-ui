@@ -13,3 +13,7 @@
 .ui.secondary.pointing.menu .user-menu-item.item {
   padding: 0px 0px 4px 0px;
 }
+
+.ui.secondary.pointing.menu .user-menu-item.item.mobile {
+  padding: 0px 0px 8px 0px;
+}

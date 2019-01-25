@@ -11,7 +11,8 @@ import {
 } from "semantic-ui-react";
 
 import { Component as MainContainer } from "src/components/container-main";
-import { Component as UserMenu } from "src/components/user-menu";
+import { Component as UserMenu } from "src/components/menu-user";
+import { Component as AboutMenu } from "src/components/menu-about";
 import { windowInnerWidth } from "src/helpers/responsive";
 
 import "./sideBarLayout.css";
@@ -54,6 +55,7 @@ class DesktopContainer extends Component {
               <Container>
                 {this.props.menu}
                 <Menu.Item position="right" className="user-menu-item">
+                  <AboutMenu />
                   <UserMenu />
                 </Menu.Item>
               </Container>
@@ -115,6 +117,9 @@ class MobileContainer extends Component {
               <Menu inverted pointing secondary size="small">
                 <Menu.Item onClick={this.handleToggle}>
                   <Icon name="sidebar" />
+                </Menu.Item>
+                <Menu.Item position="right" className="user-menu-item mobile">
+                  <AboutMenu />
                 </Menu.Item>
               </Menu>
             </Container>

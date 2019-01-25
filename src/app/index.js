@@ -1,5 +1,8 @@
 import React from "react";
 
+import { ConfigContext } from "src/context/ConfigContext";
+
+import { config } from "./config";
 import "./config/configDataSources";
 import { MainRouter } from "./routers/Main";
 
@@ -8,6 +11,8 @@ import "./app.css";
 
 export const App = () => (
   <div className="app">
-    <MainRouter />
+    <ConfigContext.Provider value={{ staticsRoute: config.staticsRoute }}>
+      <MainRouter />
+    </ConfigContext.Provider>
   </div>
 );

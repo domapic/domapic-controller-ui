@@ -1,0 +1,28 @@
+.user-avatar {
+  height:26px;
+  width:26px;
+}
+
+.ui.secondary.pointing.menu .item button.user-button {
+  padding:2px;
+}
+
+.ui.dropdown.user-dropdown>.dropdown.icon {
+  position:absolute;
+  top:8px;
+  margin-left:2px;
+  font-size:1.2em;
+}
+
+.ui.dropdown.user-dropdown:hover>.dropdown.icon {
+  color:#fff;
+}
+
+.ui.dropdown.user-dropdown:hover>.ui.button.user-button {
+  background-color: #fff;
+}
+
+.ui.dropdown.user-dropdown {
+  margin-left:16px;
+  margin-right:26px;
+}
