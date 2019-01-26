@@ -5,10 +5,10 @@ import { Switch } from "react-router-dom";
 import { Component as SideBarLayout } from "src/components/layout-sidebar";
 import { Component as Menu } from "src/components/menu";
 
-import { sectionsAsArray } from "../routes";
+import { sectionsAsArray, menuSectionsAsArray } from "../routes";
 
 export const SideBarLayoutRouter = () => (
-  <SideBarLayout menu={<Menu sections={sectionsAsArray} />}>
+  <SideBarLayout menu={<Menu sections={menuSectionsAsArray} />}>
     <Switch>
       {sectionsAsArray.map(section => (
         <Route key={section.route} path={section.route} component={section.component} />

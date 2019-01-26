@@ -8,12 +8,32 @@ export const sections = {
   dashboard: {
     name: "Dashboard",
     route: "/dashboard",
-    component: Dashboard
+    component: Dashboard,
+    showInMenu: false
   },
   modules: {
     name: "Modules",
     route: "/modules",
-    component: Modules
+    component: Modules,
+    showInMenu: true
+  },
+  plugins: {
+    name: "Plugins",
+    route: "/plugins",
+    component: Modules,
+    showInMenu: true
+  },
+  activity: {
+    name: "Activity",
+    route: "/activity",
+    component: Modules,
+    showInMenu: true
+  },
+  users: {
+    name: "Users",
+    route: "/users",
+    component: Modules,
+    showInMenu: false
   }
 };
 
@@ -29,6 +49,8 @@ export const routes = {
 };
 
 export const sectionsAsArray = Object.values(sections);
+
+export const menuSectionsAsArray = sectionsAsArray.filter(section => section.showInMenu);
 
 export const sectionsRoutes = sectionsAsArray.map(section => section.route);
 

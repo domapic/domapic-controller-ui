@@ -13,6 +13,9 @@ import {
 import { Component as MainContainer } from "src/components/container-main";
 import { Component as UserMenu } from "src/components/menu-user";
 import { Component as AboutMenu } from "src/components/menu-about";
+import { Component as SettingsMenu } from "src/components/menu-settings";
+import { Component as HomeMenu } from "src/components/menu-home";
+import { Component as UserAvatar } from "src/components/user-avatar";
 import { windowInnerWidth } from "src/helpers/responsive";
 
 import "./sideBarLayout.css";
@@ -53,8 +56,10 @@ class DesktopContainer extends Component {
               size="small"
             >
               <Container>
+                <HomeMenu />
                 {this.props.menu}
-                <Menu.Item position="right" className="user-menu-item">
+                <Menu.Item position="right" className="right-menu-item">
+                  <SettingsMenu />
                   <AboutMenu />
                   <UserMenu />
                 </Menu.Item>
@@ -108,18 +113,43 @@ class MobileContainer extends Component {
           vertical
           visible={sidebarOpened}
         >
+          <Menu.Item>
+            <UserAvatar /> Javier Brea
+          </Menu.Item>
+          <Menu.Item>
+            User
+            <Menu.Menu>
+              <Menu.Item>Account</Menu.Item>
+              <Menu.Item>Logout</Menu.Item>
+            </Menu.Menu>
+          </Menu.Item>
           {this.props.menu}
+          <Menu.Item>
+            Settings
+            <Menu.Menu>
+              <Menu.Item>Configuration</Menu.Item>
+              <Menu.Item>Users</Menu.Item>
+            </Menu.Menu>
+          </Menu.Item>
+          <Menu.Item>
+            About
+            <Menu.Menu>
+              <Menu.Item>Controller</Menu.Item>
+              <Menu.Item>Api Swagger</Menu.Item>
+            </Menu.Menu>
+          </Menu.Item>
         </Sidebar>
 
         <Sidebar.Pusher dimmed={sidebarOpened} className="sidebar">
           <Segment inverted textAlign="center" vertical className="main-menu">
             <Container>
-              <Menu inverted pointing secondary size="small">
+              <Menu inverted pointing secondary size="small" className="mobile">
                 <Menu.Item onClick={this.handleToggle}>
                   <Icon name="sidebar" />
                 </Menu.Item>
-                <Menu.Item position="right" className="user-menu-item mobile">
-                  <AboutMenu />
+                <HomeMenu />
+                <Menu.Item position="right" className="right-menu-item mobile">
+                  <UserMenu />
                 </Menu.Item>
               </Menu>
             </Container>

@@ -1,3 +1,11 @@
 .ui.segment.main-menu {
   padding:0.1em 0;
 }
+
+.ui.secondary.pointing.menu .right-menu-item.item {
+  padding: 0px 0px 4px 0px;
+}
+
+.ui.secondary.pointing.menu .right-menu-item.item.mobile {
+  padding: 0px 10px 8px 0px;
+}

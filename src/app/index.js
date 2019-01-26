@@ -1,18 +1,24 @@
 import React from "react";
 
-import { ConfigContext } from "src/context/ConfigContext";
+import { RoutesContext } from "src/context/RoutesContext";
 
 import { config } from "./config";
-import "./config/configDataSources";
+import { routes } from "./routes";
 import { MainRouter } from "./routers/Main";
 
+import "./config/configDataSources";
 import "semantic-ui-css/semantic.min.css";
 import "./app.css";
 
+const routesContext = {
+  assets: `${config.staticsRoute}assets`,
+  home: routes.index.route
+};
+
 export const App = () => (
   <div className="app">
-    <ConfigContext.Provider value={{ staticsRoute: config.staticsRoute }}>
+    <RoutesContext.Provider value={routesContext}>
       <MainRouter />
-    </ConfigContext.Provider>
+    </RoutesContext.Provider>
   </div>
 );
