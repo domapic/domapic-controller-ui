@@ -26,7 +26,10 @@ export class App extends Component {
     super(props);
 
     this.state = {
-      historyPosition: 0
+      history: {
+        history,
+        position: 0
+      }
     };
 
     this.changeHistoryPosition = this.changeHistoryPosition.bind(this);
@@ -44,12 +47,18 @@ export class App extends Component {
     switch (action) {
       case "POP":
         this.setState(state => ({
-          historyPosition: state.historyPosition - 1
+          history: {
+            history,
+            position: state.history.position - 1
+          }
         }));
         break;
       case "PUSH":
         this.setState(state => ({
-          historyPosition: state.historyPosition + 1
+          history: {
+            history,
+            position: state.history.position + 1
+          }
         }));
         break;
     }
@@ -59,12 +68,7 @@ export class App extends Component {
     return (
       <div className="app">
         <RoutesContext.Provider value={routesContext}>
-          <HistoryContext.Provider
-            value={{
-              history,
-              position: this.state.historyPosition
-            }}
-          >
+          <HistoryContext.Provider value={this.state.history}>
             <MainRouter history={history} />
           </HistoryContext.Provider>
         </RoutesContext.Provider>

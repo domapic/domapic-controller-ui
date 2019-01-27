@@ -1,6 +1,7 @@
 import React from "react";
 import { Route } from "react-router";
 import { Router, Redirect, Switch } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import { SideBarLayoutRouter } from "./SideBarLayout";
 import { SimpleLayoutRouter } from "./SimpleLayout";
@@ -20,3 +21,7 @@ export class MainRouter extends React.Component {
     );
   }
 }
+
+MainRouter.propTypes = {
+  history: PropTypes.any.isRequired
+};
