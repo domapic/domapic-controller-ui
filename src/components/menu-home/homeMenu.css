@@ -1,16 +1,12 @@
-.home-logo {
+.home-menu__item--logo {
   height:26px;
 }
 
-.ui.secondary.pointing.menu.mobile .item.home-menu-item {
+.ui.secondary.pointing.menu .item.home-menu__item {
   padding:0px 0px 5px 0px;
 }
 
-.ui.secondary.pointing.menu .item.home-menu-item {
-  padding:0px 0px 5px 16px;
-}
-
-.ui.secondary.pointing.menu .item.home-menu-item.back {
+.ui.secondary.pointing.menu .item.home-menu__item--back {
   padding:0px 0px 8px 16px;
   margin-right:15px;
 }

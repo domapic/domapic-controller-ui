@@ -10,7 +10,10 @@ class HomeLogo extends Component {
   render() {
     return (
       <Link to={this.context.home}>
-        <Image src={`${this.context.assets}/logo-white-trans.png`} className="home-logo" />
+        <Image
+          src={`${this.context.assets}/logo-white-trans.png`}
+          className="home-menu__item--logo"
+        />
       </Link>
     );
   }
@@ -20,10 +23,10 @@ HomeLogo.contextType = RoutesContext;
 
 export const HomeMenu = () => (
   <React.Fragment>
-    <Menu.Item className="home-menu-item">
+    <Menu.Item className="home-menu__item">
       <HomeLogo />
     </Menu.Item>
-    <Menu.Item className="home-menu-item back">
+    <Menu.Item className="home-menu__item home-menu__item--back">
       <Icon link name="arrow left" size="large" />
     </Menu.Item>
   </React.Fragment>

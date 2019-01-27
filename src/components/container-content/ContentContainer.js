@@ -1,23 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Dimmer, Segment as SegmentSemantic, Loader, Header } from "semantic-ui-react";
+import { Dimmer, Segment, Loader, Header } from "semantic-ui-react";
 
-export const Segment = ({ children, loading, header }) => {
+export const ContentContainer = ({ children, loading, header }) => {
   const segmentHeader = header ? <Header as="h2">{header}</Header> : null;
   return (
     <React.Fragment>
       {segmentHeader}
-      <SegmentSemantic>
+      <Segment>
         <Dimmer active={loading} inverted>
           <Loader inverted />
         </Dimmer>
         {children}
-      </SegmentSemantic>
+      </Segment>
     </React.Fragment>
   );
 };
 
-Segment.propTypes = {
+ContentContainer.propTypes = {
   children: PropTypes.node,
   header: PropTypes.string,
   loading: PropTypes.bool

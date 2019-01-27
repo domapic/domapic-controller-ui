@@ -1,19 +1,27 @@
-.sidebar {
+.sidebar-layout__sidebar-pusher {
   height:100vh;
 }
 
-.ui.segment.sidebar-desktop-menu {
-  padding:0.1em 0;
+.ui.vertical.segment.sidebar-layout__header-menu, .ui.vertical.segment.sidebar-layout__header-menu--mobile {
+  padding-left:10px;
+  padding-right:10px;
 }
 
-.main-container {
-  padding:1em;
+.ui.vertical.segment.sidebar-layout__header-menu {
+  padding-top: 4px;
+  padding-bottom: 5px;
 }
 
-.ui.secondary.pointing.menu .right-menu-item.item {
-  padding: 0px 0px 4px 0px;
+.ui.vertical.segment.sidebar-layout__header-menu--mobile {
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
-.ui.secondary.pointing.menu .right-menu-item.item.mobile {
-  padding: 0px 0px 8px 0px;
+.ui.secondary.pointing.menu .item.sidebar-layout__header-menu__item--right {
+  padding: 0px 0px 2px 0px;
+}
+
+.ui.secondary.pointing.menu .item.sidebar-layout__header-menu__item--toggle {
+  padding-right: 30px;
+  padding-left: 0px;
 }

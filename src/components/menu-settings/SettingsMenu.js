@@ -1,21 +1,16 @@
 import React from "react";
-import { Dropdown, Icon } from "semantic-ui-react";
+import PropTypes from "prop-types";
 
-import "./settingsMenu.css";
+import { SettingsMenuDropdown } from "./SettingsMenuDropdown";
+import { SettingsMenuVertical } from "./SettingsMenuVertical";
 
-const Settings = () => <Icon name="configure" size="large" />;
+export const SettingsMenu = ({ vertical }) => {
+  if (vertical) {
+    return <SettingsMenuVertical />;
+  }
+  return <SettingsMenuDropdown />;
+};
 
-export const SettingsMenu = () => (
-  <Dropdown trigger={<Settings />} pointing="top right" className="settings-dropdown" icon={null}>
-    <Dropdown.Menu>
-      <Dropdown.Header>Settings</Dropdown.Header>
-      <Dropdown.Divider />
-      <Dropdown.Item>
-        <Icon name="configure" /> Configuration
-      </Dropdown.Item>
-      <Dropdown.Item>
-        <Icon name="users" /> Users
-      </Dropdown.Item>
-    </Dropdown.Menu>
-  </Dropdown>
-);
+SettingsMenu.propTypes = {
+  vertical: PropTypes.bool
+};

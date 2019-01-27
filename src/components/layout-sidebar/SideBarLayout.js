@@ -15,7 +15,6 @@ import { Component as UserMenu } from "src/components/menu-user";
 import { Component as AboutMenu } from "src/components/menu-about";
 import { Component as SettingsMenu } from "src/components/menu-settings";
 import { Component as HomeMenu } from "src/components/menu-home";
-import { Component as UserAvatar } from "src/components/user-avatar";
 import { windowInnerWidth } from "src/helpers/responsive";
 
 import "./sideBarLayout.css";
@@ -47,7 +46,7 @@ class DesktopContainer extends Component {
           onBottomPassed={this.showFixedMenu}
           onBottomPassedReverse={this.hideFixedMenu}
         >
-          <Segment inverted textAlign="center" vertical className="sidebar-desktop-menu">
+          <Segment inverted textAlign="center" vertical className="sidebar-layout__header-menu">
             <Menu
               fixed={fixed ? "top" : null}
               inverted={!fixed}
@@ -58,7 +57,7 @@ class DesktopContainer extends Component {
               <Container>
                 <HomeMenu />
                 {this.props.menu}
-                <Menu.Item position="right" className="right-menu-item">
+                <Menu.Item position="right" className="sidebar-layout__header-menu__item--right">
                   <SettingsMenu />
                   <AboutMenu />
                   <UserMenu />
@@ -113,46 +112,31 @@ class MobileContainer extends Component {
           vertical
           visible={sidebarOpened}
         >
-          <Menu.Item>
-            <UserAvatar /> Javier Brea
-          </Menu.Item>
-          <Menu.Item>
-            User
-            <Menu.Menu>
-              <Menu.Item>Account</Menu.Item>
-              <Menu.Item>Logout</Menu.Item>
-            </Menu.Menu>
-          </Menu.Item>
+          <UserMenu vertical />
           {this.props.menu}
-          <Menu.Item>
-            Settings
-            <Menu.Menu>
-              <Menu.Item>Configuration</Menu.Item>
-              <Menu.Item>Users</Menu.Item>
-            </Menu.Menu>
-          </Menu.Item>
-          <Menu.Item>
-            About
-            <Menu.Menu>
-              <Menu.Item>Controller</Menu.Item>
-              <Menu.Item>Api Swagger</Menu.Item>
-            </Menu.Menu>
-          </Menu.Item>
+          <SettingsMenu vertical />
+          <AboutMenu vertical />
         </Sidebar>
 
-        <Sidebar.Pusher dimmed={sidebarOpened} className="sidebar">
-          <Segment inverted textAlign="center" vertical className="main-menu">
-            <Container>
-              <Menu inverted pointing secondary size="small" className="mobile">
-                <Menu.Item onClick={this.handleToggle}>
-                  <Icon name="sidebar" />
-                </Menu.Item>
-                <HomeMenu />
-                <Menu.Item position="right" className="right-menu-item mobile">
-                  <UserMenu />
-                </Menu.Item>
-              </Menu>
-            </Container>
+        <Sidebar.Pusher dimmed={sidebarOpened} className="sidebar-layout__sidebar-pusher">
+          <Segment
+            inverted
+            textAlign="center"
+            vertical
+            className="sidebar-layout__header-menu--mobile"
+          >
+            <Menu inverted pointing secondary size="small">
+              <Menu.Item
+                onClick={this.handleToggle}
+                className="sidebar-layout__header-menu__item--toggle"
+              >
+                <Icon name="sidebar" />
+              </Menu.Item>
+              <HomeMenu />
+              <Menu.Item position="right" className="sidebar-layout__header-menu__item--right">
+                <UserMenu />
+              </Menu.Item>
+            </Menu>
           </Segment>
           {children}
         </Sidebar.Pusher>

@@ -1,11 +1,10 @@
-.ui.segment.main-menu {
-  padding:0.1em 0;
+.ui.vertical.segment.simple-layout__header-menu {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left:10px;
+  padding-right:10px;
 }
 
-.ui.secondary.pointing.menu .right-menu-item.item {
-  padding: 0px 0px 4px 0px;
-}
-
-.ui.secondary.pointing.menu .right-menu-item.item.mobile {
-  padding: 0px 10px 8px 0px;
+.ui.secondary.pointing.menu .item.simple-layout__header-menu__item--right {
+  padding: 0px 0px 9px 0px;
 }

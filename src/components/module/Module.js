@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Placeholder } from "semantic-ui-react";
 
 import { Component as ErrorComponent } from "src/components/error";
-import { Component as Segment } from "src/components/segment";
+import { Component as ContentContainer } from "src/components/container-content";
 
 const ModuleLoading = () => (
   <Placeholder>
@@ -38,9 +38,9 @@ ModuleContent.propTypes = propTypes;
 
 export const Module = ({ module, loading, error }) => {
   return (
-    <Segment loading={loading} header="Module">
+    <ContentContainer loading={loading} header="Module">
       <ModuleContent module={module} loading={loading} error={error} />
-    </Segment>
+    </ContentContainer>
   );
 };
 

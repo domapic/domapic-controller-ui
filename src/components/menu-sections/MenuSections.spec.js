@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { Menu, MenuLink } from "./Menu";
+import { MenuSections, MenuLink } from "./Menu";
 
 describe("Menu Link component", () => {
   it("should render without throwing an error", () => {
@@ -22,12 +22,12 @@ describe("Menu component", () => {
   ];
 
   it("should render without throwing an error", () => {
-    const wrapper = shallow(<Menu />);
+    const wrapper = shallow(<MenuSections />);
     expect(wrapper.exists()).toBe(true);
   });
 
   it("should render links sections", () => {
-    const wrapper = shallow(<Menu sections={sections} />);
+    const wrapper = shallow(<MenuSections sections={sections} />);
     expect(
       wrapper.containsMatchingElement(
         <MenuLink name={sections[0].name} route={sections[0].route} />
@@ -36,7 +36,7 @@ describe("Menu component", () => {
   });
 
   it("should render as many links as sections are received", () => {
-    const wrapper = shallow(<Menu sections={sections} />);
+    const wrapper = shallow(<MenuSections sections={sections} />);
     expect(wrapper.find(MenuLink).length).toBe(sections.length);
   });
 });

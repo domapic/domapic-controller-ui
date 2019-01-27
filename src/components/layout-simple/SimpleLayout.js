@@ -11,11 +11,11 @@ import "./simpleLayout.css";
 
 export const SimpleLayout = ({ children }) => (
   <Responsive>
-    <Segment inverted textAlign="center" vertical className="main-menu">
+    <Segment inverted textAlign="center" vertical className="simple-layout__header-menu">
       <Menu inverted={true} size="small" pointing={true} secondary={true}>
         <Container>
           <HomeMenu />
-          <Menu.Item position="right" className="right-menu-item mobile">
+          <Menu.Item position="right" className="simple-layout__header-menu__item--right">
             <AboutMenu />
           </Menu.Item>
         </Container>

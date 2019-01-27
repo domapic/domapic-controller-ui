@@ -11,7 +11,7 @@ MenuLink.propTypes = {
   route: PropTypes.string.isRequired
 };
 
-export const Menu = ({ sections = [] }) => (
+export const MenuSections = ({ sections = [] }) => (
   <React.Fragment>
     {sections.map(section => (
       <SemanticMenu.Item key={section.route}>
@@ -21,7 +21,7 @@ export const Menu = ({ sections = [] }) => (
   </React.Fragment>
 );
 
-Menu.propTypes = {
+MenuSections.propTypes = {
   sections: PropTypes.arrayOf(
     PropTypes.shape({
       route: PropTypes.string.isRequired,
