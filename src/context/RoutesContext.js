@@ -1,10 +1,14 @@
 import React from "react";
-import createHistory from "history/createMemoryHistory";
+
+const defaultRoute = "/";
 
 export const defaultRoutes = {
-  assets: "/assets",
-  home: "/",
-  history: createHistory()
+  assets: defaultRoute,
+  home: defaultRoute,
+  configuration: defaultRoute,
+  users: defaultRoute,
+  account: defaultRoute,
+  packageInfo: defaultRoute
 };
 
 export const RoutesContext = React.createContext(defaultRoutes);

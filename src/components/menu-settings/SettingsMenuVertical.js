@@ -1,12 +1,27 @@
-import React from "react";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 
-export const SettingsMenuVertical = () => (
-  <Menu.Item>
-    Settings
-    <Menu.Menu>
-      <Menu.Item>Configuration</Menu.Item>
-      <Menu.Item>Users</Menu.Item>
-    </Menu.Menu>
-  </Menu.Item>
-);
+import { RoutesContext } from "src/context/RoutesContext";
+
+import "./settingsMenuVertical.css";
+
+export class SettingsMenuVertical extends Component {
+  render() {
+    return (
+      <Menu.Item>
+        Settings
+        <Menu.Menu>
+          <Menu.Item className="settings-menu-vertical__item">
+            <Link to={this.context.configuration}>Configuration</Link>
+          </Menu.Item>
+          <Menu.Item className="settings-menu-vertical__item">
+            <Link to={this.context.users}>Users</Link>
+          </Menu.Item>
+        </Menu.Menu>
+      </Menu.Item>
+    );
+  }
+}
+
+SettingsMenuVertical.contextType = RoutesContext;

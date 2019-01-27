@@ -5,16 +5,22 @@ import { RoutesContext } from "src/context/RoutesContext";
 import { HistoryContext } from "src/context/HistoryContext";
 
 import { config } from "./config";
-import { routes } from "./routes";
+import { routes, sections } from "./routes";
 import { MainRouter } from "./routers/Main";
 
 import "./config/configDataSources";
+
 import "semantic-ui-css/semantic.min.css";
 import "./app.css";
 
 const routesContext = {
   assets: `${config.staticsRoute}assets`,
-  home: routes.index.route
+  home: routes.index.route,
+  configuration: sections.configuration.route,
+  users: sections.users.route,
+  account: sections.account.route,
+  packageInfo: routes.packageInfo.route,
+  swagger: routes.swagger.route
 };
 
 const history = createHistory({

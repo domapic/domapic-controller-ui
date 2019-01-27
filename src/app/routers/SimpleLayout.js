@@ -9,7 +9,8 @@ import { routes } from "../routes";
 
 export const SimpleRouter = () => (
   <Switch>
-    <Route path={routes.login.route} component={routes.login.component} />
+    <Route exact path={routes.login.route} component={routes.login.component} />
+    <Route exact path={routes.packageInfo.route} component={routes.packageInfo.component} />
     <Route render={() => <ErrorComponent message="Not found" />} />
   </Switch>
 );

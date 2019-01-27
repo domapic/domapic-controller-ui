@@ -1,19 +1,40 @@
-import React from "react";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
+import PropTypes from "prop-types";
 
+import { RoutesContext } from "src/context/RoutesContext";
 import { UserAvatar } from "./UserAvatar";
 
-export const UserMenuVertical = () => (
-  <React.Fragment>
-    <Menu.Item>
-      <UserAvatar /> Javier Brea
-    </Menu.Item>
-    <Menu.Item>
-      User
-      <Menu.Menu>
-        <Menu.Item>Account</Menu.Item>
-        <Menu.Item>Logout</Menu.Item>
-      </Menu.Menu>
-    </Menu.Item>
-  </React.Fragment>
-);
+import "./userMenuVertical.css";
+
+export class UserMenuVertical extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <Menu.Item>
+          <UserAvatar /> Javier Brea
+        </Menu.Item>
+        <Menu.Item>
+          User
+          <Menu.Menu>
+            <Menu.Item className="user-menu-vertical__item">
+              <Link to={this.context.account}>Account</Link>
+            </Menu.Item>
+            <Menu.Item className="user-menu-vertical__item">
+              <Link to="" onClick={this.props.logoutHandler}>
+                Logout
+              </Link>
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu.Item>
+      </React.Fragment>
+    );
+  }
+}
+
+UserMenuVertical.contextType = RoutesContext;
+
+UserMenuVertical.propTypes = {
+  logoutHandler: PropTypes.func.isRequired
+};

@@ -29,9 +29,21 @@ export const sections = {
     component: Modules,
     showInMenu: true
   },
+  configuration: {
+    name: "Configuration",
+    route: "/configuration",
+    component: Modules,
+    showInMenu: false
+  },
   users: {
     name: "Users",
     route: "/users",
+    component: Modules,
+    showInMenu: false
+  },
+  account: {
+    name: "Account",
+    route: "/account",
     component: Modules,
     showInMenu: false
   }
@@ -45,6 +57,13 @@ export const routes = {
   login: {
     route: "/login",
     component: Login
+  },
+  packageInfo: {
+    route: "/package-info",
+    component: Modules
+  },
+  swagger: {
+    route: "/swagger"
   }
 };
 

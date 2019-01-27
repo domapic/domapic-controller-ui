@@ -25,3 +25,7 @@
 .user-menu-dropdown .ui.avatar.image.user-avatar {
   margin-right: 0px;
 }
+
+.ui.inverted.menu .user-menu-dropdown .item>a:not(.ui) {
+  color: black;
+}
