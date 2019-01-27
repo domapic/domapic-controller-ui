@@ -111,6 +111,7 @@ class MobileContainer extends Component {
           onHide={this.handleSidebarHide}
           vertical
           visible={sidebarOpened}
+          onClick={this.handleSidebarHide}
         >
           <UserMenu vertical />
           {this.props.menu}
