@@ -102,12 +102,14 @@ export class DataSource extends Base {
         methods[methodName].error = null;
         methods[methodName].loading = false;
         methods[methodName]._source = methods;
+        methods[methodName]._isDataSource = true;
         methods[methodName]._methodName = methodName;
 
         const createGetter = prop => {
           const getter = () => methods[methodName][prop];
           getter.isGetter = true;
           getter.prop = prop;
+          getter._isDataSource = true;
           getter._method = methods[methodName];
           return getter;
         };

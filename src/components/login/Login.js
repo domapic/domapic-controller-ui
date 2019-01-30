@@ -38,14 +38,24 @@ export class Login extends Component {
   }
 
   handleSubmit(event) {
-    this.props.dispatch(this.state);
     event.preventDefault();
+    this.props
+      .doLoginAndAuth({
+        user: this.state.user,
+        password: this.state.password
+      })
+      .then(() => {
+        this.setState(state => ({
+          ...state,
+          loggedIn: true
+        }));
+      });
   }
 
   render() {
     const error = this.props.error ? <ErrorComponent message={this.props.error.message} /> : null;
     if (this.state.loggedIn) {
-      return <Redirect to={routes.index.redirectTo} />;
+      return <Redirect to={this.context.home} />;
     }
 
     return (

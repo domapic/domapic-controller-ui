@@ -78,10 +78,12 @@ export const reactConnect = mapDataSourcesToProps => {
       getDataSourcesPropsValues() {
         const dataSourcesProps = {};
         this.dataSourcePropsKeys.forEach(dataSourceKey => {
-          dataSourcesProps[dataSourceKey] = this.cleanDataSourceProps(
-            this.dataSourceProps[dataSourceKey],
-            this.dataSourcePropsGetters[dataSourceKey]
-          );
+          dataSourcesProps[dataSourceKey] = this.dataSourceProps[dataSourceKey]._isDataSource
+            ? this.cleanDataSourceProps(
+                this.dataSourceProps[dataSourceKey],
+                this.dataSourcePropsGetters[dataSourceKey]
+              )
+            : this.dataSourceProps[dataSourceKey];
         });
         return dataSourcesProps;
       }
@@ -108,40 +110,44 @@ export const reactConnect = mapDataSourcesToProps => {
 
       addDataSourceListeners() {
         this.dataSourcePropsKeys.forEach(dataSourceKey => {
-          this.dataSourcePropsReaders[dataSourceKey] = () => {
-            if (this.dataSourceProps[dataSourceKey]._methodName === READ_METHOD) {
-              this.dataSourceProps[dataSourceKey]._source.read.dispatch().catch(error => {
-                this.logError(this.dataSourceProps[dataSourceKey]._source._id, error.message);
-              });
-            }
-          };
-
-          this.dataSourcePropsListeners[dataSourceKey] = methodName => {
-            if (methodName === this.dataSourceProps[dataSourceKey]._methodName) {
-              if (!this._unmounted) {
-                this.updateState();
+          if (this.dataSourceProps[dataSourceKey]._isDataSource) {
+            this.dataSourcePropsReaders[dataSourceKey] = () => {
+              if (this.dataSourceProps[dataSourceKey]._methodName === READ_METHOD) {
+                this.dataSourceProps[dataSourceKey]._source.read.dispatch().catch(error => {
+                  this.logError(this.dataSourceProps[dataSourceKey]._source._id, error.message);
+                });
               }
-            }
-          };
+            };
 
-          this.dataSourceProps[dataSourceKey]._source.onClean(
-            this.dataSourcePropsReaders[dataSourceKey]
-          );
+            this.dataSourcePropsListeners[dataSourceKey] = methodName => {
+              if (methodName === this.dataSourceProps[dataSourceKey]._methodName) {
+                if (!this._unmounted) {
+                  this.updateState();
+                }
+              }
+            };
 
-          this.dataSourceProps[dataSourceKey]._source.onChange(
-            this.dataSourcePropsListeners[dataSourceKey]
-          );
+            this.dataSourceProps[dataSourceKey]._source.onClean(
+              this.dataSourcePropsReaders[dataSourceKey]
+            );
+
+            this.dataSourceProps[dataSourceKey]._source.onChange(
+              this.dataSourcePropsListeners[dataSourceKey]
+            );
+          }
         });
       }
 
       removeDataSourceListeners() {
         this.dataSourcePropsKeys.forEach(dataSourceKey => {
-          this.dataSourceProps[dataSourceKey]._source.removeCleanListener(
-            this.dataSourcePropsReaders[dataSourceKey]
-          );
-          this.dataSourceProps[dataSourceKey]._source.removeChangeListener(
-            this.dataSourcePropsListeners[dataSourceKey]
-          );
+          if (this.dataSourceProps[dataSourceKey]._isDataSource) {
+            this.dataSourceProps[dataSourceKey]._source.removeCleanListener(
+              this.dataSourcePropsReaders[dataSourceKey]
+            );
+            this.dataSourceProps[dataSourceKey]._source.removeChangeListener(
+              this.dataSourcePropsListeners[dataSourceKey]
+            );
+          }
         });
       }
 

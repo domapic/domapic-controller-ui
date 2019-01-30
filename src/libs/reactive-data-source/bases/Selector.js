@@ -136,12 +136,14 @@ export class Selector extends Base {
     methods[READ_METHOD].error = null;
     methods[READ_METHOD].loading = false;
     methods[READ_METHOD]._source = methods;
+    methods[READ_METHOD]._isDataSource = true;
     methods[READ_METHOD]._methodName = READ_METHOD;
 
     const createGetter = prop => {
       const getter = () => methods[READ_METHOD][prop];
       getter.isGetter = true;
       getter.prop = prop;
+      getter._isDataSource = true;
       getter._method = methods[READ_METHOD];
       return getter;
     };
