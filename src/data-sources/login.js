@@ -6,12 +6,14 @@ class Login {
   constructor() {
     this._doLogin = this._doLogin.bind(this);
     this._refreshToken = authSession.refreshToken();
+    this._apiKey = authSession.apiKey();
   }
 
   _doLogin(dataSources, retry) {
-    return this._refreshToken
-      .read()
-      .then(refreshToken => {
+    return Promise.all([this._refreshToken.read(), this._apiKey.read()])
+      .then(tokens => {
+        const refreshToken = tokens[0];
+        const apiKey = tokens[1];
         if (refreshToken) {
           return authJwt
             .create({
@@ -25,8 +27,15 @@ class Login {
               });
               return retry();
             });
+        } else if (apiKey) {
+          this._dataSources.forEach(dataSource => {
+            dataSource.addHeaders({
+              "X-Api-Key": apiKey
+            });
+          });
+          return retry();
         }
-        return Promise.reject(new Error("No refresh token found"));
+        return Promise.reject(new Error("No authentication token found"));
       })
       .catch(err => {
         return this._refreshToken.delete().then(() => {

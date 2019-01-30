@@ -9,7 +9,7 @@ authSession.addCustomFilter({
 });
 
 authSession.addCustomFilter({
-  userId: () => "userId"
+  apiKey: () => "apiKey"
 });
 
 // AUTHENTICATION API

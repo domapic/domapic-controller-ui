@@ -41,7 +41,7 @@ const getModulesUnauth = {
   url: "/api/services?type=module",
   method: "GET",
   response: (req, res) => {
-    if (req.headers.authorization) {
+    if (req.headers.authorization || req.headers["x-api-key"]) {
       res.status(200);
       res.send([module_1, module_2]);
     } else {

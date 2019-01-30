@@ -10,6 +10,8 @@ import { MainRouter } from "./routers/Main";
 
 import { setupDataSources } from "./setup/dataSources";
 
+import "./setup/modules";
+
 import "semantic-ui-css/semantic.min.css";
 import "./app.css";
 

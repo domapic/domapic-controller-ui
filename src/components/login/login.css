@@ -1,12 +1,19 @@
-.login-form-container {
+.login-form {
   height:60vh;
   margin-top:100px;
 }
 
-.login-form {
+.login-form__grid {
   height:100%;
 }
 
-.login-column {
+.login-form__column {
   max-width: 450px;
+}
+
+.login-form__message {
+  text-align: right;
+}
+.login-form__message a{
+  cursor: pointer;
 }
