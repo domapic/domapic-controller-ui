@@ -8,7 +8,7 @@ class Login {
     this._refreshToken = authSession.refreshToken();
   }
 
-  _doLogin() {
+  _doLogin(dataSources, retry) {
     return this._refreshToken
       .read()
       .then(refreshToken => {
@@ -23,7 +23,7 @@ class Login {
                   authorization: `Bearer ${response.accessToken}`
                 });
               });
-              return Promise.resolve();
+              return retry();
             });
         }
         return Promise.reject(new Error("No refresh token found"));

@@ -40,7 +40,15 @@ const getModulesSuccess = {
 const getModulesUnauth = {
   url: "/api/services?type=module",
   method: "GET",
-  response: authErrorResponse
+  response: (req, res) => {
+    if (req.headers.authorization) {
+      res.status(200);
+      res.send([module_1, module_2]);
+    } else {
+      res.status(authErrorResponse.status);
+      res.send(authErrorResponse.body);
+    }
+  }
 };
 
 const getModule1Success = {

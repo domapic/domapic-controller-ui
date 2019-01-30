@@ -2,12 +2,11 @@ import { plugins } from "reactive-data-source";
 
 import { Component as LoginComponent } from "src/components/login";
 
-import { authJwt } from "src/data-sources/authentication";
+import { authSession, authJwt } from "src/data-sources/authentication";
 
 const doLoginAndAuth = userData =>
   authJwt.create(userData).then(result => {
-    console.log("result");
-    console.log(result);
+    authSession.refreshToken().update(result.refreshToken);
   });
 
 export const mapDataSourceToProps = () => {
