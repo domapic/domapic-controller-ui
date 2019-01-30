@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Image } from "semantic-ui-react";
 
-import { RoutesContext } from "src/context/RoutesContext";
+import { RoutesContext } from "src/contexts/RoutesContext";
 
 export class UserAvatar extends Component {
   render() {

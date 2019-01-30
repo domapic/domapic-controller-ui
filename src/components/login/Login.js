@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 
 import { Component as ErrorComponent } from "src/components/error";
-import { RoutesContext } from "src/context/RoutesContext";
+import { RoutesContext } from "src/contexts/RoutesContext";
 
 import "./login.css";
 

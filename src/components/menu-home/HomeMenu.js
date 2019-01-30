@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Menu, Image, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-import { RoutesContext } from "src/context/RoutesContext";
-import { HistoryContext } from "src/context/HistoryContext";
+import { RoutesContext } from "src/contexts/RoutesContext";
+import { HistoryContext } from "src/contexts/HistoryContext";
 
 import "./homeMenu.css";
 

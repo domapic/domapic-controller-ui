@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import createHistory from "history/createBrowserHistory";
 
-import { RoutesContext } from "src/context/RoutesContext";
-import { HistoryContext } from "src/context/HistoryContext";
+import { RoutesContext } from "src/contexts/RoutesContext";
+import { HistoryContext } from "src/contexts/HistoryContext";
 
 import { environment } from "./config/environment";
 import { routes, sections } from "./routes";

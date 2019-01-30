@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Icon } from "semantic-ui-react";
 
-import { RoutesContext } from "src/context/RoutesContext";
+import { RoutesContext } from "src/contexts/RoutesContext";
 
 import "./aboutMenuDropdown.css";
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-import { RoutesContext } from "src/context/RoutesContext";
+import { RoutesContext } from "src/contexts/RoutesContext";
 import { UserAvatar } from "./UserAvatar";
 
 import "./userMenuVertical.css";
