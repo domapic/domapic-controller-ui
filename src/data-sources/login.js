@@ -1,3 +1,5 @@
+import queryString from "query-string";
+
 import { authSession, authJwt } from "./authentication";
 
 class Login {
@@ -28,7 +30,11 @@ class Login {
       })
       .catch(err => {
         return this._refreshToken.delete().then(() => {
-          this._history.push(this._loginRoute);
+          this._history.push(
+            `${this._loginRoute}?${queryString.stringify({
+              redirect: this._history.location.pathname
+            })}`
+          );
           return Promise.reject(err);
         });
       });

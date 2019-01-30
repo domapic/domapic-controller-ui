@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import queryString from "query-string";
 
 import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 
@@ -11,10 +12,12 @@ import "./login.css";
 export class Login extends Component {
   constructor(props) {
     super(props);
+    const queryStrings = queryString.parse(props.location.search) || {};
     this.state = {
       user: "",
       password: "",
-      loggedIn: false
+      loggedIn: false,
+      redirectTo: queryStrings.redirect
     };
 
     this.handleUserChange = this.handleUserChange.bind(this);
@@ -55,7 +58,7 @@ export class Login extends Component {
   render() {
     const error = this.props.error ? <ErrorComponent message={this.props.error.message} /> : null;
     if (this.state.loggedIn) {
-      return <Redirect to={this.context.home} />;
+      return <Redirect to={this.state.redirectTo || this.context.home} />;
     }
 
     return (
