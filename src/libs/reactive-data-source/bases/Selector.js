@@ -1,5 +1,4 @@
 import once from "lodash.once";
-import isEqual from "lodash.isequal";
 import isFunction from "lodash.isfunction";
 
 import { Base } from "./Base";
@@ -33,6 +32,10 @@ export class Selector extends Base {
     this._createBaseMethods();
   }
 
+  _clean(filter) {
+    this._cache.clean(filter);
+  }
+
   _readAllDataSources(filter, methods, filterUniqueId) {
     const dataSourcesResults = [];
     const dataSources = [];
@@ -41,28 +44,21 @@ export class Selector extends Base {
     });
 
     const updateData = (data, action) => {
-      const oldData = {
-        value: methods[READ_METHOD].value,
-        error: methods[READ_METHOD].error,
-        loading: methods[READ_METHOD].loading
-      };
       const newData = {
         value: methods[READ_METHOD].value,
         error: methods[READ_METHOD].error,
         loading: methods[READ_METHOD].loading,
         ...data
       };
-      if (!isEqual(oldData, newData)) {
-        methods[READ_METHOD].value = newData.value;
-        methods[READ_METHOD].loading = newData.loading;
-        methods[READ_METHOD].error = newData.error;
-        this._emitChange(filter, READ_METHOD);
-        this._emitChangeAny({
-          source: this.filters[filterUniqueId],
-          method: READ_METHOD,
-          action
-        });
-      }
+      methods[READ_METHOD].value = newData.value;
+      methods[READ_METHOD].loading = newData.loading;
+      methods[READ_METHOD].error = newData.error;
+      this._emitChange(filter, READ_METHOD);
+      this._emitChangeAny({
+        source: this.filters[filterUniqueId],
+        method: READ_METHOD,
+        action
+      });
     };
 
     const readDataSource = dataSourceIndex => {
@@ -112,6 +108,10 @@ export class Selector extends Base {
           },
           actions[READ_METHOD].error
         );
+        dataSources.forEach(dataSource => {
+          dataSource.onceClean(cleanFilter);
+        });
+        this._cache.set(filter, null);
         return Promise.reject(error);
       });
   }

@@ -1,3 +1,5 @@
+const { authErrorResponse } = require("../common");
+
 const module_1 = {
   _id: "module-id-1",
   processId: "tj4d5wqPtrRmAJw85D7p2gM4WLpUz1cK",
@@ -35,6 +37,12 @@ const getModulesSuccess = {
   }
 };
 
+const getModulesUnauth = {
+  url: "/api/services?type=module",
+  method: "GET",
+  response: authErrorResponse
+};
+
 const getModule1Success = {
   url: "/api/services/module-id-1",
   method: "GET",
@@ -42,6 +50,12 @@ const getModule1Success = {
     status: 200,
     body: module_1
   }
+};
+
+const getModule1Unauth = {
+  url: "/api/services/module-id-1",
+  method: "GET",
+  response: authErrorResponse
 };
 
 const getModule2Success = {
@@ -53,8 +67,17 @@ const getModule2Success = {
   }
 };
 
+const getModule2Unauth = {
+  url: "/api/services/module-id-2",
+  method: "GET",
+  response: authErrorResponse
+};
+
 module.exports = {
   getModulesSuccess,
+  getModulesUnauth,
   getModule1Success,
-  getModule2Success
+  getModule1Unauth,
+  getModule2Success,
+  getModule2Unauth
 };

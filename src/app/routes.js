@@ -1,8 +1,8 @@
 import { Module as Dashboard } from "src/modules/dashboard";
 import { Module as Modules } from "src/modules/modules";
-import { Component as Login } from "src/components/login";
+import { Module as Login } from "src/modules/login";
 
-import { config } from "./config";
+import { environment } from "./config/environment";
 
 export const sections = {
   dashboard: {
@@ -51,7 +51,7 @@ export const sections = {
 
 export const routes = {
   index: {
-    route: config.baseRoute,
+    route: environment.baseRoute,
     redirectTo: sections.dashboard.route
   },
   login: {

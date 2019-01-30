@@ -4,17 +4,17 @@ import createHistory from "history/createBrowserHistory";
 import { RoutesContext } from "src/context/RoutesContext";
 import { HistoryContext } from "src/context/HistoryContext";
 
-import { config } from "./config";
+import { environment } from "./config/environment";
 import { routes, sections } from "./routes";
 import { MainRouter } from "./routers/Main";
 
-import "./config/configDataSources";
+import { setupDataSources } from "./setup/dataSources";
 
 import "semantic-ui-css/semantic.min.css";
 import "./app.css";
 
 const routesContext = {
-  assets: `${config.staticsRoute}assets`,
+  assets: `${environment.staticsRoute}assets`,
   home: routes.index.route,
   configuration: sections.configuration.route,
   users: sections.users.route,
@@ -26,6 +26,8 @@ const routesContext = {
 const history = createHistory({
   basename: routes.index.route
 });
+
+setupDataSources(history);
 
 export class App extends Component {
   constructor(props) {

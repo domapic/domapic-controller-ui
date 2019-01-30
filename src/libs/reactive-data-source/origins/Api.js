@@ -185,7 +185,10 @@ export class Api extends DataSource {
     if (cached) {
       return cached;
     }
-    const request = this._readRequest(url);
+    const request = this._readRequest(url).catch(err => {
+      this._cache.set(filter, null);
+      return Promise.reject(err);
+    });
     this._cache.set(filter, request);
     return request;
   }
@@ -225,7 +228,7 @@ export class Api extends DataSource {
   addHeaders(headers) {
     this._headers = {
       ...this._headers,
-      headers
+      ...headers
     };
   }
 }

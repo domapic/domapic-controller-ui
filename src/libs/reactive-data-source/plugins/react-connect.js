@@ -5,7 +5,7 @@ import isEqual from "lodash.isequal";
 import { READ_METHOD } from "../bases/helpers";
 
 function getDisplayName(WrappedComponent) {
-  return WrappedComponent.displayName || WrappedComponent.name || "Component";
+  return WrappedComponent.displayName || WrappedComponent.name;
 }
 
 export const reactConnect = mapDataSourcesToProps => {
