@@ -31,7 +31,7 @@ class Login {
         return Promise.reject(new Error("No authentication token found"));
       })
       .catch(err => {
-        return this._refreshToken.delete().then(() => {
+        return Promise.all([this._refreshToken.delete(), this._apiKey.delete()]).then(() => {
           this._history.push(
             `${this._loginRoute}?${queryString.stringify({
               redirect: this._history.location.pathname
