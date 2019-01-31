@@ -9,6 +9,11 @@ import { RoutesContext } from "src/contexts/RoutesContext";
 
 import "./login.css";
 
+const types = {
+  JWT: "jwt",
+  API_KEY: "api-key"
+};
+
 class JwtLogin extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +48,7 @@ class JwtLogin extends Component {
   }
 
   changeType() {
-    this.props.onChangeType("api-key");
+    this.props.onChangeType(types.API_KEY);
   }
 
   render() {
@@ -102,7 +107,7 @@ class ApiKeyLogin extends Component {
   }
 
   changeType() {
-    this.props.onChangeType("jwt");
+    this.props.onChangeType(types.JWT);
   }
 
   render() {
@@ -134,7 +139,7 @@ export class Login extends Component {
     this.state = {
       loggedIn: false,
       redirectTo: queryStrings.redirect,
-      type: props.type || "jwt"
+      type: props.type || types.JWT
     };
 
     this.doJwtLogin = this.doJwtLogin.bind(this);
@@ -177,7 +182,7 @@ export class Login extends Component {
     }
 
     const loginComponent =
-      this.state.type === "jwt" ? (
+      this.state.type === types.JWT ? (
         <JwtLogin
           loading={this.props.jwtLoading}
           doLogin={this.doJwtLogin}
@@ -198,7 +203,7 @@ export class Login extends Component {
         <Grid textAlign="center" className="login-form__grid" verticalAlign="middle">
           <Grid.Column className="login-form__column">
             <Header as="h2" color="grey" textAlign="center">
-              <Image src={`${this.context.assets}/logo.png`} /> Domapic Controller
+              <Image src={`${this.context.assets}/logo.png`} /> {this.props.header}
             </Header>
             {loginComponent}
           </Grid.Column>
@@ -209,3 +214,5 @@ export class Login extends Component {
 }
 
 Login.contextType = RoutesContext;
+
+Login.types = types;

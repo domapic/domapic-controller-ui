@@ -1,6 +1,7 @@
 import queryString from "query-string";
 
 import { authSession, authJwt } from "./authentication";
+import { setAuthErrorHandler, setJwt, setApiKey } from "./setup";
 
 class Login {
   constructor() {
@@ -20,19 +21,11 @@ class Login {
               refreshToken
             })
             .then(response => {
-              this._dataSources.forEach(dataSource => {
-                dataSource.addHeaders({
-                  authorization: `Bearer ${response.accessToken}`
-                });
-              });
+              setJwt(response.accessToken);
               return retry();
             });
         } else if (apiKey) {
-          this._dataSources.forEach(dataSource => {
-            dataSource.addHeaders({
-              "X-Api-Key": apiKey
-            });
-          });
+          setApiKey(apiKey);
           return retry();
         }
         return Promise.reject(new Error("No authentication token found"));
@@ -50,17 +43,12 @@ class Login {
   }
 
   _configDataSources() {
-    this._dataSources.forEach(dataSource =>
-      dataSource.config({
-        authErrorHandler: this._doLogin
-      })
-    );
+    setAuthErrorHandler(this._doLogin);
   }
 
-  setup(dataSources, history, loginRoute) {
+  setup(history, loginRoute) {
     this._history = history;
     this._loginRoute = loginRoute;
-    this._dataSources = dataSources;
     this._configDataSources();
   }
 }

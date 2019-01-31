@@ -3,26 +3,37 @@ import { plugins } from "reactive-data-source";
 import { Component as LoginComponent } from "src/components/login";
 
 import { authSession, authJwt } from "src/data-sources/authentication";
+import { setApiKey, setJwt } from "src/data-sources/setup";
 
 let moduleConfig = {
-  type: "jwt",
-  allowChangeType: false
+  type: LoginComponent.types.JWT,
+  allowChangeType: false,
+  header: "Domapic"
 };
 
 const setup = config => {
-  moduleConfig = config;
+  moduleConfig = { ...moduleConfig, ...config };
 };
 
 const doJwtLogin = userData =>
   Promise.all([
-    authJwt.create(userData).then(result => {
-      authSession.refreshToken().update(result.refreshToken);
-    }),
+    authJwt
+      .create(userData)
+      .then(result =>
+        Promise.all([
+          authSession.refreshToken().update(result.refreshToken),
+          setJwt(result.accessToken)
+        ])
+      ),
     authSession.apiKey().delete()
   ]);
 
 const doApiKeyLogin = apiKey =>
-  Promise.all([authSession.apiKey().update(apiKey), authSession.refreshToken().delete()]);
+  Promise.all([
+    authSession.apiKey().update(apiKey),
+    setApiKey(apiKey),
+    authSession.refreshToken().delete()
+  ]);
 
 export const mapDataSourceToProps = () => {
   const doLogin = authJwt.create;
@@ -38,3 +49,4 @@ export const mapDataSourceToProps = () => {
 export const Login = plugins.connect(mapDataSourceToProps)(LoginComponent);
 
 Login.setup = setup;
+Login.types = LoginComponent.types;
