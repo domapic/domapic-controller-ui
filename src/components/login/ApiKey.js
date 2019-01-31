@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-
 import { Button, Form, Segment, Message } from "semantic-ui-react";
+import debounce from "lodash.debounce";
 
 import { types } from "./constants";
 
@@ -11,15 +11,15 @@ export class ApiKey extends Component {
       apiKey: ""
     };
 
-    this.handleApiKeyChange = this.handleApiKeyChange.bind(this);
+    this.handleApiKeyChange = debounce(this.handleApiKeyChange.bind(this), 200);
     this.changeType = this.changeType.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleApiKeyChange(event) {
+  handleApiKeyChange(event, data) {
     this.setState(state => ({
       ...state,
-      apiKey: event.target.value
+      apiKey: data.value
     }));
   }
 
@@ -42,7 +42,13 @@ export class ApiKey extends Component {
       <React.Fragment>
         <Form size="large" onSubmit={this.handleSubmit}>
           <Segment stacked>
-            <Form.Input fluid icon="key" iconPosition="left" placeholder="Api key" />
+            <Form.Input
+              fluid
+              icon="key"
+              iconPosition="left"
+              placeholder="Api key"
+              onChange={this.handleApiKeyChange}
+            />
             <Button color="blue" fluid size="large">
               Login
             </Button>

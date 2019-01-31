@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import queryString from "query-string";
-
 import { Grid, Header, Image } from "semantic-ui-react";
 
 import { RoutesContext } from "src/contexts/RoutesContext";

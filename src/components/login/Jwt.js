@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-
 import { Button, Form, Segment, Message } from "semantic-ui-react";
+import debounce from "lodash.debounce";
 
 import { Component as ErrorComponent } from "src/components/error";
 
@@ -14,23 +14,23 @@ export class Jwt extends Component {
       password: ""
     };
 
-    this.handleUserChange = this.handleUserChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleUserChange = debounce(this.handleUserChange.bind(this), 200);
+    this.handlePasswordChange = debounce(this.handlePasswordChange.bind(this), 200);
     this.changeType = this.changeType.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleUserChange(event) {
+  handleUserChange(event, data) {
     this.setState(state => ({
       ...state,
-      user: event.target.value
+      user: data.value
     }));
   }
 
-  handlePasswordChange(event) {
+  handlePasswordChange(event, data) {
     this.setState(state => ({
       ...state,
-      password: event.target.value
+      password: data.value
     }));
   }
 
@@ -54,13 +54,14 @@ export class Jwt extends Component {
       <React.Fragment>
         <Form size="large" onSubmit={this.handleSubmit}>
           <Segment stacked>
-            <Form.Input fluid icon="user" iconPosition="left" placeholder="User" />
+            <Form.Input fluid icon="user" iconPosition="left" placeholder="User" onChange={this.handleUserChange}/>
             <Form.Input
               fluid
               icon="lock"
               iconPosition="left"
               placeholder="Password"
               type="password"
+              onChange={this.handlePasswordChange}
             />
             <Button color="blue" fluid size="large" loading={this.props.loading}>
               Login
