@@ -4,18 +4,17 @@ import PropTypes from "prop-types";
 import { UserMenuVertical } from "./UserMenuVertical";
 import { UserMenuDropdown } from "./UserMenuDropdown";
 
-const logout = event => {
-  event.preventDefault();
-  console.log("User logout");
-};
-
-export const UserMenu = ({ vertical }) => {
+export const UserMenu = ({ vertical, doLogout, ...rest }) => {
   if (vertical) {
-    return <UserMenuVertical logoutHandler={logout} />;
+    return <UserMenuVertical logoutHandler={doLogout} {...rest} />;
   }
-  return <UserMenuDropdown logoutHandler={logout} />;
+  return <UserMenuDropdown logoutHandler={doLogout} {...rest} />;
 };
 
 UserMenu.propTypes = {
+  doLogout: PropTypes.func,
+  error: PropTypes.any,
+  loading: PropTypes.bool,
+  user: PropTypes.any,
   vertical: PropTypes.bool
 };

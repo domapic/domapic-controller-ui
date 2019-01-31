@@ -11,7 +11,6 @@ import {
 } from "semantic-ui-react";
 
 import { Component as MainContainer } from "src/components/container-main";
-import { Component as UserMenu } from "src/components/menu-user";
 import { Component as AboutMenu } from "src/components/menu-about";
 import { Component as SettingsMenu } from "src/components/menu-settings";
 import { Component as HomeMenu } from "src/components/menu-home";
@@ -38,6 +37,7 @@ class DesktopContainer extends Component {
   render() {
     const { children } = this.props;
     const { fixed } = this.state;
+    const UserMenu = this.props.userMenu;
 
     return (
       <Responsive getWidth={windowInnerWidth} minWidth={Responsive.onlyTablet.minWidth}>
@@ -75,7 +75,8 @@ class DesktopContainer extends Component {
 
 DesktopContainer.propTypes = {
   children: PropTypes.node,
-  menu: PropTypes.node
+  menu: PropTypes.node,
+  userMenu: PropTypes.func
 };
 
 class MobileContainer extends Component {
@@ -97,6 +98,7 @@ class MobileContainer extends Component {
   render() {
     const { children } = this.props;
     const { sidebarOpened } = this.state;
+    const UserMenu = this.props.userMenu;
 
     return (
       <Responsive
@@ -148,28 +150,35 @@ class MobileContainer extends Component {
 
 MobileContainer.propTypes = {
   children: PropTypes.node,
-  menu: PropTypes.node
+  menu: PropTypes.node,
+  userMenu: PropTypes.func
 };
 
-const ResponsiveContainer = ({ menu, children }) => (
+const ResponsiveContainer = ({ menu, userMenu, children }) => (
   <div>
-    <DesktopContainer menu={menu}>{children}</DesktopContainer>
-    <MobileContainer menu={menu}>{children}</MobileContainer>
+    <DesktopContainer menu={menu} userMenu={userMenu}>
+      {children}
+    </DesktopContainer>
+    <MobileContainer menu={menu} userMenu={userMenu}>
+      {children}
+    </MobileContainer>
   </div>
 );
 
 ResponsiveContainer.propTypes = {
   children: PropTypes.node,
-  menu: PropTypes.node
+  menu: PropTypes.node,
+  userMenu: PropTypes.func
 };
 
-export const SideBarLayout = ({ menu, children }) => (
-  <ResponsiveContainer menu={menu}>
+export const SideBarLayout = ({ menu, userMenu, children }) => (
+  <ResponsiveContainer menu={menu} userMenu={userMenu}>
     <MainContainer>{children}</MainContainer>
   </ResponsiveContainer>
 );
 
 SideBarLayout.propTypes = {
   children: PropTypes.node,
-  menu: PropTypes.node
+  menu: PropTypes.node,
+  userMenu: PropTypes.func
 };

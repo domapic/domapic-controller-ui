@@ -26,6 +26,12 @@
   margin-right: 0px;
 }
 
+i.icon.user-avatar__icon {
+  margin-right: 19px;
+  width:20px;
+  height:20px;
+}
+
 .ui.inverted.menu .user-menu-dropdown .item>a:not(.ui) {
   color: black;
 }

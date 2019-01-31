@@ -13,7 +13,7 @@ export class UserMenuVertical extends Component {
     return (
       <React.Fragment>
         <Menu.Item>
-          <UserAvatar /> Javier Brea
+          <UserAvatar loading={this.props.loading} email={this.props.user.email} /> Javier Brea
         </Menu.Item>
         <Menu.Item>
           User

@@ -12,7 +12,7 @@ class AvatarButton extends Component {
   render() {
     return (
       <Button circular className="user-menu-dropdown__button">
-        <UserAvatar />
+        <UserAvatar loading={this.props.loading} email={this.props.email} />
       </Button>
     );
   }
@@ -21,7 +21,11 @@ class AvatarButton extends Component {
 export class UserMenuDropdown extends Component {
   render() {
     return (
-      <Dropdown trigger={<AvatarButton />} pointing="top right" className="user-menu-dropdown">
+      <Dropdown
+        trigger={<AvatarButton loading={this.props.loading} email={this.props.user.email} />}
+        pointing="top right"
+        className="user-menu-dropdown"
+      >
         <Dropdown.Menu>
           <Dropdown.Header>User</Dropdown.Header>
           <Dropdown.Divider />

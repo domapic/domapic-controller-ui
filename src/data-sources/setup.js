@@ -28,18 +28,26 @@ export const setAuthErrorHandler = authErrorHandler =>
 
 export const setJwt = accessToken => {
   needAuthDataSources.forEach(dataSource => {
-    dataSource.addHeaders({
-      [JWT_HEADER]: `Bearer ${accessToken}`,
-      [API_KEY_HEADER]: undefined
+    dataSource.setHeaders({
+      [JWT_HEADER]: `Bearer ${accessToken}`
     });
   });
 };
 
 export const setApiKey = apiKey => {
   needAuthDataSources.forEach(dataSource => {
-    dataSource.addHeaders({
-      [JWT_HEADER]: undefined,
+    dataSource.setHeaders({
       [API_KEY_HEADER]: apiKey
     });
   });
+};
+
+export const logout = () => {
+  needAuthDataSources.forEach(dataSource => {
+    dataSource.setHeaders({});
+  });
+};
+
+export const cleanAll = () => {
+  allDataSources.forEach(dataSource => dataSource.clean());
 };
