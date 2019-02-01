@@ -6,7 +6,7 @@ const getUserMe = {
     body: {
       _id: "123123",
       name: "Foo user",
-      email: "foo-email@foo-domain.com",
+      email: "foo@foo.com",
       role: "admin",
       createdAt: "2018-07-28T17:13:08.718Z",
       updatedAt: "2018-07-28T17:13:09.730Z"

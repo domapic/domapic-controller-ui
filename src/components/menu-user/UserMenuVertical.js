@@ -12,8 +12,9 @@ export class UserMenuVertical extends Component {
   render() {
     return (
       <React.Fragment>
-        <Menu.Item>
-          <UserAvatar loading={this.props.loading} email={this.props.user.email} /> Javier Brea
+        <Menu.Item className="user-menu-vertical__avatar">
+          <UserAvatar {...this.props} />
+          {this.props.user.name}
         </Menu.Item>
         <Menu.Item>
           User
