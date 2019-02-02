@@ -7,6 +7,7 @@ import { Component as MenuSections } from "src/components/menu-sections";
 
 import { Module as UserMenu } from "src/modules/menu-user";
 import { Module as SettingsMenu } from "src/modules/menu-settings";
+import { Module as HomeMenu } from "src/modules/menu-home";
 
 import { sectionsAsArray, menuSectionsAsArray } from "../routes";
 
@@ -15,6 +16,7 @@ export const SideBarLayoutRouter = () => (
     menu={<MenuSections sections={menuSectionsAsArray} />}
     userMenu={UserMenu}
     settingsMenu={SettingsMenu}
+    homeMenu={HomeMenu}
   >
     <Switch>
       {sectionsAsArray.map(section => (

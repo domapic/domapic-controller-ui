@@ -3,7 +3,6 @@ import { Menu, Image, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import { RoutesContext } from "src/contexts/RoutesContext";
-import { HistoryContext } from "src/contexts/HistoryContext";
 
 import "./homeMenu.css";
 
@@ -31,12 +30,12 @@ class BackButton extends Component {
   }
 
   isDisabled() {
-    return this.context.position < 1;
+    return this.props.historyPosition < 1;
   }
 
   goBack() {
     if (!this.isDisabled()) {
-      this.context.history.goBack();
+      this.props.historyBack();
     }
   }
 
@@ -56,11 +55,9 @@ class BackButton extends Component {
   }
 }
 
-BackButton.contextType = HistoryContext;
-
-export const HomeMenu = () => (
+export const HomeMenu = props => (
   <React.Fragment>
     <HomeLogo />
-    <BackButton />
+    <BackButton {...props} />
   </React.Fragment>
 );

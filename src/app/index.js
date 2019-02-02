@@ -1,16 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
 import createHistory from "history/createBrowserHistory";
+import { Provider } from "react-redux";
 
 import { RoutesContext } from "src/contexts/RoutesContext";
-import { HistoryContext } from "src/contexts/HistoryContext";
 
 import { environment } from "./config/environment";
 import { routes, sections } from "./routes";
 import { MainRouter } from "./routers/Main";
 
 import { setupDataSources } from "./setup/dataSources";
-
-import "./setup/modules";
+import { setupStore } from "./setup/store";
+import { setupModules } from "./setup/modules";
 
 import "semantic-ui-css/semantic.min.css";
 import "./app.css";
@@ -30,59 +30,15 @@ const history = createHistory({
 });
 
 setupDataSources(history);
+const store = setupStore(history);
+setupModules(history, store);
 
-export class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      history: {
-        history,
-        position: 0
-      }
-    };
-
-    this.changeHistoryPosition = this.changeHistoryPosition.bind(this);
-  }
-
-  componentDidMount() {
-    this.unlistenHistory = history.listen(this.changeHistoryPosition);
-  }
-
-  componentWillUnmount() {
-    this.unlistenHistory();
-  }
-
-  changeHistoryPosition(location, action) {
-    switch (action) {
-      case "POP":
-        this.setState(state => ({
-          history: {
-            history,
-            position: state.history.position - 1
-          }
-        }));
-        break;
-      case "PUSH":
-        this.setState(state => ({
-          history: {
-            history,
-            position: state.history.position + 1
-          }
-        }));
-        break;
-    }
-  }
-
-  render() {
-    return (
-      <div className="app">
-        <RoutesContext.Provider value={routesContext}>
-          <HistoryContext.Provider value={this.state.history}>
-            <MainRouter history={history} />
-          </HistoryContext.Provider>
-        </RoutesContext.Provider>
-      </div>
-    );
-  }
-}
+export const App = () => (
+  <div className="app">
+    <RoutesContext.Provider value={routesContext}>
+      <Provider store={store}>
+        <MainRouter history={history} />
+      </Provider>
+    </RoutesContext.Provider>
+  </div>
+);

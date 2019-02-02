@@ -1,7 +1,15 @@
-import { Module as LoginModule } from "src/modules/login";
+import { Module as Login } from "src/modules/login";
+import { Module as HomeMenu } from "src/modules/menu-home";
 
-LoginModule.setup({
-  type: LoginModule.types.JWT,
-  allowChangeType: true,
-  header: "Domapic Controller"
-});
+export const setupModules = (history, store) => {
+  Login.setup({
+    type: Login.types.JWT,
+    allowChangeType: true,
+    header: "Domapic Controller"
+  });
+
+  HomeMenu.setup({
+    history,
+    store
+  });
+};

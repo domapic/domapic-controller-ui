@@ -22,7 +22,7 @@ export class UserMenuDropdown extends Component {
   render() {
     return (
       <Dropdown
-        trigger={<AvatarButton {...this.props}/>}
+        trigger={<AvatarButton {...this.props} />}
         pointing="top right"
         className="user-menu-dropdown"
       >
