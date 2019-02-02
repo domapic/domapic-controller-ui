@@ -1,87 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  Container,
-  Icon,
-  Menu,
-  Responsive,
-  Segment,
-  Sidebar,
-  Visibility
-} from "semantic-ui-react";
+import { Menu, Responsive, Sidebar } from "semantic-ui-react";
 
 import { Component as MainContainer } from "src/components/container-main";
 import { Component as AboutMenu } from "src/components/menu-about";
 import { windowInnerWidth } from "src/helpers/responsive";
 
+import { HeaderMenu } from "./HeaderMenu";
+
 import "./sideBarLayout.css";
 
-class DesktopContainer extends Component {
-  constructor() {
-    super();
-    this.state = {};
-    this.hideFixedMenu = this.hideFixedMenu.bind(this);
-    this.showFixedMenu = this.showFixedMenu.bind(this);
-  }
-
-  hideFixedMenu() {
-    this.setState({ fixed: false });
-  }
-
-  showFixedMenu() {
-    this.setState({ fixed: true });
-  }
-
-  render() {
-    const { children } = this.props;
-    const { fixed } = this.state;
-    const UserMenu = this.props.userMenu;
-    const SettingsMenu = this.props.settingsMenu;
-    const HomeMenu = this.props.homeMenu;
-
-    return (
-      <Responsive getWidth={windowInnerWidth} minWidth={Responsive.onlyTablet.minWidth}>
-        <Visibility
-          once={false}
-          onBottomPassed={this.showFixedMenu}
-          onBottomPassedReverse={this.hideFixedMenu}
-        >
-          <Segment inverted textAlign="center" vertical className="sidebar-layout__header-menu">
-            <Menu
-              fixed={fixed ? "top" : null}
-              inverted={!fixed}
-              pointing={!fixed}
-              secondary={!fixed}
-              size="small"
-            >
-              <Container>
-                <HomeMenu />
-                {this.props.menu}
-                <Menu.Item position="right" className="sidebar-layout__header-menu__item--right">
-                  <SettingsMenu />
-                  <AboutMenu />
-                  <UserMenu />
-                </Menu.Item>
-              </Container>
-            </Menu>
-          </Segment>
-        </Visibility>
-
-        {children}
-      </Responsive>
-    );
-  }
-}
-
-DesktopContainer.propTypes = {
-  children: PropTypes.node,
-  homeMenu: PropTypes.func,
-  menu: PropTypes.node,
-  settingsMenu: PropTypes.func,
-  userMenu: PropTypes.func
-};
-
-class MobileContainer extends Component {
+export class SideBarLayout extends Component {
   constructor() {
     super();
     this.state = {};
@@ -102,81 +31,56 @@ class MobileContainer extends Component {
     const { sidebarOpened } = this.state;
     const UserMenu = this.props.userMenu;
     const SettingsMenu = this.props.settingsMenu;
-    const HomeMenu = this.props.homeMenu;
+
+    const menu = <HeaderMenu {...this.props} handleToggle={this.handleToggle} />;
+
+    const rootMenu = sidebarOpened ? null : menu;
+    const overlayedMenu = sidebarOpened ? menu : null;
 
     return (
-      <Responsive
-        as={Sidebar.Pushable}
-        getWidth={windowInnerWidth}
-        maxWidth={Responsive.onlyMobile.maxWidth}
-      >
-        <Sidebar
-          as={Menu}
-          animation="push"
-          inverted
-          onHide={this.handleSidebarHide}
-          vertical
-          visible={sidebarOpened}
-          onClick={this.handleSidebarHide}
+      <React.Fragment>
+        <Responsive
+          as={Sidebar.Pushable}
+          getWidth={windowInnerWidth}
+          maxWidth={Responsive.onlyMobile.maxWidth}
+          className="sidebar-layout--mobile"
         >
-          <UserMenu vertical />
-          {this.props.menu}
-          <SettingsMenu vertical />
-          <AboutMenu vertical />
-        </Sidebar>
-
-        <Sidebar.Pusher dimmed={sidebarOpened} className="sidebar-layout__sidebar-pusher">
-          <Segment
+          <Sidebar
+            as={Menu}
+            animation="overlay"
             inverted
-            textAlign="center"
+            onHide={this.handleSidebarHide}
             vertical
-            className="sidebar-layout__header-menu--mobile"
+            visible={sidebarOpened}
+            onClick={this.handleSidebarHide}
           >
-            <Menu inverted pointing secondary size="small">
-              <Menu.Item
-                onClick={this.handleToggle}
-                className="sidebar-layout__header-menu__item--toggle"
-              >
-                <Icon name="sidebar" />
-              </Menu.Item>
-              <HomeMenu />
-              <Menu.Item position="right" className="sidebar-layout__header-menu__item--right">
-                <UserMenu />
-              </Menu.Item>
-            </Menu>
-          </Segment>
-          {children}
-        </Sidebar.Pusher>
-      </Responsive>
+            <UserMenu vertical />
+            {this.props.menu}
+            <SettingsMenu vertical />
+            <AboutMenu vertical />
+          </Sidebar>
+          <Sidebar.Pusher dimmed={sidebarOpened} className="sidebar-layout__sidebar-pusher">
+            <MainContainer>{children}</MainContainer>
+            {overlayedMenu}
+          </Sidebar.Pusher>
+        </Responsive>
+        <Responsive
+          getWidth={windowInnerWidth}
+          minWidth={Responsive.onlyTablet.minWidth}
+          className="sidebar-layout--desktop"
+        >
+          <MainContainer>{children}</MainContainer>
+        </Responsive>
+        {rootMenu}
+      </React.Fragment>
     );
   }
 }
 
-MobileContainer.propTypes = {
+SideBarLayout.propTypes = {
   children: PropTypes.node,
   homeMenu: PropTypes.func,
   menu: PropTypes.node,
   settingsMenu: PropTypes.func,
   userMenu: PropTypes.func
-};
-
-const ResponsiveContainer = ({ children, ...rest }) => (
-  <div>
-    <DesktopContainer {...rest}>{children}</DesktopContainer>
-    <MobileContainer {...rest}>{children}</MobileContainer>
-  </div>
-);
-
-ResponsiveContainer.propTypes = {
-  children: PropTypes.node
-};
-
-export const SideBarLayout = ({ children, ...rest }) => (
-  <ResponsiveContainer {...rest}>
-    <MainContainer>{children}</MainContainer>
-  </ResponsiveContainer>
-);
-
-SideBarLayout.propTypes = {
-  children: PropTypes.node
 };

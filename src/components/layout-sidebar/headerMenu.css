@@ -1,0 +1,19 @@
+.ui.sidebar-layout__header-menu {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.ui.menu .item.sidebar-layout__header-menu__item--right {
+  padding: 0px 0px 2px 0px;
+}
+
+.ui.menu .item.sidebar-layout__header-menu__item--toggle {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.sidebar-layout__header-menu__container {
+  display: inline-flex;
+  width:100%;
+  padding-right:10px;
+}

@@ -34,11 +34,9 @@ const store = setupStore(history);
 setupModules(history, store);
 
 export const App = () => (
-  <div className="app">
-    <RoutesContext.Provider value={routesContext}>
-      <Provider store={store}>
-        <MainRouter history={history} />
-      </Provider>
-    </RoutesContext.Provider>
-  </div>
+  <RoutesContext.Provider value={routesContext}>
+    <Provider store={store}>
+      <MainRouter history={history} />
+    </Provider>
+  </RoutesContext.Provider>
 );
