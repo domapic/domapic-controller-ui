@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Container, Menu } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 
 import { Component as MainContainer } from "src/components/container-main";
 import { Component as AboutMenu } from "src/components/menu-about";
