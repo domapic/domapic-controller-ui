@@ -37,3 +37,5 @@ export const userMeWithAvatar = new Selector(
   }),
   {}
 );
+
+export const userIsAdmin = new Selector(userMe, userMeData => userMeData.role === "admin", false);

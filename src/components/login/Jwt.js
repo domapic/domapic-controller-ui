@@ -6,12 +6,16 @@ import { Component as ErrorComponent } from "src/components/error";
 
 import { types } from "./constants";
 
+const USER_FIELD = "user";
+const PASSWORD_FIELD = "password";
+
 export class Jwt extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: "",
-      password: ""
+      [USER_FIELD]: "",
+      [PASSWORD_FIELD]: "",
+      disabled: true
     };
 
     this.handleUserChange = debounce(this.handleUserChange.bind(this), 200);
@@ -20,18 +24,21 @@ export class Jwt extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleUserChange(event, data) {
+  updateState(field, value) {
+    const stateFieldToCheck = field === USER_FIELD ? PASSWORD_FIELD : USER_FIELD;
     this.setState(state => ({
       ...state,
-      user: data.value
+      [field]: value,
+      disabled: !(value.length > 0 && state[stateFieldToCheck].length > 0)
     }));
   }
 
+  handleUserChange(event, data) {
+    this.updateState(USER_FIELD, data.value);
+  }
+
   handlePasswordChange(event, data) {
-    this.setState(state => ({
-      ...state,
-      password: data.value
-    }));
+    this.updateState(PASSWORD_FIELD, data.value);
   }
 
   handleSubmit(event) {
@@ -54,7 +61,13 @@ export class Jwt extends Component {
       <React.Fragment>
         <Form size="large" onSubmit={this.handleSubmit}>
           <Segment stacked>
-            <Form.Input fluid icon="user" iconPosition="left" placeholder="User" onChange={this.handleUserChange}/>
+            <Form.Input
+              fluid
+              icon="user"
+              iconPosition="left"
+              placeholder="User"
+              onChange={this.handleUserChange}
+            />
             <Form.Input
               fluid
               icon="lock"
@@ -63,7 +76,13 @@ export class Jwt extends Component {
               type="password"
               onChange={this.handlePasswordChange}
             />
-            <Button color="blue" fluid size="large" loading={this.props.loading}>
+            <Button
+              color="blue"
+              fluid
+              size="large"
+              loading={this.props.loading}
+              disabled={this.state.disabled || this.props.loading}
+            >
               Login
             </Button>
           </Segment>

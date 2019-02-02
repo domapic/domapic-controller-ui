@@ -8,7 +8,8 @@ export class ApiKey extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      apiKey: ""
+      apiKey: "",
+      disabled: true
     };
 
     this.handleApiKeyChange = debounce(this.handleApiKeyChange.bind(this), 200);
@@ -19,7 +20,8 @@ export class ApiKey extends Component {
   handleApiKeyChange(event, data) {
     this.setState(state => ({
       ...state,
-      apiKey: data.value
+      apiKey: data.value,
+      disabled: !(data.value.length > 0)
     }));
   }
 
@@ -49,7 +51,7 @@ export class ApiKey extends Component {
               placeholder="Api key"
               onChange={this.handleApiKeyChange}
             />
-            <Button color="blue" fluid size="large">
+            <Button color="blue" fluid size="large" disabled={this.state.disabled}>
               Login
             </Button>
           </Segment>
