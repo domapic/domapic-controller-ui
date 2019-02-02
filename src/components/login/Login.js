@@ -15,7 +15,7 @@ import "./login.css";
 export class Login extends Component {
   constructor(props) {
     super(props);
-    const queryStrings = queryString.parse(props.location.search) || {};
+    const queryStrings = (props.location && queryString.parse(props.location.search)) || {};
     this.state = {
       loggedIn: false,
       redirectTo: queryStrings.redirect,

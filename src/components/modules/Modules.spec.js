@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { shallow } from "enzyme";
 
-import { modules } from "src/data-sources/services";
-import { Modules, mapDataSourceToProps } from "./Modules";
+import { Modules } from "./Modules";
 
 describe("Modules component", () => {
   const modulesMock = [
@@ -64,9 +63,7 @@ describe("Modules component", () => {
           error: null,
           loading: false
         }}
-        match={{
-          url: ""
-        }}
+        baseUrl={""}
       />
     );
     expect(wrapper.containsMatchingElement(<Link to={"/foo-id-1"}>foo-name</Link>)).toBe(true);
@@ -83,11 +80,5 @@ describe("Modules component", () => {
       />
     );
     expect(wrapper.find(Link).length).toBe(modulesMock.length);
-  });
-
-  it("should be connected to modules data source", () => {
-    expect(mapDataSourceToProps()).toEqual({
-      modules
-    });
   });
 });

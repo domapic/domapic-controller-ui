@@ -8,7 +8,7 @@ import { Component as AboutMenu } from "src/components/menu-about";
 
 import "./simpleLayout.css";
 
-export const SimpleLayout = ({ children, homeMenu }) => {
+export const SimpleLayout = ({ children, homeMenu = () => {} }) => {
   const HomeMenu = homeMenu;
   return (
     <Responsive>
