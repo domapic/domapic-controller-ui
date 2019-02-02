@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Button, Form, Segment, Message } from "semantic-ui-react";
 import debounce from "lodash.debounce";
 
@@ -93,3 +94,11 @@ export class Jwt extends Component {
     );
   }
 }
+
+Jwt.propTypes = {
+  allowChangeType: PropTypes.bool,
+  doLogin: PropTypes.func,
+  error: PropTypes.instanceOf(Error),
+  loading: PropTypes.bool,
+  onChangeType: PropTypes.func
+};

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 import queryString from "query-string";
 import { Grid, Header, Image } from "semantic-ui-react";
@@ -95,3 +96,16 @@ export class Login extends Component {
 Login.contextType = RoutesContext;
 
 Login.types = types;
+
+Login.propTypes = {
+  allowChangeType: PropTypes.bool,
+  doApiKeyLogin: PropTypes.func,
+  doJwtLogin: PropTypes.func,
+  header: PropTypes.string,
+  jwtError: PropTypes.instanceOf(Error),
+  jwtLoading: PropTypes.bool,
+  location: PropTypes.shape({
+    search: PropTypes.string
+  }),
+  type: PropTypes.oneOf([types.JWT, types.API_KEY])
+};

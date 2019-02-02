@@ -37,5 +37,8 @@ export class UserMenuVertical extends Component {
 UserMenuVertical.contextType = RoutesContext;
 
 UserMenuVertical.propTypes = {
-  logoutHandler: PropTypes.func.isRequired
+  logoutHandler: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string
+  })
 };

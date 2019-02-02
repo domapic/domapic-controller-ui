@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Menu, Image, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
@@ -54,6 +55,11 @@ class BackButton extends Component {
     );
   }
 }
+
+BackButton.propTypes = {
+  historyBack: PropTypes.func,
+  historyPosition: PropTypes.number
+};
 
 export const HomeMenu = props => (
   <React.Fragment>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Image, Loader, Dimmer, Icon } from "semantic-ui-react";
 
 export class UserAvatar extends Component {
@@ -27,3 +28,10 @@ export class UserAvatar extends Component {
     );
   }
 }
+
+UserAvatar.propTypes = {
+  loading: PropTypes.bool,
+  user: PropTypes.shape({
+    avatar: PropTypes.string
+  })
+};
