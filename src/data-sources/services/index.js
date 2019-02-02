@@ -12,7 +12,13 @@ const typeFilter = serviceType => {
   }
 };
 
-export const servicesCollection = new origins.Api("/services");
+export const servicesCollection = new origins.Api(
+  "/services",
+  {},
+  {
+    defaultValue: []
+  }
+);
 
 servicesCollection.addCustomFilter({
   type: typeFilter
@@ -25,7 +31,8 @@ export const modulesCollection = new Selector(
     source: servicesCollection,
     filter: () => typeFilter("module")
   },
-  servicesResults => servicesResults
+  servicesResults => servicesResults,
+  []
 );
 
 // SERVICE MODEL

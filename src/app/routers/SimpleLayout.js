@@ -13,7 +13,7 @@ export const SimpleRouter = () => (
   <Switch>
     <Route exact path={routes.login.route} component={routes.login.component} />
     <Route exact path={routes.packageInfo.route} component={routes.packageInfo.component} />
-    <Route render={() => <ErrorComponent message="Not found" />} />
+    <Route render={() => <ErrorComponent>Not found</ErrorComponent>} />
   </Switch>
 );
 

@@ -52,7 +52,9 @@ export class Jwt extends Component {
   }
 
   render() {
-    const error = this.props.error ? <ErrorComponent message={this.props.error.message} /> : null;
+    const error = this.props.error ? (
+      <ErrorComponent>{this.props.error.message}</ErrorComponent>
+    ) : null;
     const changeType = this.props.allowChangeType ? (
       <Message attached="bottom" className="login-form__message">
         <a onClick={this.changeType}>Login using API-Key</a>

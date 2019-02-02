@@ -1,37 +1,55 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-export class Modules extends Component {
-  render() {
-    const modules = this.props.modules.value || [];
-    const modulesLoading = this.props.modules.loading;
-    const modulesError = this.props.modules.error;
+import { List, Placeholder } from "semantic-ui-react";
 
-    if (modulesError) {
-      return <div>ERROR</div>;
-    }
+import { Component as Container } from "src/components/container-content";
 
-    if (modulesLoading) {
-      return <div>LOADING...</div>;
-    }
+import "./modules.css";
 
-    return (
-      <div>
-        <h2>Modules</h2>
-        <ul>
-          {modules.map(module => (
-            <li key={module._id}>
-              <Link to={`${this.props.baseUrl}/${module._id}`}>{module.name}</Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-}
+export const ModuleItem = ({ baseUrl, module }) => (
+  <List.Item>
+    <Link to={`${baseUrl}/${module._id}`}>
+      <List.Content>
+        <List.Header>{module.name}</List.Header>
+        <List.Description>{module.description}</List.Description>
+      </List.Content>
+    </Link>
+  </List.Item>
+);
+
+ModuleItem.propTypes = {
+  baseUrl: PropTypes.string,
+  module: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string
+  })
+};
+
+export const Modules = ({ loading, modules, error, baseUrl }) => (
+  <Container loading={loading} error={error}>
+    <Container.Header>Modules</Container.Header>
+    <Container.Placeholder>
+      <Placeholder.Paragraph>
+        <Placeholder.Line as="h1" />
+        <Placeholder.Line as="h2" />
+      </Placeholder.Paragraph>
+    </Container.Placeholder>
+    <Container.Content>
+      <List divided selection size="large" className="modules_list">
+        {modules.map(module => (
+          <ModuleItem key={module._id} module={module} baseUrl={baseUrl} />
+        ))}
+      </List>
+    </Container.Content>
+  </Container>
+);
 
 Modules.propTypes = {
   baseUrl: PropTypes.string.isRequired,
-  modules: PropTypes.any.isRequired
+  error: PropTypes.instanceOf(Error),
+  loading: PropTypes.bool.isRequired,
+  modules: PropTypes.array
 };

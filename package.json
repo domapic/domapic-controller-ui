@@ -37,6 +37,7 @@
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "body-parser": "1.18.3",
     "boom": "7.2.0",
     "chalk": "^2.4.1",

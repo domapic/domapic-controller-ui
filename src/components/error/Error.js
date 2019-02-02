@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 
 import { Message } from "semantic-ui-react";
 
-export const ErrorComponent = ({ message }) => (
+export const ErrorComponent = ({ children }) => (
   <Message negative size="large">
-    {message}
+    {children}
   </Message>
 );
 
 ErrorComponent.propTypes = {
-  message: PropTypes.string.isRequired
+  children: PropTypes.node
 };
