@@ -4,6 +4,7 @@ const test = require("narval");
 const config = require("../config");
 
 test.describe("Home page", function() {
+  this.timeout(10000);
   let browser;
   let page;
 
