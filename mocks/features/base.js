@@ -5,7 +5,9 @@ const { createAccessTokenSuccess } = require("./fixtures/auth/jwt/post");
 const {
   getModulesSuccess,
   getModule1Success,
-  getModule2Success
+  getModule2Success,
+  getServicesSuccess,
+  getServiceSuccess
 } = require("./fixtures/services/get");
 const { getUserMe } = require("./fixtures/users/me/get");
 
@@ -15,6 +17,8 @@ const base = new Feature([
   getModulesSuccess,
   getModule1Success,
   getModule2Success,
+  getServicesSuccess,
+  getServiceSuccess,
   getUserMe
 ]);
 

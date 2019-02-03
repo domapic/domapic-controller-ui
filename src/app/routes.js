@@ -1,5 +1,6 @@
 import { Module as Dashboard } from "src/modules/dashboard";
 import { Module as Modules } from "src/modules/modules";
+import { Module as Plugins } from "src/modules/plugins";
 import { Module as Login } from "src/modules/login";
 
 import { environment } from "./config/environment";
@@ -20,7 +21,7 @@ export const sections = {
   plugins: {
     name: "Plugins",
     route: "/plugins",
-    component: Modules,
+    component: Plugins,
     showInMenu: true
   },
   activity: {

@@ -51,8 +51,26 @@ const getModulesUnauth = {
   }
 };
 
+const getServicesSuccess = {
+  url: "/api/services",
+  method: "GET",
+  response: {
+    status: 200,
+    body: [module_1, module_2]
+  }
+};
+
 const getModule1Success = {
   url: "/api/services/module-id-1",
+  method: "GET",
+  response: {
+    status: 200,
+    body: module_1
+  }
+};
+
+const getServiceSuccess = {
+  url: "/api/services/:id",
   method: "GET",
   response: {
     status: 200,
@@ -87,5 +105,7 @@ module.exports = {
   getModule1Success,
   getModule1Unauth,
   getModule2Success,
-  getModule2Unauth
+  getModule2Unauth,
+  getServicesSuccess,
+  getServiceSuccess
 };

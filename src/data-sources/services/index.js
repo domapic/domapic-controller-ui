@@ -36,31 +36,50 @@ export const modulesCollection = new Selector(
   []
 );
 
-export const modulesCollectionFiltered = new Selector(
-  modulesCollection,
-  (modulesResults, search) => {
-    if (!search) {
-      return modulesResults;
-    }
-    return modulesResults.filter(
-      module => module.name.indexOf(search) > -1 || module.description.indexOf(search) > -1
-    );
+export const pluginsCollection = new Selector(
+  {
+    source: servicesCollection,
+    filter: () => typeFilter("plugin")
   },
+  servicesResults => servicesResults,
   []
 );
+
+const searchByNameAndDesc = (servicesResults, search) => {
+  if (!search) {
+    return servicesResults;
+  }
+  return servicesResults.filter(
+    service => service.name.indexOf(search) > -1 || service.description.indexOf(search) > -1
+  );
+};
+
+export const modulesCollectionFiltered = new Selector(modulesCollection, searchByNameAndDesc, []);
+export const pluginsCollectionFiltered = new Selector(pluginsCollection, searchByNameAndDesc, []);
+
+const sortAndOrderBy = (servicesResults, filter) => {
+  const results = sortBy(servicesResults, (filter && filter.sortBy) || "name");
+  if (filter.reverse) {
+    return results.reverse();
+  }
+  return results;
+};
 
 export const modulesCollectionFilteredAndSorted = new Selector(
   {
     source: modulesCollectionFiltered,
     filter: ({ search }) => search
   },
-  (modulesResults, filter) => {
-    const results = sortBy(modulesResults, (filter && filter.sortBy) || "name");
-    if (filter.reverse) {
-      return results.reverse();
-    }
-    return results;
+  sortAndOrderBy,
+  []
+);
+
+export const pluginsCollectionFilteredAndSorted = new Selector(
+  {
+    source: pluginsCollectionFiltered,
+    filter: ({ search }) => search
   },
+  sortAndOrderBy,
   []
 );
 
