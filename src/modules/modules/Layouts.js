@@ -1,10 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Modules } from "./views/Modules";
+import { ModulesContainer } from "./views/ModulesContainer";
+import { ModulesList } from "./views/ModulesList";
 import { Module } from "./views/Module";
 
-export const ModulesLayout = ({ match }) => <Modules baseUrl={match.url} />;
+export const ModulesLayout = ({ match }) => (
+  <ModulesContainer baseUrl={match.url} header="Modules">
+    <ModulesList baseUrl={match.url} />
+  </ModulesContainer>
+);
 
 ModulesLayout.propTypes = {
   match: PropTypes.any.isRequired

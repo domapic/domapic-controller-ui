@@ -1,4 +1,5 @@
 import { origins, Selector } from "reactive-data-source";
+import sortBy from "lodash.sortby";
 
 // SERVICES COLLECTION
 
@@ -32,6 +33,34 @@ export const modulesCollection = new Selector(
     filter: () => typeFilter("module")
   },
   servicesResults => servicesResults,
+  []
+);
+
+export const modulesCollectionFiltered = new Selector(
+  modulesCollection,
+  (modulesResults, search) => {
+    if (!search) {
+      return modulesResults;
+    }
+    return modulesResults.filter(
+      module => module.name.indexOf(search) > -1 || module.description.indexOf(search) > -1
+    );
+  },
+  []
+);
+
+export const modulesCollectionFilteredAndSorted = new Selector(
+  {
+    source: modulesCollectionFiltered,
+    filter: ({ search }) => search
+  },
+  (modulesResults, filter) => {
+    const results = sortBy(modulesResults, (filter && filter.sortBy) || "name");
+    if (filter.reverse) {
+      return results.reverse();
+    }
+    return results;
+  },
   []
 );
 

@@ -1,13 +1,12 @@
 import { plugins } from "reactive-data-source";
 
-import { Component as ModulesComponent } from "src/components/modules";
+import { Component as Services } from "src/components/services";
 
 import { modulesCollection } from "src/data-sources/services";
 
 export const mapDataSourceToProps = () => ({
-  modules: modulesCollection.read.getters.value,
   loading: modulesCollection.read.getters.loading,
   error: modulesCollection.read.getters.error
 });
 
-export const Modules = plugins.connect(mapDataSourceToProps)(ModulesComponent);
+export const ModulesContainer = plugins.connect(mapDataSourceToProps)(Services);

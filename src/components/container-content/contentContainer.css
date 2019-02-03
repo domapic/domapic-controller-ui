@@ -1,4 +1,8 @@
-.ui.inverted.menu.content-container__search-and-filter {
+.ui.inverted.menu.content-container__menu--bottom--search {
   padding-bottom: 41px;
   background-color: #51545b;
+}
+
+.ui.fixed.menu.content-container__menu--top {
+  padding-top:50px;
 }

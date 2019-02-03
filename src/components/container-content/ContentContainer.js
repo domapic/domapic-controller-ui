@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Dimmer, Segment, Loader, Header, Placeholder, Menu, Icon } from "semantic-ui-react";
+import {
+  Dimmer,
+  Segment,
+  Loader,
+  Header,
+  Placeholder,
+  Menu,
+  Icon,
+  Visibility
+} from "semantic-ui-react";
 
 import { Component as ErrorComponent } from "src/components/error";
 import { Component as Search } from "src/components/search";
@@ -71,6 +80,37 @@ export class ContentContainer extends Component {
   static Search = ContentSearch;
   static Menu = ContentMenu;
 
+  constructor() {
+    super();
+    this.state = {
+      searchVisible: false
+    };
+    this.handleSearchToggle = this.handleSearchToggle.bind(this);
+    this.showFixedMenu = this.showFixedMenu.bind(this);
+    this.hideFixedMenu = this.hideFixedMenu.bind(this);
+  }
+
+  handleSearchToggle() {
+    this.setState(state => ({
+      ...state,
+      searchVisible: !state.searchVisible
+    }));
+  }
+
+  showFixedMenu() {
+    this.setState(state => ({
+      ...state,
+      fixedMenu: true
+    }));
+  }
+
+  hideFixedMenu() {
+    this.setState(state => ({
+      ...state,
+      fixedMenu: false
+    }));
+  }
+
   renderChilds(type) {
     return React.Children.map(this.props.children, child => {
       if (child.type.displayName === type) {
@@ -90,10 +130,21 @@ export class ContentContainer extends Component {
         {this.renderChilds(HEADER)}
         <Responsive device="desktop">
           {hasSearch || hasMenu ? (
-            <Menu pointing>
-              {search}
-              {hasMenu ? <Menu.Menu position="right">{menu}</Menu.Menu> : null}
-            </Menu>
+            <Visibility
+              once={false}
+              onTopPassed={this.showFixedMenu}
+              onTopPassedReverse={this.hideFixedMenu}
+              offset={50}
+            >
+              <Menu
+                pointing
+                fixed={this.state.fixedMenu ? "top" : null}
+                className="content-container__menu--top"
+              >
+                {search}
+                {hasMenu ? <Menu.Menu position="right">{menu}</Menu.Menu> : null}
+              </Menu>
+            </Visibility>
           ) : null}
         </Responsive>
         <Segment>
@@ -106,8 +157,8 @@ export class ContentContainer extends Component {
         </Segment>
         {hasSearch || hasMenu ? (
           <Responsive device="mobile">
-            {hasSearch ? (
-              <Menu inverted fixed="bottom" className="content-container__search-and-filter">
+            {hasSearch && this.state.searchVisible ? (
+              <Menu inverted fixed="bottom" className="content-container__menu--bottom--search">
                 {search}
               </Menu>
             ) : null}
@@ -115,7 +166,7 @@ export class ContentContainer extends Component {
               {hasMenu ? menu : null}
               {hasSearch ? (
                 <Menu.Menu position="right">
-                  <Menu.Item active>
+                  <Menu.Item active={this.state.searchVisible} onClick={this.handleSearchToggle}>
                     <Icon name="ellipsis horizontal" size="small" />
                   </Menu.Item>
                 </Menu.Menu>
