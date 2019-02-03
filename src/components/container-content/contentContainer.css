@@ -1,3 +1,4 @@
-.content-container__sort-by {
-  font-size:0.9em;
+.ui.inverted.menu.content-container__search-and-filter {
+  padding-bottom: 41px;
+  background-color: #51545b;
 }

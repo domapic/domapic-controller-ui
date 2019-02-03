@@ -31,6 +31,8 @@ ModuleItem.propTypes = {
 export const Modules = ({ loading, modules, error, baseUrl }) => (
   <Container loading={loading} error={error}>
     <Container.Header>Modules</Container.Header>
+    <Container.Search />
+    <Container.Menu />
     <Container.Placeholder>
       <Placeholder.Paragraph>
         <Placeholder.Line as="h1" />

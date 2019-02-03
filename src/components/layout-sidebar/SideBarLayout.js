@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Menu, Responsive, Sidebar } from "semantic-ui-react";
+import { Menu, Sidebar } from "semantic-ui-react";
 
 import { Component as MainContainer } from "src/components/container-main";
 import { Component as AboutMenu } from "src/components/menu-about";
-import { windowInnerWidth } from "src/helpers/responsive";
+import { Component as Responsive } from "src/components/responsive";
 
 import { HeaderMenu } from "./HeaderMenu";
 
@@ -39,12 +39,7 @@ export class SideBarLayout extends Component {
 
     return (
       <React.Fragment>
-        <Responsive
-          as={Sidebar.Pushable}
-          getWidth={windowInnerWidth}
-          maxWidth={Responsive.onlyMobile.maxWidth}
-          className="sidebar-layout--mobile"
-        >
+        <Responsive as={Sidebar.Pushable} device="mobile" className="sidebar-layout--mobile">
           <Sidebar
             as={Menu}
             animation="overlay"
@@ -60,16 +55,14 @@ export class SideBarLayout extends Component {
             <AboutMenu vertical />
           </Sidebar>
           <Sidebar.Pusher dimmed={sidebarOpened} className="sidebar-layout__sidebar-pusher">
-            <MainContainer>{children}</MainContainer>
+            <MainContainer mobile={true} dimmed={sidebarOpened}>
+              {children}
+            </MainContainer>
             {overlayedMenu}
           </Sidebar.Pusher>
         </Responsive>
-        <Responsive
-          getWidth={windowInnerWidth}
-          minWidth={Responsive.onlyTablet.minWidth}
-          className="sidebar-layout--desktop"
-        >
-          <MainContainer>{children}</MainContainer>
+        <Responsive device="desktop" className="sidebar-layout--desktop">
+          <MainContainer mobile={false}>{children}</MainContainer>
         </Responsive>
         {rootMenu}
       </React.Fragment>

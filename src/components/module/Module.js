@@ -4,7 +4,7 @@ import { Placeholder } from "semantic-ui-react";
 
 import { Component as Container } from "src/components/container-content";
 
-export const Module = ({ loading, module, error }) => (
+export const Module = ({ loading, module = {}, error }) => (
   <Container loading={loading} error={error}>
     <Container.Header as="h3" loading={loading}>
       {module.name}

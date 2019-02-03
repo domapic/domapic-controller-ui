@@ -1,23 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  Dimmer,
-  Dropdown,
-  Segment,
-  Loader,
-  Header,
-  Placeholder,
-  Menu,
-  Input
-} from "semantic-ui-react";
+import { Dimmer, Segment, Loader, Header, Placeholder, Menu, Icon } from "semantic-ui-react";
 
 import { Component as ErrorComponent } from "src/components/error";
+import { Component as Search } from "src/components/search";
+import { Component as Responsive } from "src/components/responsive";
 
 import "./contentContainer.css";
 
 const HEADER = "ContentHeader";
 const PLACEHOLDER = "ContentPlaceholder";
 const CONTENT = "ContentContent";
+const SEARCH = "ContentSearch";
+const MENU = "ContentMenu";
 
 export const ContentHeader = ({ children, as, loading }) => {
   const type = as || "h2";
@@ -56,10 +51,25 @@ ContentContent.propTypes = {
   children: PropTypes.node
 };
 
+export const ContentSearch = props => <Search {...props} />;
+
+ContentSearch.displayName = SEARCH;
+
+export const ContentMenu = () => (
+  <React.Fragment>
+    <Menu.Item name="Info" active={true} />
+    <Menu.Item name="Abilities" />
+  </React.Fragment>
+);
+
+ContentMenu.displayName = MENU;
+
 export class ContentContainer extends Component {
   static Header = ContentHeader;
   static Placeholder = ContentPlaceholder;
   static Content = ContentContent;
+  static Search = ContentSearch;
+  static Menu = ContentMenu;
 
   renderChilds(type) {
     return React.Children.map(this.props.children, child => {
@@ -70,26 +80,22 @@ export class ContentContainer extends Component {
   }
 
   render() {
+    const search = this.renderChilds(SEARCH);
+    const hasSearch = search.length;
+    const menu = this.renderChilds(MENU);
+    const hasMenu = menu.length;
+
     return (
       <React.Fragment>
         {this.renderChilds(HEADER)}
-        <Menu pointing position="right">
-          <Menu.Item>
-            <Input icon="search" placeholder="Search..." />
-          </Menu.Item>
-          <Menu.Menu>
-            <Dropdown item text="By Name" className="content-container__sort-by">
-              <Dropdown.Menu size="mini">
-                <Dropdown.Item>By Name</Dropdown.Item>
-                <Dropdown.Item>By Description</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Menu.Menu>
-          <Menu.Menu position="right">
-            <Menu.Item name="Info" active={true} />
-            <Menu.Item name="Abilities" />
-          </Menu.Menu>
-        </Menu>
+        <Responsive device="desktop">
+          {hasSearch || hasMenu ? (
+            <Menu pointing>
+              {search}
+              {hasMenu ? <Menu.Menu position="right">{menu}</Menu.Menu> : null}
+            </Menu>
+          ) : null}
+        </Responsive>
         <Segment>
           <Dimmer active={this.props.loading} inverted>
             <Loader inverted />
@@ -98,6 +104,25 @@ export class ContentContainer extends Component {
           {!this.props.loading && !this.props.error ? this.renderChilds(CONTENT) : null}
           {this.props.error ? <ErrorComponent>{this.props.error.message}</ErrorComponent> : null}
         </Segment>
+        {hasSearch || hasMenu ? (
+          <Responsive device="mobile">
+            {hasSearch ? (
+              <Menu inverted fixed="bottom" className="content-container__search-and-filter">
+                {search}
+              </Menu>
+            ) : null}
+            <Menu inverted fixed="bottom">
+              {hasMenu ? menu : null}
+              {hasSearch ? (
+                <Menu.Menu position="right">
+                  <Menu.Item active>
+                    <Icon name="ellipsis horizontal" size="small" />
+                  </Menu.Item>
+                </Menu.Menu>
+              ) : null}
+            </Menu>
+          </Responsive>
+        ) : null}
       </React.Fragment>
     );
   }
