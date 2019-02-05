@@ -124,6 +124,8 @@ export class ContentContainer extends Component {
     const hasSearch = search.length;
     const menu = this.renderChilds(MENU);
     const hasMenu = menu.length;
+    const placeholder = this.renderChilds(PLACEHOLDER);
+    const hasPlaceholder = placeholder.length;
 
     return (
       <React.Fragment>
@@ -151,8 +153,10 @@ export class ContentContainer extends Component {
           <Dimmer active={this.props.loading} inverted>
             <Loader inverted />
           </Dimmer>
-          {this.props.loading ? this.renderChilds(PLACEHOLDER) : null}
-          {!this.props.loading && !this.props.error ? this.renderChilds(CONTENT) : null}
+          {this.props.loading ? placeholder : null}
+          {((hasPlaceholder && !this.props.loading) || !hasPlaceholder) && !this.props.error
+            ? this.renderChilds(CONTENT)
+            : null}
           {this.props.error ? <ErrorComponent>{this.props.error.message}</ErrorComponent> : null}
         </Segment>
         {hasSearch || hasMenu ? (

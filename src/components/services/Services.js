@@ -62,7 +62,6 @@ export class Services extends Component {
           sortOrderActive={this.state.sortOrder}
           searchValue={this.state.search}
         />
-        {/* <Container.Menu /> */}
         <Container.Placeholder>
           <Placeholder.Paragraph>
             <Placeholder.Line as="h1" />

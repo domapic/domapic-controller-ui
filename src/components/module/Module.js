@@ -1,23 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Placeholder } from "semantic-ui-react";
 
 import { Component as Container } from "src/components/container-content";
+import { Component as ServiceInfo } from "src/components/service-info";
 
 export const Module = ({ loading, module = {}, error }) => (
   <Container loading={loading} error={error}>
     <Container.Header as="h3" loading={loading}>
       {module.name}
     </Container.Header>
-    <Container.Placeholder>
-      <Placeholder.Paragraph>
-        <Placeholder.Line />
-        <Placeholder.Line />
-      </Placeholder.Paragraph>
-    </Container.Placeholder>
+    <Container.Menu />
     <Container.Content>
-      <p>Id: {module._id}</p>
-      <p>Name: {module.name}</p>
+      <ServiceInfo service={module} loading={loading} />
     </Container.Content>
   </Container>
 );
