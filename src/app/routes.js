@@ -27,25 +27,31 @@ export const sections = {
   activity: {
     name: "Activity",
     route: "/activity",
-    component: Modules,
+    component: null,
     showInMenu: true
   },
   configuration: {
     name: "Configuration",
     route: "/configuration",
-    component: Modules,
+    component: null,
     showInMenu: false
   },
   users: {
     name: "Users",
     route: "/users",
-    component: Modules,
+    component: null,
     showInMenu: false
   },
   account: {
     name: "Account",
     route: "/account",
-    component: Modules,
+    component: null,
+    showInMenu: false
+  },
+  abilities: {
+    name: "Abilities",
+    route: "/abilities",
+    component: null,
     showInMenu: false
   }
 };

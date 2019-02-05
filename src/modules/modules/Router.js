@@ -7,7 +7,7 @@ import { ModulesLayout, ModuleLayout } from "./Layouts";
 export const Router = ({ match }) => (
   <Switch>
     <Route exact path={`${match.path}`} component={ModulesLayout} />
-    <Route exact path={`${match.path}/:id`} component={ModuleLayout} />
+    <Route exact path={`${match.path}/:id/:display?`} component={ModuleLayout} />
   </Switch>
 );
 

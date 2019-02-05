@@ -64,14 +64,13 @@ export const ContentSearch = props => <Search {...props} />;
 
 ContentSearch.displayName = SEARCH;
 
-export const ContentMenu = () => (
-  <React.Fragment>
-    <Menu.Item name="Info" active={true} />
-    <Menu.Item name="Abilities" />
-  </React.Fragment>
-);
+export const ContentMenu = ({ children }) => <React.Fragment>{children}</React.Fragment>;
 
 ContentMenu.displayName = MENU;
+
+ContentMenu.propTypes = {
+  children: PropTypes.node
+};
 
 export class ContentContainer extends Component {
   static Header = ContentHeader;

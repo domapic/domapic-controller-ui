@@ -31,7 +31,7 @@ const history = createHistory({
 
 setupDataSources(history);
 const store = setupStore(history);
-setupModules(history, store);
+setupModules(history, store, routes, sections);
 
 export const App = () => (
   <RoutesContext.Provider value={routesContext}>
