@@ -1,0 +1,15 @@
+import { plugins } from "reactive-data-source";
+
+import { Component as ConfigComponent } from "src/components/config";
+
+import { baseConfig } from "src/data-sources/config";
+
+export const mapDataSourceToProps = () => {
+  return {
+    config: baseConfig.read.getters.value,
+    error: baseConfig.read.getters.error,
+    loading: baseConfig.read.getters.loading
+  };
+};
+
+export const BaseConfig = plugins.connect(mapDataSourceToProps)(ConfigComponent);

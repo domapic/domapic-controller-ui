@@ -1,4 +1,5 @@
 import { Module as About } from "src/modules/about";
+import { Module as Config } from "src/modules/config";
 import { Module as Dashboard } from "src/modules/dashboard";
 import { Module as Modules } from "src/modules/modules";
 import { Module as Plugins } from "src/modules/plugins";
@@ -34,7 +35,7 @@ export const sections = {
   configuration: {
     name: "Configuration",
     route: "/configuration",
-    component: null,
+    component: Config,
     showInMenu: false
   },
   users: {

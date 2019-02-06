@@ -14,7 +14,7 @@ export const Detail = ({ label, value }) => (
 
 Detail.propTypes = {
   label: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export const ItemInfo = ({ data }) => (
@@ -28,10 +28,5 @@ export const ItemInfo = ({ data }) => (
 );
 
 ItemInfo.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.string
-    })
-  )
+  data: PropTypes.arrayOf(PropTypes.any)
 };
