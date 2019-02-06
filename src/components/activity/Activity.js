@@ -15,6 +15,14 @@ export const Log = ({ module, ability, type, data, dateTime }) => (
   </Table.Row>
 );
 
+Log.propTypes = {
+  ability: PropTypes.string.isRequired,
+  data: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  dateTime: PropTypes.string.isRequired,
+  module: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
+};
+
 export const Activity = ({ loading, error, logs = [] }) => {
   return (
     <Container loading={loading} error={error}>

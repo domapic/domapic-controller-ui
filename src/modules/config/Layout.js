@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { plugins } from "reactive-data-source";
 
 import { BaseConfig } from "./views/BaseConfig";
@@ -16,6 +17,10 @@ export const ConfigLayout = ({ customConfig }) => {
       {custom}
     </React.Fragment>
   );
+};
+
+ConfigLayout.propTypes = {
+  customConfig: PropTypes.array
 };
 
 export const mapDataSourceToProps = () => {
