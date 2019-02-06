@@ -4,6 +4,7 @@ import { Module as Dashboard } from "src/modules/dashboard";
 import { Module as Modules } from "src/modules/modules";
 import { Module as Plugins } from "src/modules/plugins";
 import { Module as Login } from "src/modules/login";
+import { Module as Activity } from "src/modules/activity";
 
 import { environment } from "./config/environment";
 
@@ -29,7 +30,7 @@ export const sections = {
   activity: {
     name: "Activity",
     route: "/activity",
-    component: null,
+    component: Activity,
     showInMenu: true
   },
   configuration: {

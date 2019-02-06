@@ -1,5 +1,7 @@
 import { origins, Selector } from "reactive-data-source";
 
+import { display } from "../helpers";
+
 const BASE_KEYS = {
   logLevel: "Log Level",
   port: "Port",
@@ -10,13 +12,6 @@ const BASE_KEYS = {
   sslKey: "SSL key path",
   rejectUntrusted: "Reject untrusted certificates",
   auth: "Authentication enabled"
-};
-
-const display = value => {
-  if (["string", "number"].indexOf(typeof value) < 0) {
-    return JSON.stringify(value);
-  }
-  return value;
 };
 
 export const config = new origins.Api(

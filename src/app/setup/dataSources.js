@@ -2,6 +2,7 @@ import { servicesCollection, servicesModel } from "src/data-sources/services";
 import { abilitiesCollection } from "src/data-sources/abilities";
 import { about } from "src/data-sources/about";
 import { config } from "src/data-sources/config";
+import { logs } from "src/data-sources/logs";
 import { authJwt } from "src/data-sources/authentication";
 import { login } from "src/data-sources/login";
 import { userMe } from "src/data-sources/users";
@@ -19,14 +20,16 @@ export const allApiDatasources = [
   userMe,
   abilitiesCollection,
   about,
-  config
+  config,
+  logs
 ];
 export const needAuthApiDataSources = [
   servicesCollection,
   servicesModel,
   userMe,
   abilitiesCollection,
-  config
+  config,
+  logs
 ];
 
 export const setupDataSources = history => {
