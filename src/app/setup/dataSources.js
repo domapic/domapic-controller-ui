@@ -1,5 +1,6 @@
 import { servicesCollection, servicesModel } from "src/data-sources/services";
 import { abilitiesCollection } from "src/data-sources/abilities";
+import { about } from "src/data-sources/about";
 import { authJwt } from "src/data-sources/authentication";
 import { login } from "src/data-sources/login";
 import { userMe } from "src/data-sources/users";
@@ -15,7 +16,8 @@ export const allApiDatasources = [
   servicesModel,
   authJwt,
   userMe,
-  abilitiesCollection
+  abilitiesCollection,
+  about
 ];
 export const needAuthApiDataSources = [
   servicesCollection,

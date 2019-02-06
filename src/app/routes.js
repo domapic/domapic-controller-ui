@@ -1,3 +1,4 @@
+import { Module as About } from "src/modules/about";
 import { Module as Dashboard } from "src/modules/dashboard";
 import { Module as Modules } from "src/modules/modules";
 import { Module as Plugins } from "src/modules/plugins";
@@ -65,9 +66,9 @@ export const routes = {
     route: "/login",
     component: Login
   },
-  packageInfo: {
-    route: "/package-info",
-    component: Modules
+  about: {
+    route: "/about",
+    component: About
   },
   swagger: {
     route: "/swagger"

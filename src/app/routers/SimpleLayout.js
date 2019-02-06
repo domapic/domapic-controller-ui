@@ -12,7 +12,7 @@ import { routes } from "../routes";
 export const SimpleRouter = () => (
   <Switch>
     <Route exact path={routes.login.route} component={routes.login.component} />
-    <Route exact path={routes.packageInfo.route} component={routes.packageInfo.component} />
+    <Route exact path={routes.about.route} component={routes.about.component} />
     <Route render={() => <ErrorComponent>Not found</ErrorComponent>} />
   </Switch>
 );

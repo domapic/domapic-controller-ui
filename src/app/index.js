@@ -21,7 +21,7 @@ const routesContext = {
   configuration: sections.configuration.route,
   users: sections.users.route,
   account: sections.account.route,
-  packageInfo: routes.packageInfo.route,
+  about: routes.about.route,
   swagger: routes.swagger.route
 };
 

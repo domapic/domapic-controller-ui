@@ -13,7 +13,7 @@ export class AboutMenuVertical extends Component {
         About
         <Menu.Menu>
           <Menu.Item className="about-menu-vertical__item">
-            <Link to={this.context.packageInfo}>Package info</Link>
+            <Link to={this.context.about}>Package info</Link>
           </Menu.Item>
           <Menu.Item className="about-menu-vertical__item">
             <Link to={this.context.swagger} target="_blank">
