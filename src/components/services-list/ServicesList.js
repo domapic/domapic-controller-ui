@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 
 import { List } from "semantic-ui-react";
 
-import "./itemsList.css";
+import "./servicesList.css";
 
-export const Item = ({ baseUrl, item }) => (
+export const Service = ({ baseUrl, item }) => (
   <List.Item>
     <Link to={`${baseUrl}/${item._id}`}>
       <List.Content>
@@ -17,7 +17,7 @@ export const Item = ({ baseUrl, item }) => (
   </List.Item>
 );
 
-Item.propTypes = {
+Service.propTypes = {
   baseUrl: PropTypes.string,
   item: PropTypes.shape({
     _id: PropTypes.string,
@@ -26,15 +26,15 @@ Item.propTypes = {
   })
 };
 
-export const ItemsList = ({ list, baseUrl }) => (
-  <List divided selection size="large" className="items-list">
+export const ServicesList = ({ list, baseUrl }) => (
+  <List divided selection size="large" className="services-list">
     {list.map(item => (
-      <Item key={item._id} item={item} baseUrl={baseUrl} />
+      <Service key={item._id} item={item} baseUrl={baseUrl} />
     ))}
   </List>
 );
 
-ItemsList.propTypes = {
+ServicesList.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   list: PropTypes.array
 };

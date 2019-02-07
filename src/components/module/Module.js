@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { Component as Container } from "src/components/container-content";
 import { Component as ServiceInfo } from "src/components/service-info";
-import { Component as ItemsList } from "src/components/items-list";
+import { Component as ServicesList } from "src/components/services-list";
 import { Menu } from "semantic-ui-react";
 
 const ABILITIES = "abilities";
@@ -26,7 +26,7 @@ export const Module = ({
     display === INFO ? (
       <ServiceInfo service={module} loading={moduleLoading} />
     ) : (
-      <ItemsList baseUrl={abilitiesLinkBaseUrl} list={abilities} />
+      <ServicesList baseUrl={abilitiesLinkBaseUrl} list={abilities} />
     );
   return (
     <Container loading={moduleLoading && abilitiesLoading} error={moduleError || abilitiesError}>

@@ -1,0 +1,8 @@
+.ui.menu .item.menu-toggle {
+  font-size:0.8rem;
+  color: #999;
+}
+
+.ui.menu .item.menu-toggle .toggle {
+  margin-left:10px;
+}

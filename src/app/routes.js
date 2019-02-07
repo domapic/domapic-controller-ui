@@ -5,6 +5,7 @@ import { Module as Modules } from "src/modules/modules";
 import { Module as Plugins } from "src/modules/plugins";
 import { Module as Login } from "src/modules/login";
 import { Module as Activity } from "src/modules/activity";
+import { Module as Users } from "src/modules/users";
 
 import { environment } from "./config/environment";
 
@@ -42,7 +43,7 @@ export const sections = {
   users: {
     name: "Users",
     route: "/users",
-    component: null,
+    component: Users,
     showInMenu: false
   },
   account: {

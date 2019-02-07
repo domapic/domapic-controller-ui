@@ -28,7 +28,7 @@ export const Activity = ({ loading, error, logs = [] }) => {
     <Container loading={loading} error={error}>
       <Container.Header as="h3">Activity</Container.Header>
       <Container.Content>
-        <Table>
+        <Table unstackable compact="very">
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>At</Table.HeaderCell>

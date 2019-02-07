@@ -1,6 +1,6 @@
 import { plugins } from "reactive-data-source";
 
-import { Component as ItemsList } from "src/components/items-list";
+import { Component as ServicesList } from "src/components/services-list";
 
 import { pluginsCollectionFilteredAndSorted } from "src/data-sources/services";
 
@@ -12,4 +12,4 @@ export const mapDataSourceToProps = ({ search, sortBy, sortOrder }) => ({
   }).read.getters.value
 });
 
-export const PluginsList = plugins.connect(mapDataSourceToProps)(ItemsList);
+export const PluginsList = plugins.connect(mapDataSourceToProps)(ServicesList);

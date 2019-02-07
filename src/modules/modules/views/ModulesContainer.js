@@ -1,6 +1,6 @@
 import { plugins } from "reactive-data-source";
 
-import { Component as Services } from "src/components/services";
+import { Component as SearchableList } from "src/components/searchable-list";
 
 import { modulesCollection } from "src/data-sources/services";
 
@@ -9,4 +9,4 @@ export const mapDataSourceToProps = () => ({
   error: modulesCollection.read.getters.error
 });
 
-export const ModulesContainer = plugins.connect(mapDataSourceToProps)(Services);
+export const ModulesContainer = plugins.connect(mapDataSourceToProps)(SearchableList);

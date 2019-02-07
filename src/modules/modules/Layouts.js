@@ -5,6 +5,7 @@ import { ModulesContainer } from "./views/ModulesContainer";
 import { ModulesList } from "./views/ModulesList";
 import { Module } from "./views/Module";
 
+const SORT_BY = ["name", "description"];
 const ABILITIES = "abilities";
 const INFO = "info";
 const ROUTE_SEP = "/";
@@ -18,7 +19,13 @@ export const setup = configuration => {
 };
 
 export const ModulesLayout = ({ match }) => (
-  <ModulesContainer baseUrl={match.url} header="Modules">
+  <ModulesContainer
+    baseUrl={match.url}
+    header="Modules"
+    sortBy={SORT_BY[0]}
+    sortOrder="asc"
+    sortByChoices={SORT_BY}
+  >
     <ModulesList baseUrl={match.url} />
   </ModulesContainer>
 );

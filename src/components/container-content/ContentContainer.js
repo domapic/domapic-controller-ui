@@ -112,7 +112,7 @@ export class ContentContainer extends Component {
 
   renderChilds(type) {
     return React.Children.map(this.props.children, child => {
-      if (child.type.displayName === type) {
+      if (child && child.type.displayName === type) {
         return child;
       }
     });

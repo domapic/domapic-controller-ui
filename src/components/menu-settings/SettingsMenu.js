@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { SettingsMenuDropdown } from "./SettingsMenuDropdown";
 import { SettingsMenuVertical } from "./SettingsMenuVertical";
 
-export const SettingsMenu = ({ vertical, userIsAdmin }) => {
-  if (!userIsAdmin) {
+export const SettingsMenu = ({ vertical, userMeIsAdmin }) => {
+  if (!userMeIsAdmin) {
     return null;
   }
   if (vertical) {
@@ -15,6 +15,6 @@ export const SettingsMenu = ({ vertical, userIsAdmin }) => {
 };
 
 SettingsMenu.propTypes = {
-  userIsAdmin: PropTypes.bool,
+  userMeIsAdmin: PropTypes.bool,
   vertical: PropTypes.bool
 };

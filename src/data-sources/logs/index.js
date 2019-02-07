@@ -1,6 +1,6 @@
 import { origins, Selector } from "reactive-data-source";
 
-import { display } from "../helpers";
+import { display, formatDate } from "../helpers";
 import { abilitiesCollection } from "../abilities";
 import { servicesCollection } from "../services";
 
@@ -30,7 +30,7 @@ export const lastLogsDetails = new Selector(
       const service = servicesResults.find(service => service._id === ability._service);
       return {
         ...log,
-        dateTime: log.createdAt,
+        dateTime: formatDate(log.createdAt),
         module: (service && service.name) || "-",
         ability: (ability && ability.name) || "-",
         data: display(log.data)
