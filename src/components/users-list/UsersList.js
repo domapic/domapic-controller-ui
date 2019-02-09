@@ -7,19 +7,13 @@ import { Component as UserAvatar } from "src/components/user-avatar";
 
 import "./usersList.css";
 
-export const User = ({ baseUrl, user }) => {
+export const User = ({ user, onClickUser }) => {
   const onClick = event => {
     event.preventDefault();
-    console.log("clicked");
-    console.log(baseUrl);
-    console.log(user._id);
+    onClickUser(user._id);
   };
   return (
-    <Table.Row
-      onClick={onClick}
-      selectable={false}
-      className={user.isSystemRole ? "users-list__row--system" : ""}
-    >
+    <Table.Row onClick={onClick} className={user.isSystemRole ? "users-list__row--system" : ""}>
       <Table.Cell textAlign="center">
         <UserAvatar user={user} />
       </Table.Cell>
@@ -31,7 +25,7 @@ export const User = ({ baseUrl, user }) => {
 };
 
 User.propTypes = {
-  baseUrl: PropTypes.string,
+  onClickUser: PropTypes.func,
   user: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
@@ -40,7 +34,7 @@ User.propTypes = {
   })
 };
 
-export const UsersList = ({ users, baseUrl }) => (
+export const UsersList = ({ users, onClickUser }) => (
   <Table unstackable compact="very" selectable size="large" definition className="users-list">
     <Table.Header>
       <Table.Row>
@@ -52,13 +46,13 @@ export const UsersList = ({ users, baseUrl }) => (
     </Table.Header>
     <Table.Body>
       {users.map(user => (
-        <User key={user._id} user={user} baseUrl={baseUrl} />
+        <User key={user._id} user={user} onClickUser={onClickUser} />
       ))}
     </Table.Body>
   </Table>
 );
 
 UsersList.propTypes = {
-  baseUrl: PropTypes.string.isRequired,
+  onClickUser: PropTypes.func,
   users: PropTypes.array
 };

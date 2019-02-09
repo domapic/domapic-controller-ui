@@ -2,14 +2,16 @@ import { plugins } from "reactive-data-source";
 
 import { Component as UserComponent } from "src/components/user";
 
-import { usersModel } from "src/data-sources/users";
+import { usersModelWithExtraData, userAllowedRoles } from "src/data-sources/users";
+// import { roles } from "src/data-sources/roles";
 
 export const mapDataSourceToProps = ({ id }) => {
-  const source = usersModel.byId(id).read;
+  const source = usersModelWithExtraData.byId(id).read;
   return {
+    roles: userAllowedRoles.filter(id).read.getters.value,
     user: source.getters.value,
-    userLoading: source.getters.loading,
-    userError: source.getters.error
+    loading: source.getters.loading,
+    error: source.getters.error
   };
 };
 

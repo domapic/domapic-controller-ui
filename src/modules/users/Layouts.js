@@ -1,15 +1,25 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { UsersContainer } from "./views/UsersContainer";
 import { UsersList } from "./views/UsersList";
 
 import { Component as UsersListTogglable } from "src/components/users-list-togglable";
-//import { User } from "./views/User";
+import { User } from "./views/User";
 
 const SORT_BY = ["name", "email", "role"];
 
-export class UsersLayout extends Component {
+export class UsersLayoutBase extends Component {
+  constructor() {
+    super();
+    this.onClickUser = this.onClickUser.bind(this);
+  }
+
+  onClickUser(userId) {
+    this.props.history.push(`${this.props.match.url}/${userId}`);
+  }
+
   render() {
     return (
       <UsersListTogglable
@@ -17,17 +27,21 @@ export class UsersLayout extends Component {
         usersList={UsersList}
         sortByChoices={SORT_BY}
         baseUrl={this.props.match.url}
+        onClickUser={this.onClickUser}
       />
     );
   }
 }
 
-UsersLayout.propTypes = {
+UsersLayoutBase.propTypes = {
+  history: PropTypes.any,
   match: PropTypes.any.isRequired
 };
 
-/* export const UserLayout = ({ match }) => <User id={match.params.id} />;
+export const UsersLayout = withRouter(UsersLayoutBase);
+
+export const UserLayout = ({ match }) => <User id={match.params.id} />;
 
 UserLayout.propTypes = {
   match: PropTypes.any.isRequired
-}; */
+};

@@ -1,3 +1,7 @@
+.ui.table.users-list tr {
+  cursor: pointer;
+}
+
 .ui.table.users-list tr.users-list__row--system  {
   color: rgba(0,0,0,0.5);
 }

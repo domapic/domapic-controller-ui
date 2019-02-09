@@ -1,16 +1,15 @@
 import { origins, Selector } from "reactive-data-source";
 import sortBy from "lodash.sortby";
 
-import { userAvatar } from "./avatar";
+import { roles } from "../roles";
 
-const NON_SYSTEM_ROLES = ["admin", "operator"];
+import { userAvatar } from "./avatar";
+import { isSystemRole, avatarValueFromResponse } from "./helpers";
 
 export const usersCollection = new origins.Api(
   "/users",
   {
-    create: true,
-    update: true,
-    delete: true
+    create: true
   },
   {
     defaultValue: []
@@ -19,24 +18,24 @@ export const usersCollection = new origins.Api(
 
 export const usersCollectionWithExtraData = new Selector(
   usersCollection,
-  usersResults => {
+  roles,
+  (usersResults, rolesResults) => {
     return Promise.all(
       usersResults.map(user => {
-        const isSystemRole = NON_SYSTEM_ROLES.indexOf(user.role) < 0;
         if (user.email) {
           return userAvatar
             .byEmail(user.email)
             .read()
             .then(avatarResponse => ({
               ...user,
-              avatar: avatarResponse.status === 200 ? avatarResponse.request.responseURL : null,
-              isSystemRole
+              avatar: avatarValueFromResponse(avatarResponse),
+              isSystemRole: isSystemRole(user, rolesResults)
             }));
         }
         return {
           ...user,
           avatar: null,
-          isSystemRole
+          isSystemRole: isSystemRole(user, rolesResults)
         };
       })
     );

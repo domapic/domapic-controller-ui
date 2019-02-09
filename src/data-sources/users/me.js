@@ -1,6 +1,7 @@
 import { origins, Selector } from "reactive-data-source";
 
 import { userAvatar, byEmailFilter } from "./avatar";
+import { avatarValueFromResponse } from "./helpers";
 
 export const userMe = new origins.Api(
   "/users/me",
@@ -14,11 +15,11 @@ export const userMeWithAvatar = new Selector(
   userMe,
   {
     source: userAvatar,
-    filter: (filter, results) => byEmailFilter(results[0].email || "")
+    filter: (filter, results) => byEmailFilter(results[0].email)
   },
   (userMeData, userMeAvatarResponse) => ({
     ...userMeData,
-    avatar: userMeAvatarResponse.status === 200 ? userMeAvatarResponse.request.responseURL : null
+    avatar: avatarValueFromResponse(userMeAvatarResponse)
   }),
   {}
 );

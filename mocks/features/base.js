@@ -9,6 +9,7 @@ const {
   getServicesSuccess,
   getServiceSuccess
 } = require("./fixtures/services/get");
+const { getUser } = require("./fixtures/users/get");
 const { getUserMe } = require("./fixtures/users/me/get");
 
 const base = new Feature([
@@ -19,7 +20,8 @@ const base = new Feature([
   getModule2Success,
   getServicesSuccess,
   getServiceSuccess,
-  getUserMe
+  getUserMe,
+  getUser
 ]);
 
 module.exports = {

@@ -10,7 +10,7 @@ export const userAvatar = new origins.Api(
   }
 );
 
-export const byEmailFilter = email => ({
+export const byEmailFilter = (email = "") => ({
   params: {
     hash: md5(email.toLowerCase())
   },

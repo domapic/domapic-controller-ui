@@ -7,6 +7,7 @@ import * as reduxDebug from "./plugins/redux-debug";
 import { Api } from "./origins/Api";
 import { LocalStorage } from "./origins/LocalStorage";
 import { SessionStorage } from "./origins/SessionStorage";
+import { MemoryStorage } from "./origins/MemoryStorage";
 
 const plugins = {
   connect,
@@ -16,7 +17,8 @@ const plugins = {
 const origins = {
   Api,
   LocalStorage,
-  SessionStorage
+  SessionStorage,
+  MemoryStorage
 };
 
 export { DataSource, Selector, plugins, origins };

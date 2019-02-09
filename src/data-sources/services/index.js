@@ -1,6 +1,8 @@
 import { origins, Selector } from "reactive-data-source";
 import sortBy from "lodash.sortby";
 
+import { byIdFilter } from "../helpers";
+
 // SERVICES COLLECTION
 
 const typeFilter = serviceType => {
@@ -84,16 +86,6 @@ export const pluginsCollectionFilteredAndSorted = new Selector(
 );
 
 // SERVICE MODEL
-
-const byIdFilter = id => {
-  if (id) {
-    return {
-      params: {
-        id
-      }
-    };
-  }
-};
 
 export const servicesModel = new origins.Api(
   "/services/:id",

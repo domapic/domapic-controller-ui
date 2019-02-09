@@ -8,24 +8,24 @@ export class UserAvatar extends Component {
   }
 
   render() {
+    const loader = (
+      <Dimmer active={this.props.loading}>
+        <Loader />
+      </Dimmer>
+    );
     const image = this.props.user.avatar ? (
       <Image circular className="user-avatar" avatar>
+        {loader}
         <img src={this.props.user.avatar} />
       </Image>
     ) : (
       <Image circular className="user-avatar" avatar>
+        {loader}
         <Icon name="user circle" size="big" className="user-avatar__icon" />
       </Image>
     );
 
-    return (
-      <React.Fragment>
-        <Dimmer active={this.props.loading}>
-          <Loader />
-        </Dimmer>
-        {image}
-      </React.Fragment>
-    );
+    return image;
   }
 }
 

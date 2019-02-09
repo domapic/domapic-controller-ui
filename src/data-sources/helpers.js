@@ -10,3 +10,13 @@ export const display = value => {
   }
   return value;
 };
+
+export const byIdFilter = id => {
+  if (id) {
+    return {
+      params: {
+        id
+      }
+    };
+  }
+};
