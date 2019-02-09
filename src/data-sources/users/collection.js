@@ -1,6 +1,8 @@
 import { origins, Selector } from "reactive-data-source";
 import sortBy from "lodash.sortby";
 
+import { userAvatar } from "./avatar";
+
 const NON_SYSTEM_ROLES = ["admin", "operator"];
 
 export const usersCollection = new origins.Api(
@@ -11,13 +13,40 @@ export const usersCollection = new origins.Api(
     delete: true
   },
   {
-    defaultValue: {}
+    defaultValue: []
   }
+);
+
+export const usersCollectionWithExtraData = new Selector(
+  usersCollection,
+  usersResults => {
+    return Promise.all(
+      usersResults.map(user => {
+        const isSystemRole = NON_SYSTEM_ROLES.indexOf(user.role) < 0;
+        if (user.email) {
+          return userAvatar
+            .byEmail(user.email)
+            .read()
+            .then(avatarResponse => ({
+              ...user,
+              avatar: avatarResponse.status === 200 ? avatarResponse.request.responseURL : null,
+              isSystemRole
+            }));
+        }
+        return {
+          ...user,
+          avatar: null,
+          isSystemRole
+        };
+      })
+    );
+  },
+  []
 );
 
 const searchBy = (usersResults, { search, showSystem }) => {
   return usersResults.filter(user => {
-    if (!showSystem && NON_SYSTEM_ROLES.indexOf(user.role) < 0) {
+    if (!showSystem && user.isSystemRole) {
       return false;
     }
     if (!search) {
@@ -31,7 +60,7 @@ const searchBy = (usersResults, { search, showSystem }) => {
   });
 };
 
-export const usersCollectionFiltered = new Selector(usersCollection, searchBy, []);
+export const usersCollectionFiltered = new Selector(usersCollectionWithExtraData, searchBy, []);
 
 const sortAndOrderBy = (usersResults, filter) => {
   const results = sortBy(usersResults, (filter && filter.sortBy) || "name");

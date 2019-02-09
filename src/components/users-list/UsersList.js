@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 
 import { Table } from "semantic-ui-react";
 
+import { Component as UserAvatar } from "src/components/user-avatar";
+
+import "./usersList.css";
+
 export const User = ({ baseUrl, user }) => {
   const onClick = event => {
     event.preventDefault();
@@ -11,7 +15,14 @@ export const User = ({ baseUrl, user }) => {
     console.log(user._id);
   };
   return (
-    <Table.Row onClick={onClick}>
+    <Table.Row
+      onClick={onClick}
+      selectable={false}
+      className={user.isSystemRole ? "users-list__row--system" : ""}
+    >
+      <Table.Cell textAlign="center">
+        <UserAvatar user={user} />
+      </Table.Cell>
       <Table.Cell>{user.name}</Table.Cell>
       <Table.Cell>{user.email}</Table.Cell>
       <Table.Cell>{user.role}</Table.Cell>
@@ -30,9 +41,10 @@ User.propTypes = {
 };
 
 export const UsersList = ({ users, baseUrl }) => (
-  <Table unstackable compact="very" selectable size="large">
+  <Table unstackable compact="very" selectable size="large" definition className="users-list">
     <Table.Header>
       <Table.Row>
+        <Table.HeaderCell />
         <Table.HeaderCell>Name</Table.HeaderCell>
         <Table.HeaderCell>Email</Table.HeaderCell>
         <Table.HeaderCell>Role</Table.HeaderCell>

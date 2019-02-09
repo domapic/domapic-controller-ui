@@ -1,0 +1,7 @@
+.ui.table.users-list tr.users-list__row--system  {
+  color: rgba(0,0,0,0.5);
+}
+
+.ui.definition.table.users-list tr.users-list__row--system td .avatar {
+  color: rgba(0,0,0,0.4);
+}

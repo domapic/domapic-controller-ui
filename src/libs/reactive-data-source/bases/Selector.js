@@ -1,5 +1,6 @@
 import once from "lodash.once";
 import isFunction from "lodash.isfunction";
+import isPromise from "is-promise";
 
 import { Base } from "./Base";
 import { Cache } from "./Cache";
@@ -74,7 +75,8 @@ export class Selector extends Base {
         if (dataSourceIndex < this.dataSources.length - 1) {
           return readDataSource(dataSourceIndex + 1);
         }
-        return Promise.resolve(this.resultsParser.apply(null, dataSourcesResults.concat(filter)));
+        const result = this.resultsParser.apply(null, dataSourcesResults.concat(filter));
+        return isPromise(result) ? result : Promise.resolve(result);
       });
     };
 

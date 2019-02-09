@@ -4,7 +4,7 @@ import { Dropdown, Button, Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 import { RoutesContext } from "src/contexts/RoutesContext";
-import { UserAvatar } from "./UserAvatar";
+import { Component as UserAvatar } from "src/components/user-avatar";
 
 import "./userMenuDropdown.css";
 
