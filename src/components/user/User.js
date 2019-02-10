@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import debounce from "lodash.debounce";
+import { debounce } from "lodash";
 
-import { Form, Button, Divider } from "semantic-ui-react";
+import { Form, Button, Divider, Message } from "semantic-ui-react";
 
 import { Component as Container } from "src/components/container-content";
 import { Component as UserAvatar } from "src/components/user-avatar";
@@ -14,11 +14,15 @@ import "./user.css";
 export class User extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      submitSuccess: false
+    };
 
     this.handleRoleChange = this.handleRoleChange.bind(this);
     this.handlePasswordChange = debounce(this.handlePasswordChange.bind(this), 200);
     this.handleRepeatPasswordChange = debounce(this.handleRepeatPasswordChange.bind(this), 200);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   handleRoleChange(event, data) {
@@ -32,14 +36,16 @@ export class User extends Component {
   handlePasswordChange(event, data) {
     this.setState(state => ({
       ...state,
-      password: data.value
+      password: data.value,
+      submitSuccess: false
     }));
   }
 
   handleRepeatPasswordChange(event, data) {
     this.setState(state => ({
       ...state,
-      repeatPassword: data.value
+      repeatPassword: data.value,
+      submitSuccess: false
     }));
   }
 
@@ -58,8 +64,41 @@ export class User extends Component {
     return false;
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    const { password, role } = this.state;
+    this.props
+      .submit(this.props.user._id, {
+        password,
+        role
+      })
+      .then(() => {
+        this.setState(state => ({
+          ...state,
+          submitSuccess: true
+        }));
+      })
+      .catch(() => {
+        console.error("Error updating user");
+      });
+  }
+
+  handleCancel() {
+    event.preventDefault();
+    this.props.cancel();
+  }
+
   render() {
-    const { user = {}, loading, error, roles, currentUserIsAdmin } = this.props;
+    const {
+      user = {},
+      userLoading,
+      userError,
+      roles,
+      currentUserIsAdmin,
+      submitLoading,
+      submitError
+    } = this.props;
+    const { submitSuccess } = this.state;
     const repeatedPasswordError = this.repeatedPasswordError();
     const repeatedPasswordErrorMessage = repeatedPasswordError ? (
       <FieldValidationMessage message="Passwords are not the same" />
@@ -88,12 +127,23 @@ export class User extends Component {
     );
 
     return (
-      <Container loading={loading} error={error}>
+      <Container loading={userLoading} error={userError}>
         <Container.Header as="h3">Modify User</Container.Header>
         <Container.Content>
-          <Form loading={loading}>
-            <UserAvatar user={user} loading={loading} />
+          <Form
+            loading={userLoading}
+            onSubmit={this.handleSubmit}
+            error={!!submitError}
+            success={submitSuccess}
+          >
+            <UserAvatar user={user} loading={userLoading} />
             <Divider />
+            <Message
+              error
+              header="Error modifying user"
+              content={submitError && submitError.message}
+            />
+            <Message success header="Updated" content="User was successfully updated" />
             <Form.Input label="Name" defaultValue={user.name} width="6" disabled />
             {emailField}
             <Form.Group>
@@ -116,9 +166,23 @@ export class User extends Component {
             </Form.Group>
             {passwordFields}
             <Divider />
-            <div className="user--form--buttons-container">
-              <Button floated="right" color="blue" disabled={!submitEnabled}>
+            <div className="user--form--buttons-container" key={submitLoading}>
+              <Button
+                floated="right"
+                color="blue"
+                disabled={!submitEnabled || submitLoading}
+                loading={submitLoading}
+                type="submit"
+              >
                 Submit
+              </Button>
+              <Button
+                floated="right"
+                disabled={submitLoading}
+                loading={submitLoading}
+                onClick={this.handleCancel}
+              >
+                Cancel
               </Button>
             </div>
           </Form>
@@ -129,9 +193,13 @@ export class User extends Component {
 }
 
 User.propTypes = {
+  cancel: PropTypes.func,
   currentUserIsAdmin: PropTypes.bool,
-  error: PropTypes.instanceOf(Error),
-  loading: PropTypes.bool,
   roles: PropTypes.array,
-  user: PropTypes.any
+  submit: PropTypes.func,
+  submitError: PropTypes.instanceOf(Error),
+  submitLoading: PropTypes.bool,
+  user: PropTypes.any,
+  userError: PropTypes.instanceOf(Error),
+  userLoading: PropTypes.bool
 };

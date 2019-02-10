@@ -40,8 +40,16 @@ UsersLayoutBase.propTypes = {
 
 export const UsersLayout = withRouter(UsersLayoutBase);
 
-export const UserLayout = ({ match }) => <User id={match.params.id} />;
+export const UserLayoutBase = ({ match, history }) => {
+  const cancel = () => {
+    history.goBack();
+  };
+  return <User id={match.params.id} cancel={cancel} />;
+};
 
-UserLayout.propTypes = {
+UserLayoutBase.propTypes = {
+  history: PropTypes.any,
   match: PropTypes.any.isRequired
 };
+
+export const UserLayout = withRouter(UserLayoutBase);

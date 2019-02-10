@@ -1,18 +1,30 @@
+import { pickBy, identity } from "lodash";
+
 import { plugins } from "reactive-data-source";
 
 import { Component as UserComponent } from "src/components/user";
 
-import { usersModelWithExtraData, userAllowedRoles, userMeIsAdmin } from "src/data-sources/users";
-// import { roles } from "src/data-sources/roles";
+import {
+  usersModels,
+  usersModelsWithExtraData,
+  userAllowedRoles,
+  userMeIsAdmin
+} from "src/data-sources/users";
+
+const updateUser = (id, userData) => usersModels.byId(id).update(pickBy(userData, identity));
 
 export const mapDataSourceToProps = ({ id }) => {
-  const source = usersModelWithExtraData.byId(id).read;
+  const user = usersModelsWithExtraData.byId(id).read;
+  const submitUser = usersModels.byId(id).update;
   return {
     currentUserIsAdmin: userMeIsAdmin.read.getters.value,
-    roles: userAllowedRoles.filter(id).read.getters.value,
-    user: source.getters.value,
-    loading: source.getters.loading,
-    error: source.getters.error
+    roles: userAllowedRoles.byId(id).read.getters.value,
+    submit: updateUser,
+    submitLoading: submitUser.getters.loading,
+    submitError: submitUser.getters.error,
+    user: user.getters.value,
+    userLoading: user.getters.loading,
+    userError: user.getters.error
   };
 };
 

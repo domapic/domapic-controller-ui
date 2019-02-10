@@ -6,7 +6,7 @@ import { byIdFilter } from "../helpers";
 import { isSystemRole, avatarValueFromResponse } from "./helpers";
 import { userAvatar, byEmailFilter } from "./avatar";
 
-export const usersModel = new origins.Api(
+export const usersModels = new origins.Api(
   "/users/:id",
   {
     update: true,
@@ -17,13 +17,13 @@ export const usersModel = new origins.Api(
   }
 );
 
-usersModel.addCustomFilter({
+usersModels.addCustomFilter({
   byId: byIdFilter
 });
 
-export const usersModelWithExtraData = new Selector(
+export const usersModelsWithExtraData = new Selector(
   {
-    source: usersModel,
+    source: usersModels,
     filter: id => byIdFilter(id)
   },
   {
@@ -41,14 +41,14 @@ export const usersModelWithExtraData = new Selector(
   {}
 );
 
-usersModelWithExtraData.addCustomFilter({
+usersModelsWithExtraData.addCustomFilter({
   byId: id => id
 });
 
 export const userAllowedRoles = new Selector(
   roles,
   {
-    source: usersModelWithExtraData,
+    source: usersModelsWithExtraData,
     filter: id => id
   },
   (rolesResults, userResults) => {
