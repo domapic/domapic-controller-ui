@@ -43,6 +43,32 @@ export const usersCollectionWithExtraData = new Selector(
   []
 );
 
+const exactSearchBy = (usersResults, { email, name }) => {
+  return usersResults.filter(user => {
+    let matchKeys = 0;
+    let matches = 0;
+    if (email) {
+      matchKeys++;
+      if (user.email === email) {
+        matches++;
+      }
+    }
+    if (name) {
+      matchKeys++;
+      if (user.name === name) {
+        matches++;
+      }
+    }
+    return matchKeys === matches;
+  });
+};
+
+export const usersCollectionExactFiltered = new Selector(
+  usersCollectionWithExtraData,
+  exactSearchBy,
+  []
+);
+
 const searchBy = (usersResults, { search, showSystem }) => {
   return usersResults.filter(user => {
     if (!showSystem && user.isSystemRole) {

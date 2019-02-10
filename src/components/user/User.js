@@ -18,8 +18,8 @@ export class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      submitSuccess: false,
-      isNew: props.isNew
+      submitSuccess: props.fromCreation,
+      fromCreation: props.fromCreation
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -39,7 +39,8 @@ export class User extends Component {
       ...state,
       name,
       submitSuccess: false,
-      nameValid: this.props.isValidUserName(name)
+      nameValid: this.props.isValidUserName(name),
+      nameError: null
     }));
   }
 
@@ -49,7 +50,8 @@ export class User extends Component {
       ...state,
       email,
       submitSuccess: false,
-      emailValid: this.props.isValidUserEmail(email)
+      emailValid: this.props.isValidUserEmail(email),
+      emailError: null
     }));
   }
 
@@ -98,55 +100,12 @@ export class User extends Component {
     return false;
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    const { name, email, password, role } = this.state;
-    this.setState(state => ({
-      ...state,
-      submitSuccess: false
-    }));
-
-    this.props
-      .onSubmit(
-        {
-          name,
-          email,
-          password,
-          role
-        },
-        this.props.user._id // Or this.state.newUserId (if new)
-      )
-      .then(() => {
-        // TODO, receive here new user ID, set as "newUserId" in state
-        this.setState(state => ({
-          ...state,
-          name: null,
-          nameValid: false,
-          email: null,
-          emailValid: false,
-          role: null,
-          roleValid: null,
-          passwordsValid: null,
-          submitSuccess: true,
-          isNew: false
-        }));
-      })
-      .catch(() => {
-        console.error("Error sending user");
-      });
-  }
-
-  handleCancel() {
-    event.preventDefault();
-    this.props.onCancel();
-  }
-
   hasChangedName() {
     return this.state.name && this.state.name.length;
   }
 
   hasValidName() {
-    return this.props.isValidUserName(this.state.name);
+    return this.props.isValidUserName(this.state.name) && !this.state.nameError;
   }
 
   hasChangedEmail() {
@@ -154,7 +113,7 @@ export class User extends Component {
   }
 
   hasValidEmail() {
-    return this.props.isValidUserEmail(this.state.email);
+    return this.props.isValidUserEmail(this.state.email) && !this.state.emailError;
   }
 
   hasChangedRole() {
@@ -170,7 +129,7 @@ export class User extends Component {
   }
 
   submitEnabled() {
-    if (!this.state.isNew) {
+    if (!this.props.isNew) {
       return (this.hasChangedPassword() || this.state.role) && !this.repeatedPasswordError();
     }
     return (
@@ -187,11 +146,21 @@ export class User extends Component {
   }
 
   handleNameBlur() {
-    if (this.hasChangedName() && !this.hasValidName()) {
-      this.setState(state => ({
-        ...state,
-        nameError: NAME_NOT_VALID
-      }));
+    if (this.hasChangedName()) {
+      if (!this.hasValidName()) {
+        this.setState(state => ({
+          ...state,
+          nameError: NAME_NOT_VALID
+        }));
+      } else {
+        this.props.isUserNameRepeated(this.state.name).then(isRepeated => {
+          this.setState(state => ({
+            ...state,
+            nameValid: !isRepeated,
+            nameError: isRepeated ? "Name is repeated" : null
+          }));
+        });
+      }
     } else {
       this.setState(state => ({
         ...state,
@@ -201,17 +170,71 @@ export class User extends Component {
   }
 
   handleEmailBlur() {
-    if (this.hasChangedEmail() && !this.hasValidEmail()) {
-      this.setState(state => ({
-        ...state,
-        emailError: EMAIL_NOT_VALID
-      }));
+    if (this.hasChangedEmail()) {
+      if (!this.hasValidEmail()) {
+        this.setState(state => ({
+          ...state,
+          emailError: EMAIL_NOT_VALID
+        }));
+      } else {
+        this.props.isUserEmailRepeated(this.state.email).then(isRepeated => {
+          this.setState(state => ({
+            ...state,
+            emailValid: !isRepeated,
+            emailError: isRepeated ? "Email is repeated" : null
+          }));
+        });
+      }
     } else {
       this.setState(state => ({
         ...state,
         emailError: null
       }));
     }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { name, email, password, role } = this.state;
+    this.setState(state => ({
+      ...state,
+      submitSuccess: false
+    }));
+
+    this.props
+      .onSubmit(
+        {
+          name,
+          email,
+          password,
+          role
+        },
+        this.props.user._id
+      )
+      .then(() => {
+        if (!this.props.isNew) {
+          this.setState(state => ({
+            ...state,
+            name: null,
+            nameValid: false,
+            email: null,
+            emailValid: false,
+            role: null,
+            roleValid: null,
+            passwordsValid: null,
+            submitSuccess: true,
+            fromCreation: false
+          }));
+        }
+      })
+      .catch(() => {
+        console.error("Error sending user");
+      });
+  }
+
+  handleCancel() {
+    event.preventDefault();
+    this.props.onCancel();
   }
 
   render() {
@@ -222,7 +245,8 @@ export class User extends Component {
       roles,
       currentUserIsAdmin,
       submitLoading,
-      submitError
+      submitError,
+      isNew
     } = this.props;
     const {
       submitSuccess,
@@ -232,7 +256,7 @@ export class User extends Component {
       emailValid,
       roleValid,
       passwordsValid,
-      isNew
+      fromCreation
     } = this.state;
 
     const repeatedPasswordErrorMessage = passwordsValid ? (
@@ -344,8 +368,8 @@ export class User extends Component {
             />
             <Message
               success
-              header={this.props.isNew ? "Created" : "Modified"}
-              content={`User was successfully ${this.props.isNew ? "created" : "modified"}`}
+              header={fromCreation ? "Created" : "Modified"}
+              content={`User was successfully ${fromCreation ? "created" : "modified"}`}
             />
             {nameField}
             {emailField}
@@ -380,7 +404,10 @@ export class User extends Component {
 
 User.propTypes = {
   currentUserIsAdmin: PropTypes.bool,
+  fromCreation: PropTypes.bool,
   isNew: PropTypes.bool,
+  isUserEmailRepeated: PropTypes.func,
+  isUserNameRepeated: PropTypes.func,
   isValidUserEmail: PropTypes.func,
   isValidUserName: PropTypes.func,
   onCancel: PropTypes.func,

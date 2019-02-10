@@ -1,5 +1,9 @@
 import { userMe, userMeWithAvatar, userMeIsAdmin } from "./me";
-import { usersCollection, usersCollectionFilteredAndSorted } from "./collection";
+import {
+  usersCollection,
+  usersCollectionExactFiltered,
+  usersCollectionFilteredAndSorted
+} from "./collection";
 import {
   usersModels,
   usersModelsWithExtraData,
@@ -20,7 +24,7 @@ usersModels.onChangeAny(changeDetails => {
 });
 
 export { userMe, userMeWithAvatar, userMeIsAdmin };
-export { usersCollection, usersCollectionFilteredAndSorted };
+export { usersCollection, usersCollectionExactFiltered, usersCollectionFilteredAndSorted };
 export {
   usersModels,
   usersModelsWithExtraData,

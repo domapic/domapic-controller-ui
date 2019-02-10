@@ -13,6 +13,8 @@ import {
   isValidUserEmail
 } from "src/data-sources/users";
 
+import { isUserNameRepeated, isUserEmailRepeated } from "./helpers";
+
 const updateUser = (userData, id) => usersModels.byId(id).update(pickBy(userData, identity));
 
 export const mapDataSourceToProps = ({ id }) => {
@@ -27,6 +29,8 @@ export const mapDataSourceToProps = ({ id }) => {
     user: user.getters.value,
     userLoading: user.getters.loading,
     userError: user.getters.error,
+    isUserNameRepeated,
+    isUserEmailRepeated,
     isValidUserName,
     isValidUserEmail
   };

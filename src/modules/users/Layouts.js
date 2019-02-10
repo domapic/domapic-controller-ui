@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
+import { plugins } from "reactive-data-source";
+import { pickBy, identity } from "lodash";
 
 import { UsersContainer } from "./views/UsersContainer";
 import { UsersList } from "./views/UsersList";
@@ -8,6 +10,7 @@ import { UsersList } from "./views/UsersList";
 import { Component as UsersListTogglable } from "src/components/users-list-togglable";
 import { UpdateUser } from "./views/UpdateUser";
 import { CreateUser } from "./views/CreateUser";
+import { usersCollection, usersCollectionExactFiltered } from "src/data-sources/users";
 
 // LIST USERS
 
@@ -67,15 +70,67 @@ export const UpdateUserLayout = withRouter(UpdateUserLayoutBase);
 
 // CREATE USER
 
-export const CreateUserLayoutBase = ({ history }) => {
-  const onCancel = () => {
-    history.goBack();
-  };
-  return <CreateUser onCancel={onCancel} />;
-};
+export class CreateUserLayoutBase extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      newUserId: false
+    };
+    this.createUser = this.createUser.bind(this);
+    this.onCancel = this.onCancel.bind(this);
+  }
+
+  createUser(userData) {
+    return usersCollection.create(pickBy(userData, identity)).then(() => {
+      return usersCollectionExactFiltered
+        .filter({
+          name: userData.name
+        })
+        .read()
+        .then(results => {
+          this.setState(state => ({
+            ...state,
+            newUserId: results[0]._id
+          }));
+        });
+    });
+  }
+
+  onCancel() {
+    this.props.history.goBack();
+  }
+
+  render() {
+    const { newUserId } = this.state;
+
+    return newUserId ? (
+      <UpdateUser id={newUserId} onCancel={this.onCancel} fromCreation={true} />
+    ) : (
+      <CreateUser
+        onCancel={this.onCancel}
+        onSubmit={this.createUser}
+        submitLoading={this.props.createLoading}
+        submitError={this.props.createError}
+        isNew={true}
+        user={{}}
+      />
+    );
+  }
+}
 
 CreateUserLayoutBase.propTypes = {
+  createError: PropTypes.instanceOf(Error),
+  createLoading: PropTypes.bool,
   history: PropTypes.any
 };
 
-export const CreateUserLayout = withRouter(CreateUserLayoutBase);
+export const mapDataSourceToProps = () => {
+  return {
+    createLoading: usersCollection.create.getters.loading,
+    createError: usersCollection.create.getters.error
+  };
+};
+
+export const CreateUserLayout = withRouter(
+  plugins.connect(mapDataSourceToProps)(CreateUserLayoutBase)
+);
