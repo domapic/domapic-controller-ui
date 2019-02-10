@@ -63,11 +63,7 @@ const exactSearchBy = (usersResults, { email, name }) => {
   });
 };
 
-export const usersCollectionExactFiltered = new Selector(
-  usersCollectionWithExtraData,
-  exactSearchBy,
-  []
-);
+export const usersCollectionExactFiltered = new Selector(usersCollection, exactSearchBy, []);
 
 const searchBy = (usersResults, { search, showSystem }) => {
   return usersResults.filter(user => {

@@ -1,18 +1,12 @@
 import { usersCollectionExactFiltered } from "src/data-sources/users";
 
-export const isUserNameRepeated = name => {
-  console.log("VALIDATING!!");
-  return usersCollectionExactFiltered
+export const isUserNameRepeated = name =>
+  usersCollectionExactFiltered
     .filter({
       name
     })
     .read()
-    .then(results => {
-      console.log("RESULTS");
-      console.log(results);
-      return results.length > 0;
-    });
-};
+    .then(results => results.length > 0);
 
 export const isUserEmailRepeated = email =>
   usersCollectionExactFiltered
