@@ -78,7 +78,7 @@ export class SearchableList extends Component {
 SearchableList.propTypes = {
   children: PropTypes.node,
   error: PropTypes.instanceOf(Error),
-  header: PropTypes.string,
+  header: PropTypes.node,
   loading: PropTypes.bool.isRequired,
   menu: PropTypes.node,
   sortBy: PropTypes.string,

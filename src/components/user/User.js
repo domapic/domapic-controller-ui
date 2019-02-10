@@ -11,13 +11,21 @@ import { Component as FieldValidationMessage } from "src/components/field-valida
 
 import "./user.css";
 
+const NAME_NOT_VALID = "User name is not valid";
+const EMAIL_NOT_VALID = "Email is not valid";
+
 export class User extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      submitSuccess: false
+      submitSuccess: false,
+      isNew: props.isNew
     };
 
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleNameBlur = this.handleNameBlur.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleEmailBlur = this.handleEmailBlur.bind(this);
     this.handleRoleChange = this.handleRoleChange.bind(this);
     this.handlePasswordChange = debounce(this.handlePasswordChange.bind(this), 200);
     this.handleRepeatPasswordChange = debounce(this.handleRepeatPasswordChange.bind(this), 200);
@@ -25,27 +33,53 @@ export class User extends Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
 
+  handleNameChange(event, data) {
+    const name = data.value !== this.props.user.name ? data.value : null;
+    this.setState(state => ({
+      ...state,
+      name,
+      submitSuccess: false,
+      nameValid: this.props.isValidUserName(name)
+    }));
+  }
+
+  handleEmailChange(event, data) {
+    const email = data.value !== this.props.user.email ? data.value : null;
+    this.setState(state => ({
+      ...state,
+      email,
+      submitSuccess: false,
+      emailValid: this.props.isValidUserEmail(email)
+    }));
+  }
+
   handleRoleChange(event, data) {
     const role = data.value !== this.props.user.role ? data.value : null;
     this.setState(state => ({
       ...state,
-      role
+      role,
+      submitSuccess: false,
+      roleValid: !!role
     }));
   }
 
   handlePasswordChange(event, data) {
+    const password = data.value;
     this.setState(state => ({
       ...state,
-      password: data.value,
-      submitSuccess: false
+      password,
+      submitSuccess: false,
+      passwordsValid: password.length && state.repeatPassword === password
     }));
   }
 
   handleRepeatPasswordChange(event, data) {
+    const repeatPassword = data.value;
     this.setState(state => ({
       ...state,
-      repeatPassword: data.value,
-      submitSuccess: false
+      repeatPassword,
+      submitSuccess: false,
+      passwordsValid: repeatPassword.length && state.password === repeatPassword
     }));
   }
 
@@ -66,26 +100,118 @@ export class User extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { password, role } = this.state;
+    const { name, email, password, role } = this.state;
+    this.setState(state => ({
+      ...state,
+      submitSuccess: false
+    }));
+
     this.props
-      .submit(this.props.user._id, {
-        password,
-        role
-      })
+      .onSubmit(
+        {
+          name,
+          email,
+          password,
+          role
+        },
+        this.props.user._id // Or this.state.newUserId (if new)
+      )
       .then(() => {
+        // TODO, receive here new user ID, set as "newUserId" in state
         this.setState(state => ({
           ...state,
-          submitSuccess: true
+          name: null,
+          nameValid: false,
+          email: null,
+          emailValid: false,
+          role: null,
+          roleValid: null,
+          passwordsValid: null,
+          submitSuccess: true,
+          isNew: false
         }));
       })
       .catch(() => {
-        console.error("Error updating user");
+        console.error("Error sending user");
       });
   }
 
   handleCancel() {
     event.preventDefault();
-    this.props.cancel();
+    this.props.onCancel();
+  }
+
+  hasChangedName() {
+    return this.state.name && this.state.name.length;
+  }
+
+  hasValidName() {
+    return this.props.isValidUserName(this.state.name);
+  }
+
+  hasChangedEmail() {
+    return this.state.email && this.state.email.length;
+  }
+
+  hasValidEmail() {
+    return this.props.isValidUserEmail(this.state.email);
+  }
+
+  hasChangedRole() {
+    return this.state.role && this.state.role.length;
+  }
+
+  hasValidRole() {
+    return this.state.role && this.state.role.length;
+  }
+
+  hasValidPassword() {
+    return this.state.email && this.state.email.length;
+  }
+
+  submitEnabled() {
+    if (!this.state.isNew) {
+      return (this.hasChangedPassword() || this.state.role) && !this.repeatedPasswordError();
+    }
+    return (
+      this.hasChangedName() &&
+      this.hasValidName() &&
+      this.hasChangedEmail() &&
+      this.hasValidEmail() &&
+      this.hasChangedRole() &&
+      this.hasValidRole() &&
+      this.hasChangedPassword() &&
+      this.hasValidPassword() &&
+      !this.repeatedPasswordError()
+    );
+  }
+
+  handleNameBlur() {
+    if (this.hasChangedName() && !this.hasValidName()) {
+      this.setState(state => ({
+        ...state,
+        nameError: NAME_NOT_VALID
+      }));
+    } else {
+      this.setState(state => ({
+        ...state,
+        nameError: null
+      }));
+    }
+  }
+
+  handleEmailBlur() {
+    if (this.hasChangedEmail() && !this.hasValidEmail()) {
+      this.setState(state => ({
+        ...state,
+        emailError: EMAIL_NOT_VALID
+      }));
+    } else {
+      this.setState(state => ({
+        ...state,
+        emailError: null
+      }));
+    }
   }
 
   render() {
@@ -98,12 +224,88 @@ export class User extends Component {
       submitLoading,
       submitError
     } = this.props;
-    const { submitSuccess } = this.state;
-    const repeatedPasswordError = this.repeatedPasswordError();
-    const repeatedPasswordErrorMessage = repeatedPasswordError ? (
-      <FieldValidationMessage message="Passwords are not the same" />
+    const {
+      submitSuccess,
+      nameError,
+      nameValid,
+      emailError,
+      emailValid,
+      roleValid,
+      passwordsValid,
+      isNew
+    } = this.state;
+
+    const repeatedPasswordErrorMessage = passwordsValid ? (
+      <FieldValidationMessage valid />
+    ) : this.repeatedPasswordError() ? (
+      <FieldValidationMessage message="Passwords are not equal" />
     ) : null;
-    const submitEnabled = (this.hasChangedPassword() || this.state.role) && !repeatedPasswordError;
+
+    const nameMessage = nameValid ? (
+      <FieldValidationMessage valid />
+    ) : nameError ? (
+      <FieldValidationMessage message={nameError || ""} />
+    ) : null;
+
+    const emailMessage = emailValid ? (
+      <FieldValidationMessage valid />
+    ) : emailError ? (
+      <FieldValidationMessage message={emailError || ""} />
+    ) : null;
+
+    const roleMessage = roleValid ? <FieldValidationMessage valid /> : null;
+
+    const submitEnabled = this.submitEnabled();
+
+    const nameField = (
+      <Form.Group>
+        <Form.Input
+          label="Name"
+          defaultValue={user.name}
+          width="6"
+          disabled={!isNew}
+          onChange={this.handleNameChange}
+          onBlur={this.handleNameBlur}
+        />
+        {nameMessage}
+      </Form.Group>
+    );
+
+    const emailField = user.isSystemRole ? null : (
+      <Form.Group>
+        <Form.Input
+          label="Email"
+          defaultValue={user.email}
+          width="12"
+          disabled={!isNew}
+          onChange={this.handleEmailChange}
+          onBlur={this.handleEmailBlur}
+        />
+        {emailMessage}
+      </Form.Group>
+    );
+
+    const roleField = (
+      <Form.Group>
+        <Form.Dropdown
+          selection
+          options={roles.map(role => {
+            return {
+              key: role.name,
+              text: role.name,
+              value: role.name
+            };
+          })}
+          defaultValue={user.role}
+          width="5"
+          label="Role"
+          disabled={user.isSystemRole || !currentUserIsAdmin}
+          key={user._id}
+          onChange={this.handleRoleChange}
+        />
+        {roleMessage}
+      </Form.Group>
+    );
 
     const passwordFields = user.isSystemRole ? null : (
       <Form.Group>
@@ -122,13 +324,10 @@ export class User extends Component {
         {repeatedPasswordErrorMessage}
       </Form.Group>
     );
-    const emailField = user.isSystemRole ? null : (
-      <Form.Input label="Email" defaultValue={user.email} width="12" disabled />
-    );
 
     return (
       <Container loading={userLoading} error={userError}>
-        <Container.Header as="h3">Modify User</Container.Header>
+        <Container.Header as="h3">{isNew ? "Create" : "Modify"} User</Container.Header>
         <Container.Content>
           <Form
             loading={userLoading}
@@ -140,30 +339,17 @@ export class User extends Component {
             <Divider />
             <Message
               error
-              header="Error modifying user"
+              header={`Error ${isNew ? "creating" : "modifying"} user`}
               content={submitError && submitError.message}
             />
-            <Message success header="Updated" content="User was successfully updated" />
-            <Form.Input label="Name" defaultValue={user.name} width="6" disabled />
+            <Message
+              success
+              header={this.props.isNew ? "Created" : "Modified"}
+              content={`User was successfully ${this.props.isNew ? "created" : "modified"}`}
+            />
+            {nameField}
             {emailField}
-            <Form.Group>
-              <Form.Dropdown
-                selection
-                options={roles.map(role => {
-                  return {
-                    key: role.name,
-                    text: role.name,
-                    value: role.name
-                  };
-                })}
-                defaultValue={user.role}
-                width="5"
-                label="Role"
-                disabled={user.isSystemRole || !currentUserIsAdmin}
-                key={user._id}
-                onChange={this.handleRoleChange}
-              />
-            </Form.Group>
+            {roleField}
             {passwordFields}
             <Divider />
             <div className="user--form--buttons-container" key={submitLoading}>
@@ -193,10 +379,13 @@ export class User extends Component {
 }
 
 User.propTypes = {
-  cancel: PropTypes.func,
   currentUserIsAdmin: PropTypes.bool,
+  isNew: PropTypes.bool,
+  isValidUserEmail: PropTypes.func,
+  isValidUserName: PropTypes.func,
+  onCancel: PropTypes.func,
+  onSubmit: PropTypes.func,
   roles: PropTypes.array,
-  submit: PropTypes.func,
   submitError: PropTypes.instanceOf(Error),
   submitLoading: PropTypes.bool,
   user: PropTypes.any,

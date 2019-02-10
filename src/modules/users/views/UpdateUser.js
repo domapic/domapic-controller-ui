@@ -8,10 +8,12 @@ import {
   usersModels,
   usersModelsWithExtraData,
   userAllowedRoles,
-  userMeIsAdmin
+  userMeIsAdmin,
+  isValidUserName,
+  isValidUserEmail
 } from "src/data-sources/users";
 
-const updateUser = (id, userData) => usersModels.byId(id).update(pickBy(userData, identity));
+const updateUser = (userData, id) => usersModels.byId(id).update(pickBy(userData, identity));
 
 export const mapDataSourceToProps = ({ id }) => {
   const user = usersModelsWithExtraData.byId(id).read;
@@ -19,13 +21,15 @@ export const mapDataSourceToProps = ({ id }) => {
   return {
     currentUserIsAdmin: userMeIsAdmin.read.getters.value,
     roles: userAllowedRoles.byId(id).read.getters.value,
-    submit: updateUser,
+    onSubmit: updateUser,
     submitLoading: submitUser.getters.loading,
     submitError: submitUser.getters.error,
     user: user.getters.value,
     userLoading: user.getters.loading,
-    userError: user.getters.error
+    userError: user.getters.error,
+    isValidUserName,
+    isValidUserEmail
   };
 };
 
-export const User = plugins.connect(mapDataSourceToProps)(UserComponent);
+export const UpdateUser = plugins.connect(mapDataSourceToProps)(UserComponent);

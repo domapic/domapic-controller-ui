@@ -1,6 +1,12 @@
 import { userMe, userMeWithAvatar, userMeIsAdmin } from "./me";
 import { usersCollection, usersCollectionFilteredAndSorted } from "./collection";
-import { usersModels, usersModelsWithExtraData, userAllowedRoles } from "./model";
+import {
+  usersModels,
+  usersModelsWithExtraData,
+  userAllowedRoles,
+  isValidUserName,
+  isValidUserEmail
+} from "./model";
 
 usersModels.onChangeAny(changeDetails => {
   if (
@@ -13,6 +19,12 @@ usersModels.onChangeAny(changeDetails => {
   }
 });
 
-export { usersModels, usersModelsWithExtraData, userAllowedRoles };
-export { usersCollection, usersCollectionFilteredAndSorted };
 export { userMe, userMeWithAvatar, userMeIsAdmin };
+export { usersCollection, usersCollectionFilteredAndSorted };
+export {
+  usersModels,
+  usersModelsWithExtraData,
+  userAllowedRoles,
+  isValidUserName,
+  isValidUserEmail
+};

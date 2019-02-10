@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Checkbox, Menu } from "semantic-ui-react";
+import { Checkbox, Menu, Button, Icon } from "semantic-ui-react";
 
 import { Component as Container } from "src/components/container-content";
 
@@ -38,9 +38,17 @@ export class UsersListTogglable extends Component {
   render() {
     const UsersContainer = this.props.usersContainer;
     const UsersList = this.props.usersList;
+    const header = (
+      <React.Fragment>
+        Users
+        <Button floated="right" positive onClick={this.props.onClickNew}>
+          <Icon name="plus" /> New
+        </Button>
+      </React.Fragment>
+    );
     return (
       <UsersContainer
-        header="Users"
+        header={header}
         sortBy={this.props.sortByChoices[0]}
         sortOrder="asc"
         sortByChoices={this.props.sortByChoices}
@@ -53,6 +61,7 @@ export class UsersListTogglable extends Component {
 }
 
 UsersListTogglable.propTypes = {
+  onClickNew: PropTypes.func,
   onClickUser: PropTypes.func,
   sortByChoices: PropTypes.array,
   usersContainer: PropTypes.func,

@@ -6,6 +6,14 @@ import { byIdFilter } from "../helpers";
 import { isSystemRole, avatarValueFromResponse } from "./helpers";
 import { userAvatar, byEmailFilter } from "./avatar";
 
+const NAME_REGEX = /^[a-z0-9_.-]*$/;
+
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+export const isValidUserName = name => name.length > 4 && NAME_REGEX.test(name);
+
+export const isValidUserEmail = email => EMAIL_REGEX.test(email);
+
 export const usersModels = new origins.Api(
   "/users/:id",
   {
