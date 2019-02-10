@@ -1,0 +1,8 @@
+.form__field-validation__container {
+  padding-top: 30px;
+}
+
+.form__field-validation__container--mobile {
+  padding-left: 10px;
+  padding-bottom: 5px;
+}

@@ -16,3 +16,11 @@ body: {
   font-size:1.5em;
   line-height: 0.5em;
 }
+
+.ui.form .field.disabled>label, .ui.form .fields.disabled>label, .ui.disabled.input, .ui.disabled.dropdown {
+  opacity:1;
+}
+
+.ui.form .disabled.field, .ui.form .disabled.fields .field, .ui.form .field :disabled {
+  opacity:0.6;
+}

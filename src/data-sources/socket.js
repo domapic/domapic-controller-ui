@@ -8,8 +8,8 @@ class Socket {
     });
   }
 
-  setup(url) {
-    this._socket = window && window.io && window.io(url);
+  setup(/*url*/) {
+    //this._socket = window && window.io && window.io(url);
     if (this._socket) {
       this._handleDataSources();
     } else {
