@@ -105,7 +105,7 @@ export class User extends Component {
   }
 
   hasValidName() {
-    return this.props.isValidUserName(this.state.name) && !this.state.nameError;
+    return this.props.isValidUserName(this.state.name);
   }
 
   hasChangedEmail() {
@@ -113,7 +113,7 @@ export class User extends Component {
   }
 
   hasValidEmail() {
-    return this.props.isValidUserEmail(this.state.email) && !this.state.emailError;
+    return this.props.isValidUserEmail(this.state.email);
   }
 
   hasChangedRole() {
@@ -135,8 +135,10 @@ export class User extends Component {
     return (
       this.hasChangedName() &&
       this.hasValidName() &&
+      !this.state.nameError &&
       this.hasChangedEmail() &&
       this.hasValidEmail() &&
+      !this.state.emailError &&
       this.hasChangedRole() &&
       this.hasValidRole() &&
       this.hasChangedPassword() &&
