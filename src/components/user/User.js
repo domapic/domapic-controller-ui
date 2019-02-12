@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { debounce } from "lodash";
 
-import { Form, Button, Divider, Message } from "semantic-ui-react";
+import { Form, Button, Divider, Message, Confirm, Header, Icon } from "semantic-ui-react";
 
 import { Component as Container } from "src/components/container-content";
 import { Component as UserAvatar } from "src/components/user-avatar";
@@ -19,7 +19,8 @@ export class User extends Component {
     super(props);
     this.state = {
       submitSuccess: props.fromCreation,
-      fromCreation: props.fromCreation
+      fromCreation: props.fromCreation,
+      deleteConfirmOpen: false
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -31,6 +32,9 @@ export class User extends Component {
     this.handleRepeatPasswordChange = debounce(this.handleRepeatPasswordChange.bind(this), 200);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleDeleteCancel = this.handleDeleteCancel.bind(this);
+    this.handleDeleteConfirm = this.handleDeleteConfirm.bind(this);
   }
 
   handleNameChange(event, data) {
@@ -239,6 +243,26 @@ export class User extends Component {
     this.props.onCancel();
   }
 
+  handleDelete() {
+    event.preventDefault();
+    this.setState(state => ({
+      ...state,
+      deleteConfirmOpen: true
+    }));
+  }
+
+  handleDeleteCancel() {
+    this.setState(state => ({
+      ...state,
+      deleteConfirmOpen: false
+    }));
+  }
+
+  handleDeleteConfirm() {
+    event.preventDefault();
+    this.props.onDelete(this.props.user._id);
+  }
+
   render() {
     const {
       user = {},
@@ -248,7 +272,9 @@ export class User extends Component {
       currentUserIsAdmin,
       submitLoading,
       submitError,
-      isNew
+      isNew,
+      userDeleteError,
+      userDeleteLoading
     } = this.props;
     const {
       submitSuccess,
@@ -258,7 +284,8 @@ export class User extends Component {
       emailValid,
       roleValid,
       passwordsValid,
-      fromCreation
+      fromCreation,
+      deleteConfirmOpen
     } = this.state;
 
     const repeatedPasswordErrorMessage = passwordsValid ? (
@@ -282,6 +309,19 @@ export class User extends Component {
     const roleMessage = roleValid ? <FieldValidationMessage valid /> : null;
 
     const submitEnabled = this.submitEnabled();
+
+    const deleteButton =
+      user._id && currentUserIsAdmin ? (
+        <Button
+          color="red"
+          loading={userDeleteLoading}
+          disabled={submitLoading || userDeleteLoading}
+          onClick={this.handleDelete}
+          size="tiny"
+        >
+          Delete
+        </Button>
+      ) : null;
 
     const nameField = (
       <Form.Group>
@@ -352,21 +392,25 @@ export class User extends Component {
     );
 
     return (
-      <Container loading={userLoading} error={userError}>
+      <Container loading={userLoading || userDeleteLoading} error={userError}>
         <Container.Header as="h3">{isNew ? "Create" : "Modify"} User</Container.Header>
         <Container.Content>
           <Form
             loading={userLoading}
             onSubmit={this.handleSubmit}
-            error={!!submitError}
+            error={!!submitError || !!userDeleteError}
             success={submitSuccess}
           >
             <UserAvatar user={user} loading={userLoading} />
             <Divider />
             <Message
               error
-              header={`Error ${isNew ? "creating" : "modifying"} user`}
-              content={submitError && submitError.message}
+              header={`Error ${
+                submitError ? (isNew ? "creating" : "modifying") : "deleting"
+              } user`}
+              content={
+                submitError ? submitError.message : userDeleteError ? userDeleteError.message : ""
+              }
             />
             <Message
               success
@@ -379,23 +423,34 @@ export class User extends Component {
             {passwordFields}
             <Divider />
             <div className="user--form--buttons-container" key={submitLoading}>
+              {deleteButton}
               <Button
                 floated="right"
                 color="blue"
-                disabled={!submitEnabled || submitLoading}
+                disabled={!submitEnabled || submitLoading || userDeleteLoading}
                 loading={submitLoading}
-                type="submit"
               >
                 Submit
               </Button>
               <Button
                 floated="right"
-                disabled={submitLoading}
-                loading={submitLoading}
+                disabled={submitLoading || userDeleteLoading}
                 onClick={this.handleCancel}
               >
                 Cancel
               </Button>
+              <Confirm
+                open={deleteConfirmOpen}
+                header={
+                  <Header as="h2">
+                    <Icon name="warning" color="red" />
+                    <Header.Content>Danger zone</Header.Content>
+                  </Header>
+                }
+                content={`You are going to delete the "${user.name}" user. Are you sure?`}
+                onCancel={this.handleDeleteCancel}
+                onConfirm={this.handleDeleteConfirm}
+              />
             </div>
           </Form>
         </Container.Content>
@@ -413,11 +468,14 @@ User.propTypes = {
   isValidUserEmail: PropTypes.func,
   isValidUserName: PropTypes.func,
   onCancel: PropTypes.func,
+  onDelete: PropTypes.func,
   onSubmit: PropTypes.func,
   roles: PropTypes.array,
   submitError: PropTypes.instanceOf(Error),
   submitLoading: PropTypes.bool,
   user: PropTypes.any,
+  userDeleteError: PropTypes.bool,
+  userDeleteLoading: PropTypes.bool,
   userError: PropTypes.instanceOf(Error),
   userLoading: PropTypes.bool
 };
