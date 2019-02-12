@@ -208,15 +208,12 @@ export class User extends Component {
     }));
 
     this.props
-      .onSubmit(
-        {
-          name,
-          email,
-          password,
-          role
-        },
-        this.props.user._id
-      )
+      .onSubmit({
+        name,
+        email,
+        password,
+        role
+      })
       .then(() => {
         if (!this.props.isNew) {
           this.setState(state => ({
@@ -260,7 +257,7 @@ export class User extends Component {
 
   handleDeleteConfirm() {
     event.preventDefault();
-    this.props.onDelete(this.props.user._id);
+    this.props.onDelete();
   }
 
   render() {

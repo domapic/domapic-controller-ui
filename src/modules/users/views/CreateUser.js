@@ -6,11 +6,11 @@ import {
   usersCollection,
   userMeIsAdmin,
   isValidUserName,
-  isValidUserEmail
+  isValidUserEmail,
+  isUserNameRepeated,
+  isUserEmailRepeated
 } from "src/data-sources/users";
 import { nonSystemRoles } from "src/data-sources/roles";
-
-import { isUserNameRepeated, isUserEmailRepeated } from "./helpers";
 
 export const mapDataSourceToProps = () => {
   return {

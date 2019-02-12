@@ -33,7 +33,7 @@ export const UsersLayout = withRouter(UsersLayoutBase);
 // UPDATE USER
 
 export const UpdateUserLayoutBase = ({ match, history }) => (
-  <CreateOrUpdateUser id={match.params.id} history={history} goBack={() => history.goBack()} />
+  <CreateOrUpdateUser id={match.params.id} goBack={() => history.goBack()} />
 );
 
 UpdateUserLayoutBase.propTypes = {
@@ -46,7 +46,7 @@ export const UpdateUserLayout = withRouter(UpdateUserLayoutBase);
 // CREATE USER
 
 export const CreateUserLayoutBase = ({ history }) => (
-  <CreateOrUpdateUser history={history} goBack={() => history.goBack()} />
+  <CreateOrUpdateUser goBack={() => history.goBack()} />
 );
 
 CreateUserLayoutBase.propTypes = {
