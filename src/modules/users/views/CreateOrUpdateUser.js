@@ -15,6 +15,7 @@ export class CreateOrUpdateUser extends Component {
     super(props);
     this.state = {
       newId: false,
+      deleting: false,
       deleted: false
     };
     this.createUser = this.createUser.bind(this);
@@ -44,18 +45,32 @@ export class CreateOrUpdateUser extends Component {
   onDelete() {
     this.setState(state => ({
       ...state,
-      deleted: true
+      deleting: true
     }));
     usersModels
       .byId(this.userId())
       .delete()
-      .then(this.props.goBack);
+      .then(() => {
+        this.setState(state => ({
+          ...state,
+          deleting: false,
+          deleted: true
+        }));
+        this.props.goBack();
+      })
+      .catch(() => {
+        this.setState(state => ({
+          ...state,
+          deleting: false,
+          deleted: false
+        }));
+      });
   }
 
   render() {
     const userId = this.state.newId || this.props.id;
 
-    if (this.state.deleted) {
+    if (this.state.deleting || this.state.deleted) {
       return null;
     }
 
