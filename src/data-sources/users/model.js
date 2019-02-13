@@ -3,7 +3,7 @@ import { origins, Selector } from "reactive-data-source";
 import { roles } from "../roles";
 
 import { byIdFilter } from "../helpers";
-import { isSystemRole, avatarValueFromResponse } from "./helpers";
+import { isSystemRole } from "./helpers";
 import { userAvatar, byEmailFilter } from "./avatar";
 
 export const usersModels = new origins.Api(
@@ -31,11 +31,11 @@ export const usersModelsWithExtraData = new Selector(
     filter: (filter, previousResults) => byEmailFilter(previousResults[0].email)
   },
   roles,
-  (userResults, avatarResponse, rolesResults) => {
+  (userResults, avatarResult, rolesResults) => {
     return {
       ...userResults,
-      isSystemRole: isSystemRole(userResults, rolesResults),
-      avatar: avatarValueFromResponse(avatarResponse)
+      ...avatarResult,
+      isSystemRole: isSystemRole(userResults, rolesResults)
     };
   },
   {}

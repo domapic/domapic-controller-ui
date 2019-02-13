@@ -30,15 +30,19 @@ class Login {
         }
         return Promise.reject(new Error("No authentication token found"));
       })
-      .catch(err => {
-        return Promise.all([this._refreshToken.delete(), this._apiKey.delete()]).then(() => {
-          this._history.push(
-            `${this._loginRoute}?${queryString.stringify({
-              redirect: this._history.location.pathname
-            })}`
-          );
-          return Promise.reject(err);
-        });
+      .catch(error => {
+        if (error.response && error.response.status === 401) {
+          return Promise.all([this._refreshToken.delete(), this._apiKey.delete()]).then(() => {
+            this._history.push(
+              `${this._loginRoute}?${queryString.stringify({
+                redirect: this._history.location.pathname
+              })}`
+            );
+            return Promise.reject(error);
+          });
+        } else {
+          return Promise.reject(error);
+        }
       });
   }
 
