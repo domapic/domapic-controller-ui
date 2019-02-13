@@ -11,6 +11,7 @@ class Login {
   }
 
   _doLogin(dataSources, retry) {
+    const noAuthenticationTokenError = new Error("No authentication token found");
     return Promise.all([this._refreshToken.read(), this._apiKey.read()])
       .then(tokens => {
         const refreshToken = tokens[0];
@@ -28,16 +29,18 @@ class Login {
           setApiKey(apiKey);
           return retry();
         }
-        return Promise.reject(new Error("No authentication token found"));
+        return Promise.reject(noAuthenticationTokenError);
       })
       .catch(error => {
-        if (error.response && error.response.status === 401) {
+        if (error === noAuthenticationTokenError || error.message === "Unauthorized") {
           return Promise.all([this._refreshToken.delete(), this._apiKey.delete()]).then(() => {
-            this._history.push(
-              `${this._loginRoute}?${queryString.stringify({
-                redirect: this._history.location.pathname
-              })}`
-            );
+            const previousLocation =
+              this._history.location.pathname !== this._loginRoute
+                ? `?${queryString.stringify({
+                    redirect: this._history.location.pathname
+                  })}`
+                : "";
+            this._history.push(`${this._loginRoute}${previousLocation}`);
             return Promise.reject(error);
           });
         } else {
