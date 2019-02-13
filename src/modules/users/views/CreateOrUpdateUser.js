@@ -15,8 +15,7 @@ export class CreateOrUpdateUser extends Component {
     super(props);
     this.state = {
       newId: false,
-      deleting: false,
-      deleted: false
+      deleting: false
     };
     this.createUser = this.createUser.bind(this);
     this.onDelete = this.onDelete.bind(this);
@@ -51,18 +50,12 @@ export class CreateOrUpdateUser extends Component {
       .byId(this.userId())
       .delete()
       .then(() => {
-        this.setState(state => ({
-          ...state,
-          deleting: false,
-          deleted: true
-        }));
         this.props.goBack();
       })
       .catch(() => {
         this.setState(state => ({
           ...state,
-          deleting: false,
-          deleted: false
+          deleting: false
         }));
       });
   }
@@ -70,33 +63,21 @@ export class CreateOrUpdateUser extends Component {
   render() {
     const userId = this.state.newId || this.props.id;
 
-    if (this.state.deleting || this.state.deleted) {
-      return null;
-    }
-
     return userId ? (
       <UpdateUser
         id={userId}
         onCancel={this.props.goBack}
         fromCreation={!!this.state.newId}
         onDelete={this.onDelete}
+        deleting={this.state.deleting}
       />
     ) : (
-      <CreateUser
-        onCancel={this.props.goBack}
-        onSubmit={this.createUser}
-        submitLoading={this.props.createLoading}
-        submitError={this.props.createError}
-        isNew={true}
-        user={{}}
-      />
+      <CreateUser onCancel={this.props.goBack} onSubmit={this.createUser} isNew={true} user={{}} />
     );
   }
 }
 
 CreateOrUpdateUser.propTypes = {
-  createError: PropTypes.instanceOf(Error),
-  createLoading: PropTypes.bool,
   goBack: PropTypes.func,
   id: PropTypes.string
 };

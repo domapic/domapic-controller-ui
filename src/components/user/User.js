@@ -19,6 +19,7 @@ export class User extends Component {
     super(props);
     this.state = {
       submitSuccess: props.fromCreation,
+      submitted: false,
       fromCreation: props.fromCreation,
       deleteConfirmOpen: false
     };
@@ -204,7 +205,8 @@ export class User extends Component {
     const { name, email, password, role } = this.state;
     this.setState(state => ({
       ...state,
-      submitSuccess: false
+      submitSuccess: false,
+      submitted: true
     }));
 
     this.props
@@ -257,6 +259,11 @@ export class User extends Component {
 
   handleDeleteConfirm() {
     event.preventDefault();
+    this.setState(state => ({
+      ...state,
+      submitted: true,
+      deleteConfirmOpen: false
+    }));
     this.props.onDelete();
   }
 
@@ -274,6 +281,7 @@ export class User extends Component {
       userDeleteLoading
     } = this.props;
     const {
+      submitted,
       submitSuccess,
       nameError,
       nameValid,
@@ -395,7 +403,7 @@ export class User extends Component {
           <Form
             loading={userLoading}
             onSubmit={this.handleSubmit}
-            error={!!submitError || !!userDeleteError}
+            error={submitted && (!!submitError || !!userDeleteError)}
             success={submitSuccess}
           >
             <UserAvatar user={user} loading={userLoading} />
@@ -471,7 +479,7 @@ User.propTypes = {
   submitError: PropTypes.instanceOf(Error),
   submitLoading: PropTypes.bool,
   user: PropTypes.any,
-  userDeleteError: PropTypes.bool,
+  userDeleteError: PropTypes.instanceOf(Error),
   userDeleteLoading: PropTypes.bool,
   userError: PropTypes.instanceOf(Error),
   userLoading: PropTypes.bool

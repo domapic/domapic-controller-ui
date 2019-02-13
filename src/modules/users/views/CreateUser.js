@@ -16,8 +16,8 @@ export const mapDataSourceToProps = () => {
   return {
     currentUserIsAdmin: userMeIsAdmin.read.getters.value,
     roles: nonSystemRoles.read.getters.value,
-    createLoading: usersCollection.create.getters.loading,
-    createError: usersCollection.create.getters.error,
+    submitLoading: usersCollection.create.getters.loading,
+    submitError: usersCollection.create.getters.error,
     isUserEmailRepeated,
     isUserNameRepeated,
     isValidUserName,

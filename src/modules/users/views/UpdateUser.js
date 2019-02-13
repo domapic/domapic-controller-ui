@@ -15,7 +15,7 @@ import {
   isUserEmailRepeated
 } from "src/data-sources/users";
 
-export const mapDataSourceToProps = ({ id }) => {
+export const mapDataSourceToProps = ({ id, deleting }) => {
   const readUser = usersModelsWithExtraData.byId(id).read;
   const user = usersModels.byId(id);
   const updateUser = user.update;
@@ -25,13 +25,13 @@ export const mapDataSourceToProps = ({ id }) => {
 
   return {
     currentUserIsAdmin: userMeIsAdmin.read.getters.value,
-    roles: userAllowedRoles.byId(id).read.getters.value,
+    roles: deleting ? [] : userAllowedRoles.byId(id).read.getters.value,
     onSubmit: submitUpdateUser,
     submitLoading: updateUser.getters.loading,
     submitError: updateUser.getters.error,
-    user: readUser.getters.value,
-    userLoading: readUser.getters.loading,
-    userError: readUser.getters.error,
+    user: deleting ? {} : readUser.getters.value,
+    userLoading: deleting ? true : readUser.getters.loading,
+    userError: deleting ? deleteUser.getters.error : readUser.getters.error,
     userDeleteLoading: deleteUser.getters.loading,
     userDeleteError: deleteUser.getters.error,
     isUserNameRepeated,
