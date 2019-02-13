@@ -3,11 +3,9 @@ import PropTypes from "prop-types";
 
 import { Table } from "semantic-ui-react";
 
-import { Component as UserAvatar } from "src/components/user-avatar";
-
 import "./usersList.css";
 
-export const User = ({ user, onClickUser }) => {
+export const User = ({ user, onClickUser, UserAvatar }) => {
   const onClick = event => {
     event.preventDefault();
     onClickUser(user._id);
@@ -15,7 +13,7 @@ export const User = ({ user, onClickUser }) => {
   return (
     <Table.Row onClick={onClick} className={user.isSystemRole ? "users-list__row--system" : ""}>
       <Table.Cell textAlign="center">
-        <UserAvatar user={user} />
+        <UserAvatar email={user.email} />
       </Table.Cell>
       <Table.Cell>{user.name}</Table.Cell>
       <Table.Cell>{user.email}</Table.Cell>
@@ -25,6 +23,7 @@ export const User = ({ user, onClickUser }) => {
 };
 
 User.propTypes = {
+  UserAvatar: PropTypes.func,
   onClickUser: PropTypes.func,
   user: PropTypes.shape({
     _id: PropTypes.string,
@@ -34,7 +33,7 @@ User.propTypes = {
   })
 };
 
-export const UsersList = ({ users, onClickUser }) => (
+export const UsersList = ({ users, onClickUser, UserAvatar }) => (
   <Table unstackable compact="very" selectable size="large" definition className="users-list">
     <Table.Header>
       <Table.Row>
@@ -46,13 +45,14 @@ export const UsersList = ({ users, onClickUser }) => (
     </Table.Header>
     <Table.Body>
       {users.map(user => (
-        <User key={user._id} user={user} onClickUser={onClickUser} />
+        <User key={user._id} user={user} onClickUser={onClickUser} UserAvatar={UserAvatar} />
       ))}
     </Table.Body>
   </Table>
 );
 
 UsersList.propTypes = {
+  UserAvatar: PropTypes.func,
   onClickUser: PropTypes.func,
   users: PropTypes.array
 };

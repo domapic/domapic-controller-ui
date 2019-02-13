@@ -1,7 +1,7 @@
 import md5 from "md5";
-import { origins } from "reactive-data-source";
+import { origins, Selector } from "reactive-data-source";
 
-export const userAvatar = new origins.Api(
+export const gravatar = new origins.Api(
   "https://www.gravatar.com/avatar/:hash",
   {},
   {
@@ -18,6 +18,16 @@ export const byEmailFilter = (email = "") => ({
     d: 404
   }
 });
+
+export const userAvatar = new Selector(
+  {
+    source: gravatar,
+    filter: filter => filter
+  },
+  gravatarResponse => ({
+    avatar: gravatarResponse.status === 200 ? gravatarResponse.request.responseURL : null
+  })
+);
 
 userAvatar.addCustomFilter({
   byEmail: byEmailFilter

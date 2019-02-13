@@ -3,8 +3,7 @@ import sortBy from "lodash.sortby";
 
 import { roles } from "../roles";
 
-import { userAvatar } from "./avatar";
-import { isSystemRole, avatarValueFromResponse } from "./helpers";
+import { isSystemRole } from "./helpers";
 
 export const usersCollection = new origins.Api(
   "/users",
@@ -20,25 +19,10 @@ export const usersCollectionWithExtraData = new Selector(
   usersCollection,
   roles,
   (usersResults, rolesResults) => {
-    return Promise.all(
-      usersResults.map(user => {
-        if (user.email) {
-          return userAvatar
-            .byEmail(user.email)
-            .read()
-            .then(avatarResponse => ({
-              ...user,
-              avatar: avatarValueFromResponse(avatarResponse),
-              isSystemRole: isSystemRole(user, rolesResults)
-            }));
-        }
-        return {
-          ...user,
-          avatar: null,
-          isSystemRole: isSystemRole(user, rolesResults)
-        };
-      })
-    );
+    return usersResults.map(user => ({
+      ...user,
+      isSystemRole: isSystemRole(user, rolesResults)
+    }));
   },
   []
 );

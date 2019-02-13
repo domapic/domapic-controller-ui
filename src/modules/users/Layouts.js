@@ -1,56 +1,48 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { UsersContainer } from "./views/UsersContainer";
-import { UsersList } from "./views/UsersList";
-
-import { Component as UsersListTogglable } from "src/components/users-list-togglable";
+import { UsersListContainer } from "./views/UsersListContainer";
 import { CreateOrUpdateUser } from "./views/CreateOrUpdateUser";
 
 // LIST USERS
 
-const SORT_BY = ["name", "email", "role"];
-
-export const UsersLayoutBase = ({ history, match }) => (
-  <UsersListTogglable
-    usersContainer={UsersContainer}
-    usersList={UsersList}
-    sortByChoices={SORT_BY}
+export const UsersListLayoutBase = ({ history, match }) => (
+  <UsersListContainer
     baseUrl={match.url}
     onClickUser={userId => history.push(`${match.url}/${userId}`)}
     onClickNew={() => history.push(`${match.url}/create`)}
   />
 );
 
-UsersLayoutBase.propTypes = {
+UsersListLayoutBase.propTypes = {
   history: PropTypes.any,
   match: PropTypes.any.isRequired
 };
 
-export const UsersLayout = withRouter(UsersLayoutBase);
+export const UsersListLayout = withRouter(UsersListLayoutBase);
 
-// UPDATE USER
+// CREATE OR UPDATE USER
 
-export const UpdateUserLayoutBase = ({ match, history }) => (
+export const CreateOrUpdateUserLayoutBase = ({ history, match }) => (
   <CreateOrUpdateUser id={match.params.id} goBack={() => history.goBack()} />
 );
 
-UpdateUserLayoutBase.propTypes = {
+CreateOrUpdateUserLayoutBase.propTypes = {
   history: PropTypes.any,
   match: PropTypes.any.isRequired
 };
 
-export const UpdateUserLayout = withRouter(UpdateUserLayoutBase);
+export const CreateOrUpdateUserLayout = withRouter(CreateOrUpdateUserLayoutBase);
 
-// CREATE USER
-
-export const CreateUserLayoutBase = ({ history }) => (
-  <CreateOrUpdateUser goBack={() => history.goBack()} />
+export const MainLayout = ({ match }) => (
+  <Switch>
+    <Route exact path={`${match.path}`} component={UsersListLayout} />
+    <Route exact path={`${match.path}/create`} component={CreateOrUpdateUserLayout} />
+    <Route exact path={`${match.path}/:id`} component={CreateOrUpdateUserLayout} />
+  </Switch>
 );
 
-CreateUserLayoutBase.propTypes = {
-  history: PropTypes.any
+MainLayout.propTypes = {
+  match: PropTypes.any.isRequired
 };
-
-export const CreateUserLayout = withRouter(CreateUserLayoutBase);

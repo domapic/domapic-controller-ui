@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import { Checkbox, Menu, Button, Icon } from "semantic-ui-react";
 
 import { Component as Container } from "src/components/container-content";
+import { Component as SearchableList } from "src/components/searchable-list";
 
-import "./usersListTogglable.css";
+import "./usersListContainer.css";
 
 const ToggleSystemUsers = ({ onChange }) => (
   <Container.Menu>
@@ -20,7 +21,7 @@ ToggleSystemUsers.propTypes = {
 
 ToggleSystemUsers.displayName = Container.Menu.displayName;
 
-export class UsersListTogglable extends Component {
+export class UsersListContainer extends Component {
   constructor() {
     super();
     this.state = {
@@ -36,8 +37,7 @@ export class UsersListTogglable extends Component {
   }
 
   render() {
-    const UsersContainer = this.props.usersContainer;
-    const UsersList = this.props.usersList;
+    const UsersList = this.props.UsersList;
     const header = (
       <React.Fragment>
         Users
@@ -47,23 +47,26 @@ export class UsersListTogglable extends Component {
       </React.Fragment>
     );
     return (
-      <UsersContainer
+      <SearchableList
         header={header}
         sortBy={this.props.sortByChoices[0]}
         sortOrder="asc"
         sortByChoices={this.props.sortByChoices}
+        loading={this.props.loading}
+        error={this.props.error}
         menu={<ToggleSystemUsers onChange={this.onChange} />}
       >
         <UsersList onClickUser={this.props.onClickUser} showSystem={this.state.showSystem} />
-      </UsersContainer>
+      </SearchableList>
     );
   }
 }
 
-UsersListTogglable.propTypes = {
+UsersListContainer.propTypes = {
+  UsersList: PropTypes.func,
+  error: PropTypes.instanceOf(Error),
+  loading: PropTypes.bool,
   onClickNew: PropTypes.func,
   onClickUser: PropTypes.func,
-  sortByChoices: PropTypes.array,
-  usersContainer: PropTypes.func,
-  usersList: PropTypes.func
+  sortByChoices: PropTypes.array
 };

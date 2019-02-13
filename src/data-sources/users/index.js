@@ -13,6 +13,8 @@ import {
   isUserEmailRepeated
 } from "./validations";
 
+import { userAvatar } from "./avatar";
+
 usersModels.onChangeAny(changeDetails => {
   if (
     [usersModels.actions.delete.success, usersModels.actions.update.success].includes(
@@ -28,6 +30,7 @@ export {
   userMe,
   userMeWithExtraData,
   userMeIsAdmin,
+  userAvatar,
   usersCollection,
   usersCollectionExactFiltered,
   usersCollectionFilteredAndSorted,
