@@ -4,11 +4,7 @@ import { pickBy, identity } from "lodash";
 
 import { UpdateUser } from "./UpdateUser";
 import { CreateUser } from "./CreateUser";
-import {
-  usersCollection,
-  usersModels,
-  usersCollectionExactFiltered
-} from "src/data-layer/users";
+import { usersCollection, usersModels, usersCollectionExactFiltered } from "src/data-layer/users";
 
 export class CreateOrUpdateUser extends Component {
   constructor(props) {
