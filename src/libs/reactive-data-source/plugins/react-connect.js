@@ -68,7 +68,10 @@ export const reactConnect = mapDataSourcesToProps => {
         this.dataSourcePropsKeys = Object.keys(this.dataSourceProps);
         // Define getters
         this.dataSourcePropsKeys.forEach(dataSourceKey => {
-          if (this.dataSourceProps[dataSourceKey].isGetter) {
+          if (
+            this.dataSourceProps[dataSourceKey] &&
+            this.dataSourceProps[dataSourceKey].isGetter
+          ) {
             this.dataSourcePropsGetters[dataSourceKey] = this.dataSourceProps[dataSourceKey].prop;
             this.dataSourceProps[dataSourceKey] = this.dataSourceProps[dataSourceKey]._method;
           }
@@ -78,12 +81,14 @@ export const reactConnect = mapDataSourcesToProps => {
       getDataSourcesPropsValues() {
         const dataSourcesProps = {};
         this.dataSourcePropsKeys.forEach(dataSourceKey => {
-          dataSourcesProps[dataSourceKey] = this.dataSourceProps[dataSourceKey]._isDataSource
-            ? this.cleanDataSourceProps(
-                this.dataSourceProps[dataSourceKey],
-                this.dataSourcePropsGetters[dataSourceKey]
-              )
-            : this.dataSourceProps[dataSourceKey];
+          dataSourcesProps[dataSourceKey] =
+            this.dataSourceProps[dataSourceKey] &&
+            this.dataSourceProps[dataSourceKey]._isDataSource
+              ? this.cleanDataSourceProps(
+                  this.dataSourceProps[dataSourceKey],
+                  this.dataSourcePropsGetters[dataSourceKey]
+                )
+              : this.dataSourceProps[dataSourceKey];
         });
         return dataSourcesProps;
       }
@@ -100,7 +105,10 @@ export const reactConnect = mapDataSourcesToProps => {
 
       dispatchAllReads() {
         this.dataSourcePropsKeys.forEach(dataSourceKey => {
-          if (this.dataSourceProps[dataSourceKey]._methodName === READ_METHOD) {
+          if (
+            this.dataSourceProps[dataSourceKey] &&
+            this.dataSourceProps[dataSourceKey]._methodName === READ_METHOD
+          ) {
             this.dataSourceProps[dataSourceKey].dispatch().catch(error => {
               this.logError(this.dataSourceProps[dataSourceKey]._source._id, error.message);
             });
@@ -110,7 +118,10 @@ export const reactConnect = mapDataSourcesToProps => {
 
       addDataSourceListeners() {
         this.dataSourcePropsKeys.forEach(dataSourceKey => {
-          if (this.dataSourceProps[dataSourceKey]._isDataSource) {
+          if (
+            this.dataSourceProps[dataSourceKey] &&
+            this.dataSourceProps[dataSourceKey]._isDataSource
+          ) {
             this.dataSourcePropsReaders[dataSourceKey] = () => {
               if (this.dataSourceProps[dataSourceKey]._methodName === READ_METHOD) {
                 this.dataSourceProps[dataSourceKey]._source.read.dispatch().catch(error => {
@@ -140,7 +151,10 @@ export const reactConnect = mapDataSourcesToProps => {
 
       removeDataSourceListeners() {
         this.dataSourcePropsKeys.forEach(dataSourceKey => {
-          if (this.dataSourceProps[dataSourceKey]._isDataSource) {
+          if (
+            this.dataSourceProps[dataSourceKey] &&
+            this.dataSourceProps[dataSourceKey]._isDataSource
+          ) {
             this.dataSourceProps[dataSourceKey]._source.removeCleanListener(
               this.dataSourcePropsReaders[dataSourceKey]
             );

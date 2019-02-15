@@ -2,7 +2,7 @@ import { plugins } from "reactive-data-source";
 
 import { Component as AboutComponent } from "src/components/about";
 
-import { about } from "src/data-sources/about";
+import { about } from "src/data-layer/about";
 
 export const mapDataSourceToProps = () => {
   return {

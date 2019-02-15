@@ -4,7 +4,7 @@ import { plugins } from "reactive-data-source";
 
 import { UpdateUser } from "./UpdateUser";
 
-import { userMe } from "src/data-sources/users";
+import { userMe } from "src/data-layer/users";
 
 export const UpdateUserMeComponent = ({ user, goBack }) =>
   user._id ? <UpdateUser id={user._id} onCancel={goBack} /> : null;

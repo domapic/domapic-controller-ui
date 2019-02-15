@@ -1,6 +1,7 @@
 import { origins, Selector } from "reactive-data-source";
 import sortBy from "lodash.sortby";
 
+import { authConfig } from "../setup";
 import { byIdFilter } from "../helpers";
 
 // SERVICES COLLECTION
@@ -19,6 +20,7 @@ export const servicesCollection = new origins.Api(
   "/services",
   {},
   {
+    ...authConfig,
     defaultValue: []
   }
 );
@@ -91,6 +93,7 @@ export const servicesModel = new origins.Api(
   "/services/:id",
   {},
   {
+    ...authConfig,
     defaultValue: {}
   }
 );

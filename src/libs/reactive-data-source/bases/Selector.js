@@ -23,9 +23,15 @@ export class Selector extends Base {
 
     this.dataSources = args.slice(0, lastIndex);
     this.resultsParser = args[lastIndex];
+    this.test.filters = [];
+    this.test.selector = this.resultsParser;
     this._id = "select-";
     this.dataSources.forEach(dataSource => {
-      this._id = `${this._id}${dataSource.source ? dataSource.source._id : dataSource._id}`;
+      const hasFilter = !!dataSource.source;
+      this._id = `${this._id}${hasFilter ? dataSource.source._id : dataSource._id}`;
+      if (hasFilter) {
+        this.test.filters.push(dataSource.filter);
+      }
     });
 
     this._cache = new Cache(this._eventEmitter, this._id);

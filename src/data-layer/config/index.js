@@ -1,5 +1,7 @@
 import { origins, Selector } from "reactive-data-source";
 
+import { authConfig } from "../setup";
+
 import { display } from "../helpers";
 
 const BASE_KEYS = {
@@ -18,6 +20,7 @@ export const config = new origins.Api(
   "/config",
   {},
   {
+    ...authConfig,
     defaultValue: {}
   }
 );

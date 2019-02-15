@@ -2,7 +2,7 @@ import { plugins } from "reactive-data-source";
 
 import { Component as ConfigComponent } from "src/components/config";
 
-import { customConfig } from "src/data-sources/config";
+import { customConfig } from "src/data-layer/config";
 
 export const mapDataSourceToProps = () => {
   return {

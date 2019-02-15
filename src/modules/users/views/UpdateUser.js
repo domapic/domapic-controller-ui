@@ -13,7 +13,7 @@ import {
   isValidUserEmail,
   isUserNameRepeated,
   isUserEmailRepeated
-} from "src/data-sources/users";
+} from "src/data-layer/users";
 
 export const mapDataSourceToProps = ({ id, deleting }) => {
   const readUser = usersModelsWithExtraData.byId(id).read;

@@ -1,5 +1,6 @@
 import { origins, Selector } from "reactive-data-source";
 
+import { authConfig } from "../setup";
 import { roles } from "../roles";
 
 import { byIdFilter } from "../helpers";
@@ -13,6 +14,7 @@ export const usersModels = new origins.Api(
     delete: true
   },
   {
+    ...authConfig,
     defaultValue: {}
   }
 );

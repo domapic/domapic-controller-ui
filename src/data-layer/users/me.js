@@ -1,5 +1,6 @@
 import { origins, Selector } from "reactive-data-source";
 
+import { authConfig } from "../setup";
 import { roles } from "../roles";
 
 import { userAvatar, byEmailFilter } from "./avatar";
@@ -9,6 +10,7 @@ export const userMe = new origins.Api(
   "/users/me",
   {},
   {
+    ...authConfig,
     defaultValue: {}
   }
 );

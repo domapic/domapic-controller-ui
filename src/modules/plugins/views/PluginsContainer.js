@@ -2,7 +2,7 @@ import { plugins } from "reactive-data-source";
 
 import { Component as SearchableList } from "src/components/searchable-list";
 
-import { pluginsCollection } from "src/data-sources/services";
+import { pluginsCollection } from "src/data-layer/services";
 
 export const mapDataSourceToProps = () => ({
   loading: pluginsCollection.read.getters.loading,

@@ -2,14 +2,12 @@ import { plugins } from "reactive-data-source";
 
 import { Component as UserMenuComponent } from "src/components/menu-user";
 
-import { authSession } from "src/data-sources/authentication";
-import { logout, cleanAll } from "src/data-sources/setup";
-import { userMeWithExtraData } from "src/data-sources/users";
+import { login } from "src/data-layer/login";
+import { userMeWithExtraData } from "src/data-layer/users";
 
 const doLogout = event => {
   event.preventDefault();
-  logout();
-  return authSession.delete().then(cleanAll);
+  return login.logout();
 };
 
 export const mapDataSourceToProps = () => {

@@ -1,5 +1,6 @@
 import { origins, Selector } from "reactive-data-source";
 
+import { authConfig } from "../setup";
 import { display, formatDate } from "../helpers";
 import { abilitiesCollection } from "../abilities";
 import { servicesCollection } from "../services";
@@ -10,6 +11,7 @@ export const logs = new origins.Api(
   "/logs",
   {},
   {
+    ...authConfig,
     defaultValue: []
   }
 );

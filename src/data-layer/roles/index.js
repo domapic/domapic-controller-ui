@@ -23,9 +23,7 @@ const ROLES = [
   }
 ];
 
-export const roles = new origins.MemoryStorage("roles", {
-  defaultValue: ROLES
-});
+export const roles = new origins.MemoryStorage("roles", ROLES);
 
 export const nonSystemRoles = new Selector(
   roles,

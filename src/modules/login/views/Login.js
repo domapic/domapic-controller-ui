@@ -2,8 +2,8 @@ import { plugins } from "reactive-data-source";
 
 import { Component as LoginComponent } from "src/components/login";
 
-import { authSession, authJwt } from "src/data-sources/authentication";
-import { setApiKey, setJwt } from "src/data-sources/setup";
+import { authSession, authJwt } from "src/data-layer/authentication";
+import { setApiKeyAuth, setJwtAuth } from "src/data-layer/setup";
 
 let moduleConfig = {
   type: LoginComponent.types.JWT,
@@ -22,7 +22,7 @@ const doJwtLogin = userData =>
       .then(result =>
         Promise.all([
           authSession.refreshToken().update(result.refreshToken),
-          setJwt(result.accessToken)
+          setJwtAuth(result.accessToken)
         ])
       ),
     authSession.apiKey().delete()
@@ -31,7 +31,7 @@ const doJwtLogin = userData =>
 const doApiKeyLogin = apiKey =>
   Promise.all([
     authSession.apiKey().update(apiKey),
-    setApiKey(apiKey),
+    setApiKeyAuth(apiKey),
     authSession.refreshToken().delete()
   ]);
 

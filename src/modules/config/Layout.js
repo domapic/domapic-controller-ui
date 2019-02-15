@@ -5,7 +5,7 @@ import { plugins } from "reactive-data-source";
 import { BaseConfig } from "./views/BaseConfig";
 import { CustomConfig } from "./views/CustomConfig";
 
-import { customConfig } from "src/data-sources/config";
+import { customConfig } from "src/data-layer/config";
 
 export const ConfigLayout = ({ customConfig }) => {
   const custom = customConfig.length ? (

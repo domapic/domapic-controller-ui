@@ -54,13 +54,13 @@ export class Storage extends DataSource {
   }
 
   _delete(filter) {
-    const rootValue = this._getRootValue();
+    let rootValue = this._getRootValue();
     if (filter) {
       delete rootValue[filter];
-      this._setRootValue(rootValue);
     } else {
-      this._setRootValue({});
+      rootValue = {};
     }
+    this._setRootValue(rootValue);
     this._clean();
     return Promise.resolve();
   }

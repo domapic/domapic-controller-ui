@@ -1,5 +1,7 @@
 import { origins } from "reactive-data-source";
 
+import { baseConfig } from "../setup";
+
 // AUTHENTICATION SESSION
 
 export const authSession = new origins.LocalStorage("authentication");
@@ -14,7 +16,11 @@ authSession.addCustomFilter({
 
 // AUTHENTICATION API
 
-export const authJwt = new origins.Api("/auth/jwt", {
-  create: true,
-  read: false
-});
+export const authJwt = new origins.Api(
+  "/auth/jwt",
+  {
+    create: true,
+    read: false
+  },
+  baseConfig
+);

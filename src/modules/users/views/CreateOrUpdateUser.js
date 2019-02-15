@@ -8,7 +8,7 @@ import {
   usersCollection,
   usersModels,
   usersCollectionExactFiltered
-} from "src/data-sources/users";
+} from "src/data-layer/users";
 
 export class CreateOrUpdateUser extends Component {
   constructor(props) {

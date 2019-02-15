@@ -1,6 +1,7 @@
 import { origins, Selector } from "reactive-data-source";
 import sortBy from "lodash.sortby";
 
+import { authConfig } from "../setup";
 import { roles } from "../roles";
 
 import { isSystemRole } from "./helpers";
@@ -11,6 +12,7 @@ export const usersCollection = new origins.Api(
     create: true
   },
   {
+    ...authConfig,
     defaultValue: []
   }
 );

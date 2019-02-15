@@ -1,9 +1,10 @@
 import { Storage } from "./Storage";
 
 export class MemoryStorage extends Storage {
-  constructor(namespace, config) {
-    super(namespace, null, `memory-storage-${namespace}`, config);
-    this._memory = (config && config.defaultValue) || {};
+  constructor(namespace, value) {
+    super(namespace, null, `memory-storage-${namespace}`, {});
+    this._memory = value || {};
+    this.update(this._memory);
   }
 
   _getRootValue() {

@@ -2,7 +2,7 @@ import { plugins } from "reactive-data-source";
 
 import { Component as SettingsMenuComponent } from "src/components/menu-settings";
 
-import { userMeIsAdmin } from "src/data-sources/users";
+import { userMeIsAdmin } from "src/data-layer/users";
 
 export const mapDataSourceToProps = () => {
   return {

@@ -17,6 +17,7 @@ export class Base {
     this._eventEmitter = new EventEmitter();
     this.filters = {};
     this.customFilters = {};
+    this.test = {};
   }
 
   _emitChange(filter, method) {
@@ -116,6 +117,8 @@ export class Base {
   addCustomFilters(customFilters) {
     Object.keys(customFilters).forEach(filterKey => {
       this.customFilters[filterKey] = customFilters[filterKey];
+      this.test.customFilters = this.test.customFilters || {};
+      this.test.customFilters[filterKey] = customFilters[filterKey];
       this[filterKey] = originalFilter => {
         const filter = cloneDeep(originalFilter);
         return this.filter(customFilters[filterKey](filter));

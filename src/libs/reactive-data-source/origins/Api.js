@@ -1,6 +1,7 @@
-import { DataSource } from "../bases/DataSource";
-
+import once from "lodash.once";
 import pathToRegexp from "path-to-regexp";
+
+import { DataSource } from "../bases/DataSource";
 
 import axios from "axios";
 import axiosRetry from "axios-retry";
@@ -19,6 +20,8 @@ const defaultConfig = {
   deleteMethod: "delete",
   authErrorStatus: 401,
   authErrorHandler: null,
+  onBeforeRequest: null,
+  onceBeforeRequest: null,
   expirationTime: 0,
   retries: 3,
   cache: true,
@@ -42,6 +45,11 @@ export class Api extends DataSource {
 
     const configuration = { ...defaultConfig, ...config };
     this._config(configuration);
+    this._addOnBeforeRequest(configuration.onceBeforeRequest);
+  }
+
+  _addOnBeforeRequest(onceBeforeRequest) {
+    this._onceBeforeRequest = onceBeforeRequest ? once(onceBeforeRequest) : null;
   }
 
   _config(configuration) {
@@ -58,6 +66,7 @@ export class Api extends DataSource {
     this._validateStatus = configuration.validateStatus;
     this._errorHandler = configuration.errorHandler;
     this._baseUrl = configuration.baseUrl;
+    this._onBeforeRequest = configuration.onBeforeRequest;
 
     this.client = axios.create();
 
@@ -78,6 +87,7 @@ export class Api extends DataSource {
 
   config(configuration) {
     this._config({ ...this._configuration, ...configuration });
+    this._addOnBeforeRequest(configuration.onceBeforeRequest);
   }
 
   _getQueryString(query) {
@@ -118,6 +128,7 @@ export class Api extends DataSource {
 
   _doRequest(requestOptions, isAuthRetry) {
     const retry = () => {
+      this._doBeforeRequest();
       return this._doRequest(
         {
           ...requestOptions,
@@ -140,6 +151,15 @@ export class Api extends DataSource {
         }
         return this._errorHandler(error);
       });
+  }
+
+  _doBeforeRequest() {
+    if (this._onBeforeRequest) {
+      this._onBeforeRequest(this);
+    }
+    if (this._onceBeforeRequest) {
+      this._onceBeforeRequest(this);
+    }
   }
 
   _readRequest(url) {
@@ -194,6 +214,7 @@ export class Api extends DataSource {
   }
 
   _read(filter) {
+    this._doBeforeRequest();
     const url = this._getUrl(filter);
     if (this._useCache) {
       return this._readFromCache(filter, url);
@@ -210,14 +231,17 @@ export class Api extends DataSource {
   }
 
   _update(filter, data) {
+    this._doBeforeRequest();
     return this._cleanAfterRequest(this._updateRequest(this._getUrl(filter), data), filter);
   }
 
   _create(filter, data) {
+    this._doBeforeRequest();
     return this._cleanAfterRequest(this._createRequest(this._getUrl(), data));
   }
 
   _delete(filter) {
+    this._doBeforeRequest();
     return this._cleanAfterRequest(this._deleteRequest(this._getUrl(filter)), filter);
   }
 

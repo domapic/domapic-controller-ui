@@ -2,8 +2,8 @@ import { plugins } from "reactive-data-source";
 
 import { Component as ModuleComponent } from "src/components/module";
 
-import { servicesModel } from "src/data-sources/services";
-import { abilitiesCollection } from "src/data-sources/abilities";
+import { servicesModel } from "src/data-layer/services";
+import { abilitiesCollection } from "src/data-layer/abilities";
 
 export const mapDataSourceToProps = ({ id }) => {
   const module = servicesModel.byId(id).read;

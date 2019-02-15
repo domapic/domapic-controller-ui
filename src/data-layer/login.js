@@ -1,7 +1,9 @@
+"use strict";
+
 import queryString from "query-string";
 
 import { authSession, authJwt } from "./authentication";
-import { setAuthErrorHandler, setJwt, setApiKey } from "./setup";
+import { config, removeAuth, setJwtAuth, setApiKeyAuth, cleanAll } from "./setup";
 
 class Login {
   constructor() {
@@ -22,27 +24,18 @@ class Login {
               refreshToken
             })
             .then(response => {
-              setJwt(response.accessToken);
+              setJwtAuth(response.accessToken);
               return retry();
             });
         } else if (apiKey) {
-          setApiKey(apiKey);
+          setApiKeyAuth(apiKey);
           return retry();
         }
         return Promise.reject(noAuthenticationTokenError);
       })
       .catch(error => {
         if (error === noAuthenticationTokenError || error.message === "Unauthorized") {
-          return Promise.all([this._refreshToken.delete(), this._apiKey.delete()]).then(() => {
-            const previousLocation =
-              this._history.location.pathname !== this._loginRoute
-                ? `?${queryString.stringify({
-                    redirect: this._history.location.pathname
-                  })}`
-                : "";
-            this._history.push(`${this._loginRoute}${previousLocation}`);
-            return Promise.reject(error);
-          });
+          return this.logout().then(() => Promise.reject(error));
         } else {
           return Promise.reject(error);
         }
@@ -50,7 +43,24 @@ class Login {
   }
 
   _configDataSources() {
-    setAuthErrorHandler(this._doLogin);
+    config({
+      authErrorHandler: this._doLogin
+    });
+  }
+
+  logout() {
+    return Promise.all([this._refreshToken.delete(), this._apiKey.delete()]).then(() => {
+      const previousLocation =
+        this._history.location.pathname !== this._loginRoute
+          ? `?${queryString.stringify({
+              redirect: this._history.location.pathname
+            })}`
+          : "";
+      this._history.push(`${this._loginRoute}${previousLocation}`);
+      removeAuth();
+      cleanAll();
+      return Promise.resolve();
+    });
   }
 
   setup(history, loginRoute) {

@@ -9,8 +9,8 @@ import {
   isValidUserEmail,
   isUserNameRepeated,
   isUserEmailRepeated
-} from "src/data-sources/users";
-import { nonSystemRoles } from "src/data-sources/roles";
+} from "src/data-layer/users";
+import { nonSystemRoles } from "src/data-layer/roles";
 
 export const mapDataSourceToProps = () => {
   return {

@@ -1,4 +1,5 @@
 import { origins } from "reactive-data-source";
+import { authConfig } from "../setup";
 
 // ABILITIES COLLECTION
 
@@ -16,6 +17,7 @@ export const abilitiesCollection = new origins.Api(
   "/abilities",
   {},
   {
+    ...authConfig,
     defaultValue: []
   }
 );
