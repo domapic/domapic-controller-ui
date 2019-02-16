@@ -1,6 +1,6 @@
 import { plugins } from "reactive-data-source";
 
-import { Component as UserMenuComponent } from "src/components/menu-user";
+import { Component as UserMenuComponent } from "../components/user";
 
 import { login } from "src/data-layer/login";
 import { userMeWithExtraData } from "src/data-layer/users";

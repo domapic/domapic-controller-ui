@@ -1,6 +1,6 @@
 import { plugins } from "reactive-data-source";
 
-import { Component as AboutComponent } from "src/components/about";
+import { Component as AboutComponent } from "../components/about";
 
 import { about } from "src/data-layer/about";
 

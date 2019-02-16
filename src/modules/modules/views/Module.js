@@ -1,6 +1,6 @@
 import { plugins } from "reactive-data-source";
 
-import { Component as ModuleComponent } from "src/components/module";
+import { Component as ModuleComponent } from "../components/module";
 
 import { servicesModel } from "src/data-layer/services";
 import { abilitiesCollection } from "src/data-layer/abilities";

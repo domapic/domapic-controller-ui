@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { Component as HomeMenuComponent } from "src/components/menu-home";
+import { Component as HomeMenuComponent } from "../components/home";
 
 import { NAMESPACE } from "../state/reducers";
 import { historyPushed, historyPopped } from "../state/actions";

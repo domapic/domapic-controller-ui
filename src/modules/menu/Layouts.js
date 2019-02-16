@@ -1,7 +1,7 @@
 import { Component } from "react";
 
-import { Component as MenuSections } from "src/components/menu-sections";
-import { Component as MenuAbout } from "src/components/menu-about";
+import { Component as MenuSections } from "./components/sections";
+import { Component as MenuAbout } from "./components/about";
 
 import { HomeMenu } from "./views/HomeMenu";
 import { SettingsMenu } from "./views/SettingsMenu";

@@ -1,6 +1,6 @@
 import { plugins } from "reactive-data-source";
 
-import { Component as ConfigComponent } from "src/components/config";
+import { Component as ConfigComponent } from "../components/config";
 
 import { baseConfig } from "src/data-layer/config";
 

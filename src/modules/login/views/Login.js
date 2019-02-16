@@ -1,6 +1,6 @@
 import { plugins } from "reactive-data-source";
 
-import { Component as LoginComponent } from "src/components/login";
+import { Component as LoginComponent } from "../components/login";
 
 import { authSession, authJwt } from "src/data-layer/authentication";
 import { setApiKeyAuth, setJwtAuth } from "src/data-layer/setup";

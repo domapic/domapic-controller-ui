@@ -1,6 +1,6 @@
 import { plugins } from "reactive-data-source";
 
-import { Component as UsersListComponent } from "src/components/users-list";
+import { Component as UsersListComponent } from "../components/users-list";
 import { usersCollectionFilteredAndSorted } from "src/data-layer/users";
 
 import { UserAvatar } from "./UserAvatar";

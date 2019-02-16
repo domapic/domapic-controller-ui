@@ -1,6 +1,6 @@
 import { plugins } from "reactive-data-source";
 
-import { Component as SettingsMenuComponent } from "src/components/menu-settings";
+import { Component as SettingsMenuComponent } from "../components/settings";
 
 import { userMeIsAdmin } from "src/data-layer/users";
 

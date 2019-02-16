@@ -1,6 +1,6 @@
 import { plugins } from "reactive-data-source";
 
-import { Component as UsersListContainerComponent } from "src/components/users-list-container";
+import { Component as UsersListContainerComponent } from "../components/users-list-container";
 import { usersCollection } from "src/data-layer/users";
 
 import { UsersList } from "./UsersList";
