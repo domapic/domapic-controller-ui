@@ -1,5 +1,5 @@
 import { Module as Login } from "src/modules/login";
-import { Module as HomeMenu } from "src/modules/menu-home";
+import { Module as Menu } from "src/modules/menu";
 import { Module as Modules } from "src/modules/modules";
 
 export const setupModules = (history, store, routes, sections) => {
@@ -9,7 +9,7 @@ export const setupModules = (history, store, routes, sections) => {
     header: "Domapic Controller"
   });
 
-  HomeMenu.setup({
+  Menu.setup({
     history,
     store
   });

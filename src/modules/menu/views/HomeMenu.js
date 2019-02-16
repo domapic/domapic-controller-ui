@@ -2,13 +2,10 @@ import { connect } from "react-redux";
 
 import { Component as HomeMenuComponent } from "src/components/menu-home";
 
-import { NAMESPACE, historyChanged } from "../state/reducers";
+import { NAMESPACE } from "../state/reducers";
 import { historyPushed, historyPopped } from "../state/actions";
 
-let config = {
-  history: null,
-  store: null
-};
+let config;
 
 const historyListener = (location, action) => {
   switch (action) {
@@ -25,8 +22,8 @@ const historyBack = () => {
   config.history.goBack();
 };
 
-const setup = configuration => {
-  config = { ...config, ...configuration };
+export const init = configuration => {
+  config = configuration;
   config.history.listen(historyListener);
 };
 
@@ -38,9 +35,3 @@ export const mapStateToProps = state => {
 };
 
 export const HomeMenu = connect(mapStateToProps)(HomeMenuComponent);
-
-HomeMenu.setup = setup;
-HomeMenu.redux = {
-  NAMESPACE,
-  reducer: historyChanged
-};

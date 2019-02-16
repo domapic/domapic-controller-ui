@@ -1,27 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Menu } from "semantic-ui-react";
+import { Menu as SemanticMenu } from "semantic-ui-react";
 
 import { Component as MainContainer } from "src/components/container-main";
-import { Component as AboutMenu } from "src/components/menu-about";
 
-export const SimpleLayout = ({ children, homeMenu = () => {} }) => {
-  const HomeMenu = homeMenu;
+export const SimpleLayout = ({ children, Menu }) => {
   return (
     <React.Fragment>
       <MainContainer>{children}</MainContainer>
-      <Menu inverted={true} size="small" fixed="top" className="simple-layout__header-menu">
-        <HomeMenu />
-        <Menu.Item position="right" className="simple-layout__header-menu__item--right">
-          <AboutMenu />
-        </Menu.Item>
-      </Menu>
+      <SemanticMenu
+        inverted={true}
+        size="small"
+        fixed="top"
+        className="simple-layout__header-menu"
+      >
+        <Menu.Home />
+        <SemanticMenu.Item position="right" className="simple-layout__header-menu__item--right">
+          <Menu.About />
+        </SemanticMenu.Item>
+      </SemanticMenu>
     </React.Fragment>
   );
 };
 
 SimpleLayout.propTypes = {
-  children: PropTypes.node,
-  homeMenu: PropTypes.func
+  Menu: PropTypes.func,
+  children: PropTypes.node
 };

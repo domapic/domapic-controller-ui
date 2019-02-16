@@ -5,7 +5,7 @@ import { Switch } from "react-router-dom";
 import { Component as SimpleLayout } from "src/components/layout-simple";
 import { Component as ErrorComponent } from "src/components/error";
 
-import { Module as HomeMenu } from "src/modules/menu-home";
+import { Module as Menu } from "src/modules/menu";
 
 import { routes } from "../routes";
 
@@ -18,7 +18,7 @@ export const SimpleRouter = () => (
 );
 
 export const SimpleLayoutRouter = () => (
-  <SimpleLayout homeMenu={HomeMenu}>
+  <SimpleLayout Menu={Menu}>
     <SimpleRouter />
   </SimpleLayout>
 );

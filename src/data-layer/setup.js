@@ -12,7 +12,6 @@ let _allDataSources = [];
 export const configDataSource = dataSource => {
   _allDataSources.push(dataSource);
   dataSource.config(_config);
-  console.log(_allDataSources);
 };
 
 export const authDataSource = dataSource => {

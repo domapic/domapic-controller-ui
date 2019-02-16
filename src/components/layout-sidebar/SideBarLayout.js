@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Menu, Sidebar } from "semantic-ui-react";
+import { Menu as SemanticMenu, Sidebar } from "semantic-ui-react";
 
 import { Component as MainContainer } from "src/components/container-main";
-import { Component as AboutMenu } from "src/components/menu-about";
 import { Component as Responsive } from "src/components/responsive";
 
 import { HeaderMenu } from "./HeaderMenu";
@@ -29,19 +28,18 @@ export class SideBarLayout extends Component {
   render() {
     const { children } = this.props;
     const { sidebarOpened } = this.state;
-    const UserMenu = this.props.userMenu;
-    const SettingsMenu = this.props.settingsMenu;
+    const Menu = this.props.Menu;
 
-    const menu = <HeaderMenu {...this.props} handleToggle={this.handleToggle} />;
+    const headerMenu = <HeaderMenu {...this.props} handleToggle={this.handleToggle} />;
 
-    const rootMenu = sidebarOpened ? null : menu;
-    const overlayedMenu = sidebarOpened ? menu : null;
+    const rootMenu = sidebarOpened ? null : headerMenu;
+    const overlayedMenu = sidebarOpened ? headerMenu : null;
 
     return (
       <React.Fragment>
         <Responsive as={Sidebar.Pushable} device="mobile" className="sidebar-layout--mobile">
           <Sidebar
-            as={Menu}
+            as={SemanticMenu}
             animation="overlay"
             inverted
             onHide={this.handleSidebarHide}
@@ -49,10 +47,10 @@ export class SideBarLayout extends Component {
             visible={sidebarOpened}
             onClick={this.handleSidebarHide}
           >
-            <UserMenu vertical />
-            {this.props.menu}
-            <SettingsMenu vertical />
-            <AboutMenu vertical />
+            <Menu.User vertical />
+            <Menu.Sections sections={this.props.sections} />
+            <Menu.Settings vertical />
+            <Menu.About vertical />
           </Sidebar>
           <Sidebar.Pusher dimmed={sidebarOpened} className="sidebar-layout__sidebar-pusher">
             <MainContainer mobile={true} dimmed={sidebarOpened}>
@@ -71,9 +69,7 @@ export class SideBarLayout extends Component {
 }
 
 SideBarLayout.propTypes = {
+  Menu: PropTypes.func,
   children: PropTypes.node,
-  homeMenu: PropTypes.func,
-  menu: PropTypes.node,
-  settingsMenu: PropTypes.func,
-  userMenu: PropTypes.func
+  sections: PropTypes.array
 };

@@ -6,9 +6,10 @@ import { routes } from "../routes";
 import { environment } from "../config/environment";
 
 export const setupDataSources = history => {
-  login.setup(history, routes.login.route);
   config({
     baseUrl: environment.baseApi
   });
+
+  login.setup(history, routes.login.route);
   socket.setup(environment.baseApi);
 };
