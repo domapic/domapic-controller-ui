@@ -4,7 +4,7 @@ import { Module as Modules } from "src/modules/modules";
 
 export const setupModules = (history, store, routes, sections) => {
   Login.setup({
-    type: Login.types.JWT,
+    type: Login.constants.types.JWT,
     allowChangeType: true,
     header: "Domapic Controller"
   });

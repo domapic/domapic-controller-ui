@@ -5,14 +5,10 @@ import { Component as LoginComponent } from "../components/login";
 import { authSession, authJwt } from "src/data-layer/authentication";
 import { setApiKeyAuth, setJwtAuth } from "src/data-layer/setup";
 
-let moduleConfig = {
-  type: LoginComponent.types.JWT,
-  allowChangeType: false,
-  header: "Domapic"
-};
+let config;
 
-const setup = config => {
-  moduleConfig = { ...moduleConfig, ...config };
+export const init = configuration => {
+  config = configuration;
 };
 
 const doJwtLogin = userData =>
@@ -42,11 +38,8 @@ export const mapDataSourceToProps = () => {
     doJwtLogin,
     jwtLoading: doLogin.getters.loading,
     jwtError: doLogin.getters.error,
-    ...moduleConfig
+    ...config
   };
 };
 
 export const Login = plugins.connect(mapDataSourceToProps)(LoginComponent);
-
-Login.setup = setup;
-Login.types = LoginComponent.types;

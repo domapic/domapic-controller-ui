@@ -1,6 +1,6 @@
-import { setup } from "./Layouts";
-import { Router } from "./Router";
+import { setup } from "./setup";
+import { MainLayout } from "./Layouts";
 
-export const Module = Router;
+export const Module = MainLayout;
 
 Module.setup = setup;

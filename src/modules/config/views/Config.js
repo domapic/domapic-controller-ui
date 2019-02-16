@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { plugins } from "reactive-data-source";
 
-import { BaseConfig } from "./views/BaseConfig";
-import { CustomConfig } from "./views/CustomConfig";
+import { BaseConfig } from "./BaseConfig";
+import { CustomConfig } from "./CustomConfig";
 
 import { customConfig } from "src/data-layer/config";
 
-export const ConfigLayout = ({ customConfig }) => {
+export const ConfigView = ({ customConfig }) => {
   const custom = customConfig.length ? (
     <CustomConfig title="Service custom configuration" />
   ) : null;
@@ -19,7 +19,7 @@ export const ConfigLayout = ({ customConfig }) => {
   );
 };
 
-ConfigLayout.propTypes = {
+ConfigView.propTypes = {
   customConfig: PropTypes.array
 };
 
@@ -29,4 +29,4 @@ export const mapDataSourceToProps = () => {
   };
 };
 
-export const Config = plugins.connect(mapDataSourceToProps)(ConfigLayout);
+export const Config = plugins.connect(mapDataSourceToProps)(ConfigView);

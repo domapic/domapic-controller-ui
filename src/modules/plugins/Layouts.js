@@ -1,20 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Route, Switch } from "react-router-dom";
 
 import { PluginsContainer } from "./views/PluginsContainer";
 import { PluginsList } from "./views/PluginsList";
 import { Plugin } from "./views/Plugin";
 
-const SORT_BY = ["name", "description"];
-
 export const PluginsLayout = ({ match }) => (
-  <PluginsContainer
-    baseUrl={match.url}
-    header="Plugins"
-    sortBy={SORT_BY[0]}
-    sortOrder="asc"
-    sortByChoices={SORT_BY}
-  >
+  <PluginsContainer baseUrl={match.url}>
     <PluginsList baseUrl={match.url} />
   </PluginsContainer>
 );
@@ -26,5 +19,16 @@ PluginsLayout.propTypes = {
 export const PluginLayout = ({ match }) => <Plugin id={match.params.id} />;
 
 PluginLayout.propTypes = {
+  match: PropTypes.any.isRequired
+};
+
+export const MainLayout = ({ match }) => (
+  <Switch>
+    <Route exact path={`${match.path}`} component={PluginsLayout} />
+    <Route exact path={`${match.path}/:id`} component={PluginLayout} />
+  </Switch>
+);
+
+MainLayout.propTypes = {
   match: PropTypes.any.isRequired
 };

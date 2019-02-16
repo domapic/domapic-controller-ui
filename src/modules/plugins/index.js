@@ -1,3 +1,3 @@
-import { Router } from "./Router";
+import { MainLayout } from "./Layouts";
 
-export const Module = Router;
+export const Module = MainLayout;

@@ -1,31 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Route, Switch } from "react-router-dom";
 
 import { ModulesContainer } from "./views/ModulesContainer";
 import { ModulesList } from "./views/ModulesList";
 import { Module } from "./views/Module";
 
-const SORT_BY = ["name", "description"];
 const ABILITIES = "abilities";
 const INFO = "info";
 const ROUTE_SEP = "/";
 
-let config = {
-  abilitiesBaseUrl: ""
-};
+let config;
 
-export const setup = configuration => {
-  config = { ...config, ...configuration };
+export const init = configuration => {
+  config = configuration;
 };
 
 export const ModulesLayout = ({ match }) => (
-  <ModulesContainer
-    baseUrl={match.url}
-    header="Modules"
-    sortBy={SORT_BY[0]}
-    sortOrder="asc"
-    sortByChoices={SORT_BY}
-  >
+  <ModulesContainer baseUrl={match.url}>
     <ModulesList baseUrl={match.url} />
   </ModulesContainer>
 );
@@ -53,5 +45,16 @@ export const ModuleLayout = ({ match }) => {
 };
 
 ModuleLayout.propTypes = {
+  match: PropTypes.any.isRequired
+};
+
+export const MainLayout = ({ match }) => (
+  <Switch>
+    <Route exact path={`${match.path}`} component={ModulesLayout} />
+    <Route exact path={`${match.path}/:id/:display?`} component={ModuleLayout} />
+  </Switch>
+);
+
+MainLayout.propTypes = {
   match: PropTypes.any.isRequired
 };
