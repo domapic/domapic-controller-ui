@@ -2,10 +2,10 @@ import { plugins } from "reactive-data-source";
 
 import { Component as PluginComponent } from "../components/plugin";
 
-import { servicesModel } from "src/data-layer/services";
+import { serviceModels } from "src/data-layer/services";
 
 export const mapDataSourceToProps = ({ id }) => {
-  const source = servicesModel.byId(id).read;
+  const source = serviceModels.byId(id).read;
   return {
     plugin: source.getters.value,
     pluginLoading: source.getters.loading,

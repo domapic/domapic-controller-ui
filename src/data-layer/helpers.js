@@ -4,7 +4,7 @@ export const formatDate = dateString => {
   return moment(dateString).format("YY-MM-DD, hh:mm:ss");
 };
 
-export const display = value => {
+export const displayValue = value => {
   if (["string", "number"].indexOf(typeof value) < 0) {
     return JSON.stringify(value);
   }

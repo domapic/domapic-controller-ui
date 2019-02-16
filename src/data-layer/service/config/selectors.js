@@ -1,8 +1,7 @@
-import { origins, Selector } from "reactive-data-source";
+import { Selector } from "reactive-data-source";
 
-import { authConfig } from "../setup";
-
-import { display } from "../helpers";
+import { displayValue } from "../../helpers";
+import { config } from "./origins";
 
 const BASE_KEYS = {
   logLevel: "Log Level",
@@ -16,15 +15,6 @@ const BASE_KEYS = {
   auth: "Authentication enabled"
 };
 
-export const config = new origins.Api(
-  "/config",
-  {},
-  {
-    ...authConfig,
-    defaultValue: {}
-  }
-);
-
 export const baseConfig = new Selector(
   config,
   configuration => {
@@ -34,7 +24,7 @@ export const baseConfig = new Selector(
         base.push({
           key: key,
           label: BASE_KEYS[key],
-          value: display(configuration[key]),
+          value: displayValue(configuration[key]),
           originalValue: configuration[key]
         });
       }
@@ -53,7 +43,7 @@ export const customConfig = new Selector(
         custom.push({
           key: key,
           label: key,
-          value: display(configuration[key]),
+          value: displayValue(configuration[key]),
           originalValue: configuration[key]
         });
       }

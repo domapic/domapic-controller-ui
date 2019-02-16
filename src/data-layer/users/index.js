@@ -1,44 +1,14 @@
-import { userMe, userMeWithExtraData, userMeIsAdmin } from "./me";
-import {
-  usersCollection,
-  usersCollectionExactFiltered,
-  usersCollectionFilteredAndSorted
-} from "./collection";
-import { usersModels, usersModelsWithExtraData, userAllowedRoles } from "./model";
+import "./listeners";
 
-import {
-  isValidUserName,
-  isValidUserEmail,
-  isUserNameRepeated,
-  isUserEmailRepeated
-} from "./validations";
-
-import { userAvatar } from "./avatar";
-
-usersModels.onChangeAny(changeDetails => {
-  if (
-    [usersModels.actions.delete.success, usersModels.actions.update.success].includes(
-      changeDetails.action
-    )
-  ) {
-    usersCollection.clean();
-    userMe.clean();
-  }
-});
-
-export {
-  userMe,
-  userMeWithExtraData,
-  userMeIsAdmin,
-  userAvatar,
-  usersCollection,
-  usersCollectionExactFiltered,
-  usersCollectionFilteredAndSorted,
-  usersModels,
-  usersModelsWithExtraData,
-  userAllowedRoles,
-  isValidUserName,
-  isValidUserEmail,
-  isUserNameRepeated,
-  isUserEmailRepeated
-};
+export * from "./authentication/origins";
+export * from "./avatar/origins";
+export * from "./avatar/selectors";
+export * from "./me/origins";
+export * from "./me/selectors";
+export * from "./roles/origins";
+export * from "./roles/selectors";
+export * from "./user/origins";
+export * from "./user/selectors";
+export * from "./users/origins";
+export * from "./users/selectors";
+export * from "./users/validators";

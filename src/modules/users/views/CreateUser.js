@@ -10,7 +10,7 @@ import {
   isUserNameRepeated,
   isUserEmailRepeated
 } from "src/data-layer/users";
-import { nonSystemRoles } from "src/data-layer/roles";
+import { nonSystemRoles } from "src/data-layer/users";
 
 export const mapDataSourceToProps = () => {
   return {

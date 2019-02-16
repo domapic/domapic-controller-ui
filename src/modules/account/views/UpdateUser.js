@@ -5,8 +5,8 @@ import { plugins } from "reactive-data-source";
 import { Component as UserComponent } from "src/components/user";
 
 import {
-  usersModels,
-  usersModelsWithExtraData,
+  userModels,
+  userModelsWithExtraData,
   userAllowedRoles,
   userMeIsAdmin,
   isValidUserName,
@@ -16,8 +16,8 @@ import {
 } from "src/data-layer/users";
 
 export const mapDataSourceToProps = ({ id }) => {
-  const readUser = usersModelsWithExtraData.byId(id).read;
-  const user = usersModels.byId(id);
+  const readUser = userModelsWithExtraData.byId(id).read;
+  const user = userModels.byId(id);
   const updateUser = user.update;
   const deleteUser = user.delete;
 

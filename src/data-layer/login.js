@@ -2,7 +2,7 @@
 
 import queryString from "query-string";
 
-import { authSession, authJwt } from "./authentication";
+import { authSession, authJwt } from "./users";
 import { config, removeAuth, setJwtAuth, setApiKeyAuth, cleanAll } from "./setup";
 
 class Login {

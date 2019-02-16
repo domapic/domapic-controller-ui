@@ -2,7 +2,7 @@ import { plugins } from "reactive-data-source";
 
 import { Component as LoginComponent } from "../components/login";
 
-import { authSession, authJwt } from "src/data-layer/authentication";
+import { authSession, authJwt } from "src/data-layer/users";
 import { setApiKeyAuth, setJwtAuth } from "src/data-layer/setup";
 
 let config;

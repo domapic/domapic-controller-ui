@@ -4,7 +4,7 @@ import { pickBy, identity } from "lodash";
 
 import { UpdateUser } from "./UpdateUser";
 import { CreateUser } from "./CreateUser";
-import { usersCollection, usersModels, usersCollectionExactFiltered } from "src/data-layer/users";
+import { usersCollection, userModels, usersCollectionExactFiltered } from "src/data-layer/users";
 
 export class CreateOrUpdateUser extends Component {
   constructor(props) {
@@ -42,7 +42,7 @@ export class CreateOrUpdateUser extends Component {
       ...state,
       deleting: true
     }));
-    usersModels
+    userModels
       .byId(this.userId())
       .delete()
       .then(() => {

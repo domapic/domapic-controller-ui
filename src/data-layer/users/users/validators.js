@@ -1,4 +1,4 @@
-import { usersCollectionExactFiltered } from "./collection";
+import { usersCollectionExactFiltered } from "./selectors";
 
 const NAME_REGEX = /^[a-z0-9_.-]*$/;
 

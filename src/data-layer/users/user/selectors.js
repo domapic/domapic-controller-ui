@@ -1,31 +1,18 @@
-import { origins, Selector } from "reactive-data-source";
+import { Selector } from "reactive-data-source";
 
-import { authConfig } from "../setup";
-import { roles } from "../roles";
+import { byIdFilter } from "../../helpers";
 
-import { byIdFilter } from "../helpers";
-import { isSystemRole } from "./helpers";
-import { userAvatar, byEmailFilter } from "./avatar";
+import { isSystemRole } from "../helpers";
+import { roles } from "../roles/origins";
 
-export const usersModels = new origins.Api(
-  "/users/:id",
+import { userAvatar } from "../avatar/selectors";
+import { byEmailFilter } from "../avatar/filters";
+
+import { userModels } from "./origins";
+
+export const userModelsWithExtraData = new Selector(
   {
-    update: true,
-    delete: true
-  },
-  {
-    ...authConfig,
-    defaultValue: {}
-  }
-);
-
-usersModels.addCustomFilter({
-  byId: byIdFilter
-});
-
-export const usersModelsWithExtraData = new Selector(
-  {
-    source: usersModels,
+    source: userModels,
     filter: id => byIdFilter(id)
   },
   {
@@ -43,14 +30,14 @@ export const usersModelsWithExtraData = new Selector(
   {}
 );
 
-usersModelsWithExtraData.addCustomFilter({
+userModelsWithExtraData.addCustomFilter({
   byId: id => id
 });
 
 export const userAllowedRoles = new Selector(
   roles,
   {
-    source: usersModelsWithExtraData,
+    source: userModelsWithExtraData,
     filter: id => id
   },
   (rolesResults, userResults) => {

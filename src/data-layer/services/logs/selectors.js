@@ -1,20 +1,12 @@
-import { origins, Selector } from "reactive-data-source";
+import { Selector } from "reactive-data-source";
 
-import { authConfig } from "../setup";
-import { display, formatDate } from "../helpers";
-import { abilitiesCollection } from "../abilities";
-import { servicesCollection } from "../services";
+import { displayValue, formatDate } from "../../helpers";
+
+import { abilitiesCollection } from "../abilities/origins";
+import { servicesCollection } from "../services/origins";
+import { logs } from "./origins";
 
 const NUMBER_OF_LOGS = 100;
-
-export const logs = new origins.Api(
-  "/logs",
-  {},
-  {
-    ...authConfig,
-    defaultValue: []
-  }
-);
 
 export const lastLogs = new Selector(
   logs,
@@ -35,7 +27,7 @@ export const lastLogsDetails = new Selector(
         dateTime: formatDate(log.createdAt),
         module: (service && service.name) || "-",
         ability: (ability && ability.name) || "-",
-        data: display(log.data)
+        data: displayValue(log.data)
       };
     });
   },

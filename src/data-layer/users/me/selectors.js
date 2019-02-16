@@ -1,19 +1,11 @@
-import { origins, Selector } from "reactive-data-source";
+import { Selector } from "reactive-data-source";
 
-import { authConfig } from "../setup";
-import { roles } from "../roles";
+import { isSystemRole } from "../helpers";
+import { userAvatar } from "../avatar/selectors";
+import { byEmailFilter } from "../avatar/filters";
+import { roles } from "../roles/origins";
 
-import { userAvatar, byEmailFilter } from "./avatar";
-import { isSystemRole } from "./helpers";
-
-export const userMe = new origins.Api(
-  "/users/me",
-  {},
-  {
-    ...authConfig,
-    defaultValue: {}
-  }
-);
+import { userMe } from "./origins";
 
 export const userMeWithExtraData = new Selector(
   userMe,
