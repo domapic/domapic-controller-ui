@@ -51,7 +51,11 @@ export class SearchableList extends Component {
 
   render() {
     return (
-      <Container loading={this.props.loading} error={this.props.error}>
+      <Container
+        loading={this.props.loading}
+        error={this.props.error}
+        background={this.props.background}
+      >
         <Container.Header>{this.props.header}</Container.Header>
         <Container.Search
           sortBy={this.props.sortByChoices}
@@ -76,6 +80,7 @@ export class SearchableList extends Component {
 }
 
 SearchableList.propTypes = {
+  background: PropTypes.bool,
   children: PropTypes.node,
   error: PropTypes.instanceOf(Error),
   header: PropTypes.node,

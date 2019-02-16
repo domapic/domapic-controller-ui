@@ -11,7 +11,7 @@ export class HeaderMenu extends Component {
     const Menu = this.props.Menu;
     return (
       <SemanticMenu inverted size="small" fixed="top" className="sidebar-layout__header-menu">
-        <Responsive device="desktop" className="sidebar-layout__header-menu__container">
+        <Responsive device="tablet-and-desktop" className="sidebar-layout__header-menu__container">
           <Menu.Home />
           <Menu.Sections sections={this.props.sections} />
           <SemanticMenu.Item position="right" className="sidebar-layout__header-menu__item--right">

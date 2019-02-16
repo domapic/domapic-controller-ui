@@ -6,7 +6,7 @@ import { Component as ItemInfo } from "src/components/item-info";
 
 export const About = ({ loading, error, about = {} }) => {
   return (
-    <Container loading={loading} error={error}>
+    <Container loading={loading} error={error} background={true}>
       <Container.Header as="h3">About this package</Container.Header>
       <Container.Content>
         <ItemInfo

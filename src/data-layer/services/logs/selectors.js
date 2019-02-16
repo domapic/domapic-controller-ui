@@ -33,3 +33,9 @@ export const lastLogsDetails = new Selector(
   },
   []
 );
+
+export const logsOfAbility = new Selector(
+  lastLogsDetails,
+  (lastLogsResults, abilityId) => lastLogsResults.filter(log => log._ability === abilityId),
+  []
+);

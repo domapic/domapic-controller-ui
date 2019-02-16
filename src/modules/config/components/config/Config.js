@@ -6,7 +6,7 @@ import { Component as ItemInfo } from "src/components/item-info";
 
 export const Config = ({ title, loading, error, config = [] }) => {
   return (
-    <Container loading={loading} error={error}>
+    <Container loading={loading} error={error} background={true}>
       <Container.Header as="h3">{title}</Container.Header>
       <Container.Content>
         <ItemInfo loading={loading} data={config} />

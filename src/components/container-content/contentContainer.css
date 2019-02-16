@@ -6,3 +6,7 @@
 .ui.fixed.menu.content-container__menu--top {
   padding-top:50px;
 }
+
+.content-container__background--empty {
+  padding-top:30px;
+}

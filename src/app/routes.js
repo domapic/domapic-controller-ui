@@ -7,6 +7,7 @@ import { Module as Login } from "src/modules/login";
 import { Module as Activity } from "src/modules/activity";
 import { Module as Users } from "src/modules/users";
 import { Module as Account } from "src/modules/account";
+import { Module as Abilities } from "src/modules/abilities";
 
 import { environment } from "./config/environment";
 
@@ -16,6 +17,12 @@ export const sections = {
     route: "/dashboard",
     component: Dashboard,
     showInMenu: false
+  },
+  abilities: {
+    name: "Abilities",
+    route: "/abilities",
+    component: Abilities,
+    showInMenu: true
   },
   modules: {
     name: "Modules",
@@ -51,12 +58,6 @@ export const sections = {
     name: "Account",
     route: "/account",
     component: Account,
-    showInMenu: false
-  },
-  abilities: {
-    name: "Abilities",
-    route: "/abilities",
-    component: null,
     showInMenu: false
   }
 };

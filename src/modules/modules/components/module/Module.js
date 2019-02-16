@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { Component as Container } from "src/components/container-content";
 import { Component as ServiceInfo } from "src/components/service-info";
-import { Component as ServicesList } from "src/components/services-list";
+import { Component as Abilities } from "src/components/abilities-list";
 import { Menu } from "semantic-ui-react";
 
 const ABILITIES = "abilities";
@@ -17,7 +17,7 @@ export const Module = ({
   module = {},
   moduleLoading,
   moduleError,
-  display = INFO,
+  display = ABILITIES,
   abilitiesUrl,
   infoUrl,
   abilitiesLinkBaseUrl
@@ -26,10 +26,15 @@ export const Module = ({
     display === INFO ? (
       <ServiceInfo service={module} loading={moduleLoading} />
     ) : (
-      <ServicesList baseUrl={abilitiesLinkBaseUrl} list={abilities} />
+      <Abilities baseUrl={abilitiesLinkBaseUrl} abilities={abilities} />
     );
+  const background = display === INFO;
   return (
-    <Container loading={moduleLoading && abilitiesLoading} error={moduleError || abilitiesError}>
+    <Container
+      loading={moduleLoading || abilitiesLoading}
+      error={moduleError || abilitiesError}
+      background={background}
+    >
       <Container.Header as="h3" loading={moduleLoading}>
         {module.name}
       </Container.Header>

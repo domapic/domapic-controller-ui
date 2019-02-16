@@ -55,6 +55,7 @@ export class UsersListContainer extends Component {
         loading={this.props.loading}
         error={this.props.error}
         menu={<ToggleSystemUsers onChange={this.onChange} />}
+        background={true}
       >
         <UsersList onClickUser={this.props.onClickUser} showSystem={this.state.showSystem} />
       </SearchableList>

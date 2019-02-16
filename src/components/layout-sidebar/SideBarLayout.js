@@ -59,7 +59,7 @@ export class SideBarLayout extends Component {
             {overlayedMenu}
           </Sidebar.Pusher>
         </Responsive>
-        <Responsive device="desktop" className="sidebar-layout--desktop">
+        <Responsive device="tablet-and-desktop" className="sidebar-layout--desktop">
           <MainContainer mobile={false}>{children}</MainContainer>
         </Responsive>
         {rootMenu}

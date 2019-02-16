@@ -5,7 +5,7 @@ import { Component as Container } from "src/components/container-content";
 import { Component as ServiceInfo } from "src/components/service-info";
 
 export const Plugin = ({ plugin = {}, pluginLoading, pluginError }) => (
-  <Container loading={pluginLoading} error={pluginError}>
+  <Container loading={pluginLoading} error={pluginError} background={true}>
     <Container.Header as="h3" loading={pluginLoading}>
       {plugin.name}
     </Container.Header>

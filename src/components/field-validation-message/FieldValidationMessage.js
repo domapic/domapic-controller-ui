@@ -28,7 +28,7 @@ export const FieldValidationMessage = ({ message, valid }) => {
   const Message = !valid ? ErrorLabel : ValidLabel;
   return (
     <React.Fragment>
-      <Responsive device="desktop">
+      <Responsive device="tablet-and-desktop">
         <Form.Field className="form__field-validation__container">
           <Message pointing="left" message={message} />
         </Form.Field>

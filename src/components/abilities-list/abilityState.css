@@ -1,0 +1,27 @@
+.ability__data {
+  float: left;
+  max-width:60%;
+}
+
+.ability__description {
+  max-height: 20px;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ability__data .header {
+  font-weight: 700;
+  font-size: 1.28571429em;
+  margin-top: -.21425em;
+  line-height: 1.28571429em;
+}
+
+.ability__settings {
+  padding-top:10px;
+}
+
+.ability__settings i.icon {
+  margin-right:10px;
+}
+

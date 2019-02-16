@@ -72,6 +72,14 @@ ContentMenu.propTypes = {
   children: PropTypes.node
 };
 
+const EmptyBackground = ({ children }) => (
+  <div className="content-container__background--empty">{children}</div>
+);
+
+EmptyBackground.propTypes = {
+  children: PropTypes.node
+};
+
 export class ContentContainer extends Component {
   static Header = ContentHeader;
   static Placeholder = ContentPlaceholder;
@@ -125,11 +133,12 @@ export class ContentContainer extends Component {
     const hasMenu = menu.length;
     const placeholder = this.renderChilds(PLACEHOLDER);
     const hasPlaceholder = placeholder.length;
+    const BackgroundContainer = this.props.background ? Segment : EmptyBackground;
 
     return (
       <React.Fragment>
         {this.renderChilds(HEADER)}
-        <Responsive device="desktop">
+        <Responsive device="tablet-and-desktop">
           {hasSearch || hasMenu ? (
             <Visibility
               once={false}
@@ -148,7 +157,7 @@ export class ContentContainer extends Component {
             </Visibility>
           ) : null}
         </Responsive>
-        <Segment>
+        <BackgroundContainer>
           <Dimmer active={this.props.loading} inverted>
             <Loader inverted />
           </Dimmer>
@@ -157,7 +166,7 @@ export class ContentContainer extends Component {
             ? this.renderChilds(CONTENT)
             : null}
           {this.props.error ? <ErrorComponent>{this.props.error.message}</ErrorComponent> : null}
-        </Segment>
+        </BackgroundContainer>
         {hasSearch || hasMenu ? (
           <Responsive device="mobile">
             {hasSearch && this.state.searchVisible ? (
@@ -183,6 +192,7 @@ export class ContentContainer extends Component {
 }
 
 ContentContainer.propTypes = {
+  background: PropTypes.bool,
   children: PropTypes.node,
   error: PropTypes.instanceOf(Error),
   loading: PropTypes.bool
