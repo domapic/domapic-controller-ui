@@ -27,21 +27,3 @@
 .ability__settings i.icon {
   margin-right:10px;
 }
-
-.ui[class*="right floated"].statistic.ability__state {
-  margin-left:0;
-  max-width:40%;
-}
-
-.ui[class*="right floated"].statistic.ability__state .label {
-  white-space: nowrap; 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size:0.9em;
-  text-align: right;
-}
-
-.ui[class*="right floated"].statistic.ability__state .value {
-  text-align: right;
-}
-
