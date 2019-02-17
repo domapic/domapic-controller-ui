@@ -17,7 +17,7 @@ export const abilityModelsWithExtraData = new Selector(
       serviceName: modulesResults.find(module => module._id === abilityModel._service).name
     };
   },
-  []
+  {}
 );
 
 abilityModelsWithExtraData.addCustomFilter({

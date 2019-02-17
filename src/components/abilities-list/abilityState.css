@@ -10,11 +10,14 @@
   text-overflow: ellipsis;
 }
 
-.ability__data .header {
+.ability__data .header.ability__name {
   font-weight: 700;
-  font-size: 1.28571429em;
+  font-size: 1.2em;
   margin-top: -.21425em;
   line-height: 1.28571429em;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ability__settings {
@@ -23,5 +26,22 @@
 
 .ability__settings i.icon {
   margin-right:10px;
+}
+
+.ui[class*="right floated"].statistic.ability__state {
+  margin-left:0;
+  max-width:40%;
+}
+
+.ui[class*="right floated"].statistic.ability__state .label {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size:0.9em;
+  text-align: right;
+}
+
+.ui[class*="right floated"].statistic.ability__state .value {
+  text-align: right;
 }
 

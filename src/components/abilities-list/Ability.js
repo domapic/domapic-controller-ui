@@ -6,11 +6,18 @@ import { Card, Icon, Statistic, Button } from "semantic-ui-react";
 
 import "./abilityState.css";
 
-export const AbilityState = () => (
+export const AbilityState = ({ ability }) => (
   <Statistic className="ability__state" floated="right">
+    <Statistic.Label>{ability.name}</Statistic.Label>
     <Statistic.Value>23</Statistic.Value>
   </Statistic>
 );
+
+AbilityState.propTypes = {
+  ability: PropTypes.shape({
+    name: PropTypes.string
+  })
+};
 
 export const AbilityAction = () => (
   <Button.Group fluid>
@@ -24,12 +31,12 @@ export const Ability = ({ ability, baseUrl }) => (
   <Card fluid>
     <Card.Content>
       <div className="ability__data">
-        <Card.Header className="ability__name">{ability.name}</Card.Header>
+        <Card.Header className="ability__name">{ability.serviceName}</Card.Header>
         <Card.Meta className="ability__description">
           <span>{ability.description}</span>
         </Card.Meta>
         <div className="ability__settings">
-          <Icon name="signal" />
+          <Icon name="signal" floated="right" />
           <a>
             <Icon name="star outline" />
           </a>
@@ -38,7 +45,7 @@ export const Ability = ({ ability, baseUrl }) => (
           </Link>
         </div>
       </div>
-      <AbilityState />
+      <AbilityState ability={ability} />
     </Card.Content>
     <Card.Content extra>
       <AbilityAction />

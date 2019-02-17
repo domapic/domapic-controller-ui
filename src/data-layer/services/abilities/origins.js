@@ -2,6 +2,8 @@ import { origins } from "reactive-data-source";
 
 import { authConfig } from "../../setup";
 
+import { ofService } from "./filters";
+
 // ABILITIES COLLECTION
 
 export const abilitiesCollection = new origins.Api(
@@ -14,13 +16,5 @@ export const abilitiesCollection = new origins.Api(
 );
 
 abilitiesCollection.addCustomFilter({
-  ofService: serviceId => {
-    if (serviceId) {
-      return {
-        query: {
-          service: serviceId
-        }
-      };
-    }
-  }
+  ofService
 });
