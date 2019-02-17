@@ -4,14 +4,12 @@ import PropTypes from "prop-types";
 import { Grid } from "semantic-ui-react";
 import { Component as Responsive } from "src/components/responsive";
 
-import { Ability } from "./Ability";
-
-export const Abilities = ({ abilities, baseUrl }) => {
+export const Abilities = ({ abilities, baseUrl, AbilityCard }) => {
   const content = (
     <React.Fragment>
       {abilities.map(ability => (
         <Grid.Column key={ability._id}>
-          <Ability ability={ability} baseUrl={baseUrl} />
+          <AbilityCard ability={ability} baseUrl={baseUrl} />
         </Grid.Column>
       ))}
     </React.Fragment>
@@ -33,6 +31,7 @@ export const Abilities = ({ abilities, baseUrl }) => {
 };
 
 Abilities.propTypes = {
+  AbilityCard: PropTypes.func,
   abilities: PropTypes.array,
   baseUrl: PropTypes.string
 };

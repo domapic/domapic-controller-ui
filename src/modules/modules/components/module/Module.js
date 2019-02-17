@@ -20,21 +20,20 @@ export const Module = ({
   display = ABILITIES,
   abilitiesUrl,
   infoUrl,
-  abilitiesLinkBaseUrl
+  abilitiesLinkBaseUrl,
+  AbilityCard
 }) => {
   const subsection =
     display === INFO ? (
       <ServiceInfo service={module} loading={moduleLoading} />
     ) : (
-      <Abilities baseUrl={abilitiesLinkBaseUrl} abilities={abilities} />
+      <Abilities baseUrl={abilitiesLinkBaseUrl} abilities={abilities} AbilityCard={AbilityCard} />
     );
   const background = display === INFO;
+  const loading = display === INFO ? moduleLoading : abilitiesLoading;
+  const error = display === INFO ? moduleError : abilitiesError;
   return (
-    <Container
-      loading={moduleLoading || abilitiesLoading}
-      error={moduleError || abilitiesError}
-      background={background}
-    >
+    <Container loading={loading} error={error} background={background}>
       <Container.Header as="h3" loading={moduleLoading}>
         {module.name}
       </Container.Header>
@@ -52,6 +51,7 @@ export const Module = ({
 };
 
 Module.propTypes = {
+  AbilityCard: PropTypes.func,
   abilities: PropTypes.any.isRequired,
   abilitiesError: PropTypes.instanceOf(Error),
   abilitiesLinkBaseUrl: PropTypes.string,

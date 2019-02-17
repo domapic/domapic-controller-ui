@@ -18,3 +18,16 @@ export const abilityModels = new origins.Api(
 abilityModels.addCustomFilter({
   byId: byIdFilter
 });
+
+export const abilityStates = new origins.Api(
+  "/abilities/:id/state",
+  {},
+  {
+    ...authConfig,
+    defaultValue: {}
+  }
+);
+
+abilityStates.addCustomFilter({
+  byId: byIdFilter
+});

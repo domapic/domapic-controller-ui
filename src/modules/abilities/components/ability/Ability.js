@@ -27,12 +27,10 @@ export const Ability = ({
     ) : (
       <AbilityInfo ability={ability} loading={abilityLoading} />
     );
+  const loading = display === ACTIVITY ? logsLoading : abilityLoading;
+  const error = display === ACTIVITY ? logsError : abilityError;
   return (
-    <Container
-      loading={abilityLoading || logsLoading}
-      error={abilityError || logsError}
-      background={true}
-    >
+    <Container loading={loading} error={error} background={true}>
       <Container.Header as="h3" loading={abilityLoading}>
         {ability.name}
       </Container.Header>

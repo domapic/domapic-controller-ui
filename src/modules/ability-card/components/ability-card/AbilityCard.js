@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { Card, Icon, Statistic, Button } from "semantic-ui-react";
 
-import "./abilityState.css";
+import "./abilityCard.css";
 
 export const AbilityState = ({ ability }) => (
   <Statistic className="ability__state" floated="right">
@@ -27,7 +27,7 @@ export const AbilityAction = () => (
   </Button.Group>
 );
 
-export const Ability = ({ ability, baseUrl }) => (
+export const AbilityCard = ({ ability, baseUrl }) => (
   <Card fluid>
     <Card.Content>
       <div className="ability__data">
@@ -53,7 +53,7 @@ export const Ability = ({ ability, baseUrl }) => (
   </Card>
 );
 
-Ability.propTypes = {
+AbilityCard.propTypes = {
   ability: PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
