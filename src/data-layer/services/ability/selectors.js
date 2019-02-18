@@ -2,6 +2,7 @@ import { Selector } from "reactive-data-source";
 
 import { byIdFilter } from "../../helpers";
 import { modulesCollection } from "../services/selectors";
+import { addAbilityExtraData } from "./helpers";
 
 import { abilityModels } from "./origins";
 
@@ -12,10 +13,7 @@ export const abilityModelsWithExtraData = new Selector(
   },
   modulesCollection,
   (abilityModel, modulesResults) => {
-    return {
-      ...abilityModel,
-      serviceName: modulesResults.find(module => module._id === abilityModel._service).name
-    };
+    return addAbilityExtraData(abilityModel, modulesResults);
   },
   {}
 );

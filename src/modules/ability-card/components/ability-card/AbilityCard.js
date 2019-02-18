@@ -9,7 +9,14 @@ import { AbilityAction } from "./AbilityAction";
 
 import "./abilityCard.css";
 
-export const AbilityCard = ({ ability, baseUrl, state, stateError, stateLoading }) => (
+export const AbilityCard = ({
+  ability,
+  baseUrl,
+  state,
+  stateError,
+  stateLoading,
+  validateAbilityData
+}) => (
   <Card fluid>
     <Card.Content>
       <div className="ability__data">
@@ -35,7 +42,7 @@ export const AbilityCard = ({ ability, baseUrl, state, stateError, stateLoading 
       />
     </Card.Content>
     <Card.Content extra>
-      <AbilityAction ability={ability} />
+      <AbilityAction ability={ability} validateAbilityData={validateAbilityData} />
     </Card.Content>
   </Card>
 );
@@ -49,5 +56,6 @@ AbilityCard.propTypes = {
   baseUrl: PropTypes.string,
   state: PropTypes.any,
   stateError: PropTypes.instanceOf(Error),
-  stateLoading: PropTypes.bool
+  stateLoading: PropTypes.bool,
+  validateAbilityData: PropTypes.func
 };

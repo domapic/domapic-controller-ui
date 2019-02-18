@@ -2,6 +2,7 @@ import { Selector } from "reactive-data-source";
 
 import { searchByNameAndDescription, sortAndOrderBy } from "../helpers";
 import { modulesCollection } from "../services/selectors";
+import { addAbilityExtraData } from "../ability/helpers";
 import { ofService } from "./filters";
 import { abilitiesCollection } from "./origins";
 
@@ -13,10 +14,7 @@ export const abilitiesCollectionWithExtraData = new Selector(
   modulesCollection,
   (abilitiesCollectionResults, modulesCollectionResults) => {
     return abilitiesCollectionResults.map(ability => {
-      return {
-        ...ability,
-        serviceName: modulesCollectionResults.find(module => module._id === ability._service).name
-      };
+      return addAbilityExtraData(ability, modulesCollectionResults);
     });
   },
   []

@@ -267,7 +267,7 @@ const ability_24 = {
   name: "number-min-max",
   description: "Number with maximum and minimum",
   type: "number",
-  maximum: 5,
+  minimum: 5,
   maximum: 30
 };
 
