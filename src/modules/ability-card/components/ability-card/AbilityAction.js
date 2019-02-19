@@ -10,6 +10,7 @@ export class AbilityActionValidated extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      value: "",
       error: null,
       showError: false,
       isValid: false
@@ -22,16 +23,17 @@ export class AbilityActionValidated extends Component {
   handleChange(event, data) {
     const error = this.props.validateAbilityData(this.props.ability, data.value);
     this.setState(state => ({
+      value: data.value,
       error,
-      showError: state.showError ? !!error : false,
-      isValid: data.value.length && !error
+      showError: data.value.length > 0 && (state.showError ? !!error : false),
+      isValid: data.value.length > 0 && !error
     }));
   }
 
   handleBlur() {
     this.setState(state => ({
       ...state,
-      showError: !!state.error
+      showError: state.value.length > 0 && !!state.error
     }));
   }
 }
@@ -81,14 +83,23 @@ export class StringAction extends AbilityActionValidated {
     if (this.props.ability.enum) {
       return <SelectAction options={this.props.ability.enum} />;
     }
+    const type =
+      this.props.ability.format === "email"
+        ? "email"
+        : this.props.ability.format === "uri"
+        ? "url"
+        : "text";
     return (
       <Input
-        type="text"
+        type={type}
         placeholder="Insert value..."
         action
         fluid
         onChange={this.handleChange}
         onBlur={this.handleBlur}
+        error={this.state.showError}
+        maxLength={this.props.ability.maxLength}
+        minLength={this.props.ability.minLength}
       >
         <input />
         <Button type="submit" color="green" disabled={!this.state.isValid}>

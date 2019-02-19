@@ -1,5 +1,7 @@
 import moment from "moment";
 
+export const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
+
 export const formatDate = dateString => {
   return moment(dateString).format("YY-MM-DD, hh:mm:ss");
 };

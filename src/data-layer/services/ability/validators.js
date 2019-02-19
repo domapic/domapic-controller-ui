@@ -1,3 +1,7 @@
+import validator from "validator";
+
+import { EMAIL_REGEX } from "../../helpers";
+
 export const validateAbilityData = (ability, value) => {
   const errors = [];
   if (ability.type === "number") {
@@ -16,13 +20,32 @@ export const validateAbilityData = (ability, value) => {
       }
     }
   } else if (ability.type === "string") {
-    if (
-      ability.format === "date-time" &&
-      !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}$/.test(value)
-    ) {
+    value = value.toString();
+    if (ability.format === "date-time" && !validator.isISO8601(value)) {
       errors.push("Not valid ISO8601 date-time");
+    } else if (ability.format === "email" && !EMAIL_REGEX.test(value)) {
+      errors.push("Not valid email");
+    } else if (
+      ability.format === "hostname" &&
+      !/^[a-z0-9]+([-.][a-z0-9]+)*\.[a-z]{2,}$/.test(value)
+    ) {
+      errors.push("Not valid hostname");
+    } else if (ability.format === "ipv4" && !validator.isIP(value, 4)) {
+      errors.push("Not valid ipv4");
+    } else if (ability.format === "ipv6" && !validator.isIP(value, 6)) {
+      errors.push("Not valid ipv6");
+    } else if (ability.format === "uri" && !validator.isURL(value)) {
+      errors.push("Not valid uri");
+    }
+    if (ability.maxLength && value.length > ability.maxLength) {
+      errors.push(`Must have a max length of ${ability.maxLength}`);
+    }
+    if (ability.minLength && value.length < ability.minLength) {
+      errors.push(`Must have a min length of ${ability.minLength}`);
+    }
+    if (ability.pattern && !validator.matches(value, ability.pattern)) {
+      errors.push(`Must match with pattern ${ability.pattern}`);
     }
   }
-  console.log(errors);
   return errors.length ? errors.join(". ") : null;
 };

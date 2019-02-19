@@ -1,8 +1,8 @@
 import { usersCollectionExactFiltered } from "./selectors";
 
-const NAME_REGEX = /^[a-z0-9_.-]*$/;
+import { EMAIL_REGEX } from "../../helpers";
 
-const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
+const NAME_REGEX = /^[a-z0-9_.-]*$/;
 
 export const isValidUserName = name => name.length > 4 && NAME_REGEX.test(name);
 
