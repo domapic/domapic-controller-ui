@@ -237,7 +237,7 @@ export class Api extends DataSource {
 
   _create(filter, data) {
     this._doBeforeRequest();
-    return this._cleanAfterRequest(this._createRequest(this._getUrl(), data));
+    return this._cleanAfterRequest(this._createRequest(this._getUrl(filter), data));
   }
 
   _delete(filter) {

@@ -17,3 +17,7 @@
   padding: .84821429em 1.5em .84821429em;
 }
 
+.ui.input.ability-action__input.disabled,.ui.selection.ability-action__select__dropdown.disabled  {
+  opacity:0.5;
+}
+

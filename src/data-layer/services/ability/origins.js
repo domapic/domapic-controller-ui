@@ -31,3 +31,18 @@ export const abilityStates = new origins.Api(
 abilityStates.addCustomFilter({
   byId: byIdFilter
 });
+
+export const abilityActions = new origins.Api(
+  "/abilities/:id/action",
+  {
+    create: true
+  },
+  {
+    ...authConfig,
+    defaultValue: {}
+  }
+);
+
+abilityActions.addCustomFilter({
+  byId: byIdFilter
+});

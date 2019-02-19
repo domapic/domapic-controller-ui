@@ -15,7 +15,10 @@ export const AbilityCard = ({
   state,
   stateError,
   stateLoading,
-  validateAbilityData
+  validateAbilityData,
+  sendAbilityAction,
+  actionError,
+  actionLoading
 }) => (
   <Card fluid>
     <Card.Content>
@@ -42,7 +45,13 @@ export const AbilityCard = ({
       />
     </Card.Content>
     <Card.Content extra>
-      <AbilityAction ability={ability} validateAbilityData={validateAbilityData} />
+      <AbilityAction
+        ability={ability}
+        validateAbilityData={validateAbilityData}
+        sendAbilityAction={sendAbilityAction}
+        actionError={actionError}
+        actionLoading={actionLoading}
+      />
     </Card.Content>
   </Card>
 );
@@ -53,7 +62,10 @@ AbilityCard.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string
   }),
+  actionError: PropTypes.instanceOf(Error),
+  actionLoading: PropTypes.bool,
   baseUrl: PropTypes.string,
+  sendAbilityAction: PropTypes.func,
   state: PropTypes.any,
   stateError: PropTypes.instanceOf(Error),
   stateLoading: PropTypes.bool,

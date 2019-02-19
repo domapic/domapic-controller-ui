@@ -18,6 +18,7 @@ const {
   getAbility2Success,
   getAbilityState
 } = require("./fixtures/abilities/get");
+const { abilityActionSuccess } = require("./fixtures/abilities/action/post");
 const { getLogsSuccess } = require("./fixtures/logs/get");
 
 const base = new Feature([
@@ -36,7 +37,8 @@ const base = new Feature([
   getAbilitySuccess,
   getAbility2Success,
   getLogsSuccess,
-  getAbilityState
+  getAbilityState,
+  abilityActionSuccess
 ]);
 
 module.exports = {
