@@ -375,7 +375,7 @@ const getAbilitySuccess = {
 };
 
 const getAbilityState = {
-  url: "/api/abilities/:id/state",
+  url: "/api/abilities/:id/sstate",
   method: "GET",
   response: (req, res) => {
     res.status(200);

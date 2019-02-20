@@ -57,8 +57,16 @@ StateDisplay.propTypes = {
   state: PropTypes.any
 };
 
-export const AbilityState = ({ ability, stateLoading, state }) => {
-  const stateValue = !stateLoading ? <StateDisplay state={state} ability={ability} /> : null;
+export const AbilityState = ({ ability, stateLoading, stateError, state }) => {
+  const stateValue = !stateLoading ? (
+    !stateError ? (
+      <StateDisplay state={state} ability={ability} />
+    ) : (
+      <Statistic.Value className="icon error">
+        <Icon name="warning sign" color="red" />
+      </Statistic.Value>
+    )
+  ) : null;
   return (
     <Statistic className="ability__state" floated="right">
       <Statistic.Label>{ability.name}</Statistic.Label>
@@ -73,5 +81,6 @@ AbilityState.propTypes = {
     name: PropTypes.string
   }),
   state: PropTypes.any,
+  stateError: PropTypes.bool,
   stateLoading: PropTypes.bool
 };

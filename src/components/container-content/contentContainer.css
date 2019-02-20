@@ -10,3 +10,11 @@
 .content-container__background--empty {
   padding-top:30px;
 }
+
+.ui.content-container__segment.loading {
+  min-height: 200px;
+}
+
+.ui.content-container__segment.basic.loading:before {
+  background: none;
+}

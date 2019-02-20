@@ -1,0 +1,9 @@
+.ui.inverted.dimmer.abilities__loading {
+  min-height: 200px;
+  background: none;
+}
+
+.ui.inverted.dimmer.abilities__loading .ui.inverted.loader:after, .ui.inverted.dimmer.abilities__loading .ui.inverted.loader:before {
+  width:3rem;
+  height:3rem;
+}

@@ -29,6 +29,10 @@
   font-size:3.2em!important;
 }
 
+.ui.statistic.ability__state .value.icon.error {
+  font-size:3em!important;
+}
+
 .ui.statistic.ability__state .value.small {
   font-size:3em!important;
 }

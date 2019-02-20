@@ -1,10 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Grid } from "semantic-ui-react";
+import { Grid, Dimmer, Loader } from "semantic-ui-react";
 import { Component as Responsive } from "src/components/responsive";
+import { Component as ErrorComponent } from "src/components/error";
 
-export const Abilities = ({ abilities, baseUrl, AbilityCard }) => {
+import "./abilities.css";
+
+export const Abilities = ({
+  abilities,
+  abilitiesLoading,
+  abilitiesError,
+  baseUrl,
+  AbilityCard
+}) => {
+  if (abilitiesError) {
+    return <ErrorComponent>{abilitiesError.message}</ErrorComponent>;
+  }
   const content = (
     <React.Fragment>
       {abilities.map(ability => (
@@ -16,6 +28,9 @@ export const Abilities = ({ abilities, baseUrl, AbilityCard }) => {
   );
   return (
     <React.Fragment>
+      <Dimmer active={abilitiesLoading} inverted className="abilities__loading">
+        <Loader inverted />
+      </Dimmer>
       <Responsive device="mobile-and-tablet">
         <Grid stackable columns={2}>
           {content}
@@ -33,5 +48,7 @@ export const Abilities = ({ abilities, baseUrl, AbilityCard }) => {
 Abilities.propTypes = {
   AbilityCard: PropTypes.func,
   abilities: PropTypes.array,
+  abilitiesError: PropTypes.instanceOf(Error),
+  abilitiesLoading: PropTypes.bool,
   baseUrl: PropTypes.string
 };

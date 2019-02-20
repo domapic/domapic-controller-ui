@@ -1,15 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  Dimmer,
-  Segment,
-  Loader,
-  Header,
-  Placeholder,
-  Menu,
-  Icon,
-  Visibility
-} from "semantic-ui-react";
+import { Segment, Header, Placeholder, Menu, Icon, Visibility } from "semantic-ui-react";
 
 import { Component as ErrorComponent } from "src/components/error";
 import { Component as Search } from "src/components/search";
@@ -133,7 +124,6 @@ export class ContentContainer extends Component {
     const hasMenu = menu.length;
     const placeholder = this.renderChilds(PLACEHOLDER);
     const hasPlaceholder = placeholder.length;
-    const BackgroundContainer = this.props.background ? Segment : EmptyBackground;
 
     return (
       <React.Fragment>
@@ -157,16 +147,17 @@ export class ContentContainer extends Component {
             </Visibility>
           ) : null}
         </Responsive>
-        <BackgroundContainer>
-          <Dimmer active={this.props.loading} inverted>
-            <Loader inverted />
-          </Dimmer>
+        <Segment
+          basic={!this.props.background}
+          loading={this.props.loading}
+          className="content-container__segment"
+        >
           {this.props.loading ? placeholder : null}
           {((hasPlaceholder && !this.props.loading) || !hasPlaceholder) && !this.props.error
             ? this.renderChilds(CONTENT)
             : null}
           {this.props.error ? <ErrorComponent>{this.props.error.message}</ErrorComponent> : null}
-        </BackgroundContainer>
+        </Segment>
         {hasSearch || hasMenu ? (
           <Responsive device="mobile">
             {hasSearch && this.state.searchVisible ? (

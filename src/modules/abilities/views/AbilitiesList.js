@@ -5,13 +5,18 @@ import { Component as AbilitiesListComponent } from "src/components/abilities-li
 
 import { abilitiesCollectionFilteredAndSorted } from "src/data-layer/services";
 
-export const mapDataSourceToProps = ({ search, sortBy, sortOrder }) => ({
-  abilities: abilitiesCollectionFilteredAndSorted.filter({
+export const mapDataSourceToProps = ({ search, sortBy, sortOrder }) => {
+  const readAbilities = abilitiesCollectionFilteredAndSorted.filter({
     search,
     sortBy,
     reverse: sortOrder === "desc"
-  }).read.getters.value,
-  AbilityCard
-});
+  }).read.getters;
+  return {
+    abilities: readAbilities.value,
+    abilitiesLoading: readAbilities.loading,
+    abilitiesError: readAbilities.error,
+    AbilityCard
+  };
+};
 
 export const AbilitiesList = plugins.connect(mapDataSourceToProps)(AbilitiesListComponent);

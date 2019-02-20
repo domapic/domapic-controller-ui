@@ -7,7 +7,6 @@ import { abilitiesCollection } from "src/data-layer/services";
 const SORT_BY = ["name", "description"];
 
 export const mapDataSourceToProps = () => ({
-  loading: abilitiesCollection.read.getters.loading,
   error: abilitiesCollection.read.getters.error,
   header: "Abilities",
   sortBy: SORT_BY[0],

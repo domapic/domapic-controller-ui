@@ -4,7 +4,7 @@
   font-size: 3em;
 }
 
-.ability-action__select__dropdown {
+.ability-action__select__dropdown{
   width:75%;
   border-top-right-radius:0!important;
   border-bottom-right-radius:0!important;
@@ -17,7 +17,16 @@
   padding: .84821429em 1.5em .84821429em;
 }
 
+.ui.input.ability-action__input, .ability-action__container {
+  position:relative;
+}
+
 .ui.input.ability-action__input.disabled,.ui.selection.ability-action__select__dropdown.disabled  {
   opacity:0.5;
+}
+
+.ui.floating.label.ability-action__label {
+  top:-20px;
+  left:calc(100% + 47px);
 }
 

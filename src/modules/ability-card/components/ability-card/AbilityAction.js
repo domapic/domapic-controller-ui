@@ -4,6 +4,8 @@ import { debounce } from "lodash";
 
 import { Button, Input, Dropdown } from "semantic-ui-react";
 
+import { AbilityActionError } from "./AbilityActionError";
+
 import "./abilityAction.css";
 
 export const NoAction = () => <div className="ability-action__no-action">-</div>;
@@ -27,19 +29,30 @@ export class SingleAction extends Component {
   }
 
   render() {
+    const actionErrorComponent =
+      this.state.actionError && this.props.actionError ? <AbilityActionError /> : null;
     return (
-      <Button
-        fluid
-        color="green"
-        disabled={this.props.actionLoading}
-        onClick={this.sendAction}
-        loading={this.props.actionLoading}
-      >
-        Send
-      </Button>
+      <div className="ability-action__container">
+        <Button
+          fluid
+          color="green"
+          disabled={this.props.actionLoading}
+          onClick={this.sendAction}
+          loading={this.props.actionLoading}
+        >
+          Send
+        </Button>
+        {actionErrorComponent}
+      </div>
     );
   }
 }
+
+SingleAction.propTypes = {
+  actionError: PropTypes.instanceOf(Error),
+  actionLoading: PropTypes.bool,
+  sendAbilityAction: PropTypes.func
+};
 
 export class BooleanAction extends Component {
   constructor(props) {
@@ -69,28 +82,39 @@ export class BooleanAction extends Component {
   }
 
   render() {
+    const actionErrorComponent =
+      this.state.actionError && this.props.actionError ? <AbilityActionError /> : null;
     return (
-      <Button.Group fluid>
-        <Button
-          disabled={this.props.actionLoading}
-          onClick={this.sendFalseAction}
-          loading={this.props.actionLoading}
-        >
-          Disable
-        </Button>
-        <Button.Or />
-        <Button
-          positive
-          disabled={this.props.actionLoading}
-          onClick={this.sendTrueAction}
-          loading={this.props.actionLoading}
-        >
-          Enable
-        </Button>
-      </Button.Group>
+      <div className="ability-action__container">
+        <Button.Group fluid>
+          <Button
+            disabled={this.props.actionLoading}
+            onClick={this.sendFalseAction}
+            loading={this.props.actionLoading}
+          >
+            Disable
+          </Button>
+          <Button.Or />
+          <Button
+            positive
+            disabled={this.props.actionLoading}
+            onClick={this.sendTrueAction}
+            loading={this.props.actionLoading}
+          >
+            Enable
+          </Button>
+          {actionErrorComponent}
+        </Button.Group>
+      </div>
     );
   }
 }
+
+BooleanAction.propTypes = {
+  actionError: PropTypes.instanceOf(Error),
+  actionLoading: PropTypes.bool,
+  sendAbilityAction: PropTypes.func
+};
 
 export class AbilityActionValidated extends Component {
   constructor(props) {
@@ -148,8 +172,10 @@ export class SelectAction extends AbilityActionValidated {
   }
 
   render() {
+    const actionErrorComponent =
+      this.state.actionError && this.props.actionError ? <AbilityActionError /> : null;
     return (
-      <React.Fragment>
+      <div className="ability-action__container">
         <Dropdown
           placeholder="Select value..."
           selection
@@ -173,7 +199,8 @@ export class SelectAction extends AbilityActionValidated {
         >
           Send
         </Button>
-      </React.Fragment>
+        {actionErrorComponent}
+      </div>
     );
   }
 }
@@ -197,6 +224,8 @@ export class StringAction extends AbilityActionValidated {
         : this.props.ability.format === "uri"
         ? "url"
         : "text";
+    const actionErrorComponent =
+      this.state.actionError && this.props.actionError ? <AbilityActionError /> : null;
     return (
       <Input
         type={type}
@@ -221,6 +250,7 @@ export class StringAction extends AbilityActionValidated {
         >
           Send
         </Button>
+        {actionErrorComponent}
       </Input>
     );
   }
@@ -241,6 +271,8 @@ export class NumericAction extends AbilityActionValidated {
     if (this.props.ability.enum) {
       return <SelectAction options={this.props.ability.enum} {...this.props} />;
     }
+    const actionErrorComponent =
+      this.state.actionError && this.props.actionError ? <AbilityActionError /> : null;
     return (
       <Input
         type="number"
@@ -265,6 +297,7 @@ export class NumericAction extends AbilityActionValidated {
         >
           Send
         </Button>
+        {actionErrorComponent}
       </Input>
     );
   }
@@ -283,14 +316,21 @@ export const AbilityAction = ({
   ability,
   validateAbilityData,
   sendAbilityAction,
-  actionLoading
+  actionLoading,
+  actionError
 }) => {
   if (!ability.action) {
     return <NoAction />;
   }
   switch (ability.type) {
     case "boolean":
-      return <BooleanAction sendAbilityAction={sendAbilityAction} actionLoading={actionLoading} />;
+      return (
+        <BooleanAction
+          sendAbilityAction={sendAbilityAction}
+          actionLoading={actionLoading}
+          actionError={actionError}
+        />
+      );
       break;
     case "string":
       return (
@@ -299,6 +339,7 @@ export const AbilityAction = ({
           validateAbilityData={validateAbilityData}
           sendAbilityAction={sendAbilityAction}
           actionLoading={actionLoading}
+          actionError={actionError}
         />
       );
       break;
@@ -311,10 +352,17 @@ export const AbilityAction = ({
           validateAbilityData={validateAbilityData}
           sendAbilityAction={sendAbilityAction}
           actionLoading={actionLoading}
+          actionError={actionError}
         />
       );
     default:
-      return <SingleAction sendAbilityAction={sendAbilityAction} actionLoading={actionLoading} />;
+      return (
+        <SingleAction
+          sendAbilityAction={sendAbilityAction}
+          actionLoading={actionLoading}
+          actionError={actionError}
+        />
+      );
   }
 };
 

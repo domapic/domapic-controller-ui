@@ -395,7 +395,6 @@ export class User extends Component {
         {repeatedPasswordErrorMessage}
       </Form.Group>
     );
-
     return (
       <Container loading={userLoading || userDeleteLoading} error={userError} background={true}>
         <Container.Header as="h3">{isNew ? "Create" : "Modify"} User</Container.Header>
