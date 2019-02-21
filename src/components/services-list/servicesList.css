@@ -1,3 +1,23 @@
-.ui.list.services-list {
-  margin:0;
+.ui.card.service__container .description {
+  width: calc(100% - 90px);
+}
+
+.ui.card.service__container>.content>.header {
+  color:#393553;
+}
+
+.ui.card.service__container .header i {
+  color:#554f7c;
+  opacity:0.8;
+  margin-right:10px;
+}
+
+.service__details {
+  position:absolute;
+  right:10px;
+  bottom:10px;
+}
+
+a .service__details i {
+  color:#21ba45
 }

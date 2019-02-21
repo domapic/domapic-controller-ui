@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Grid, Dimmer, Loader } from "semantic-ui-react";
+import { Grid, Segment } from "semantic-ui-react";
 import { Component as Responsive } from "src/components/responsive";
 import { Component as ErrorComponent } from "src/components/error";
 
@@ -27,10 +27,7 @@ export const Abilities = ({
     </React.Fragment>
   );
   return (
-    <React.Fragment>
-      <Dimmer active={abilitiesLoading} inverted className="abilities__loading">
-        <Loader inverted />
-      </Dimmer>
+    <Segment basic loading={abilitiesLoading} className="abilities__container">
       <Responsive device="mobile-and-tablet">
         <Grid stackable columns={2}>
           {content}
@@ -41,7 +38,7 @@ export const Abilities = ({
           {content}
         </Grid>
       </Responsive>
-    </React.Fragment>
+    </Segment>
   );
 };
 

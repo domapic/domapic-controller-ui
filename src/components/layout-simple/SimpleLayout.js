@@ -5,6 +5,8 @@ import { Menu as SemanticMenu } from "semantic-ui-react";
 
 import { Component as MainContainer } from "src/components/container-main";
 
+import "./simpleLayout.css";
+
 export const SimpleLayout = ({ children, Menu }) => {
   return (
     <React.Fragment>

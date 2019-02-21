@@ -4,7 +4,7 @@
 }
 
 .ui.fixed.menu.content-container__menu--top {
-  padding-top:50px;
+  padding-top:54px;
 }
 
 .content-container__background--empty {
@@ -16,7 +16,7 @@
 }
 
 .ui.content-container__segment.basic {
-  padding:20px 0 0 0;
+  padding:0;
 }
 
 .ui.content-container__segment.basic.loading:before {
