@@ -5,6 +5,13 @@ import { Table } from "semantic-ui-react";
 
 import "./usersList.css";
 
+export const NoResults = () => (
+  <Table.Row className="users-list__row--no-results">
+    <Table.Cell className="users-list__cell--avatar"> </Table.Cell>
+    <Table.Cell colSpan="3">No results</Table.Cell>
+  </Table.Row>
+);
+
 export const User = ({ user, onClickUser, UserAvatar }) => {
   const onClick = event => {
     event.preventDefault();
@@ -12,7 +19,7 @@ export const User = ({ user, onClickUser, UserAvatar }) => {
   };
   return (
     <Table.Row onClick={onClick} className={user.isSystemRole ? "users-list__row--system" : ""}>
-      <Table.Cell textAlign="center">
+      <Table.Cell textAlign="center" className="users-list__cell--avatar">
         <UserAvatar email={user.email} />
       </Table.Cell>
       <Table.Cell>{user.name}</Table.Cell>
@@ -34,7 +41,15 @@ User.propTypes = {
 };
 
 export const UsersList = ({ users, onClickUser, UserAvatar }) => (
-  <Table unstackable compact="very" selectable size="large" definition className="users-list">
+  <Table
+    unstackable
+    compact
+    basic
+    selectable={users.length > 0}
+    size="small"
+    definition
+    className="users-list"
+  >
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell />
@@ -44,6 +59,7 @@ export const UsersList = ({ users, onClickUser, UserAvatar }) => (
       </Table.Row>
     </Table.Header>
     <Table.Body>
+      {users.length < 1 ? <NoResults /> : null}
       {users.map(user => (
         <User key={user._id} user={user} onClickUser={onClickUser} UserAvatar={UserAvatar} />
       ))}

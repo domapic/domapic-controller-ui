@@ -1,6 +1,9 @@
 .ui.table.users-list tr {
   cursor: pointer;
 }
+.ui.table.users-list tr td {
+  cursor: pointer;
+}
 
 .ui.table.users-list tr.users-list__row--system  {
   color: rgba(0,0,0,0.5);
@@ -8,4 +11,12 @@
 
 .ui.definition.table.users-list tr.users-list__row--system td .avatar {
   color: rgba(0,0,0,0.4);
+}
+
+.users-list__cell--avatar {
+  width:60px;
+}
+
+.ui.table.users-list tr.users-list__row--no-results td {
+  cursor: default;
 }

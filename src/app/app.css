@@ -52,3 +52,29 @@ a {
 a:hover {
   color:#8579c0;
 }
+
+/* TABLES */
+
+.ui.small.table {
+  font-size: 1em;
+}
+.ui.basic.table thead th {
+  padding-top: 0.7em;
+  padding-bottom: 0.7em;
+  background: rgba(0,0,0,.03)
+}
+
+.ui.table tr td {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ui.toggle.checkbox input:checked~.box:before, .ui.toggle.checkbox input:checked~label:before, .ui.toggle.checkbox input:focus:checked~.box:before, .ui.toggle.checkbox input:focus:checked~label:before {
+  background-color:#554f7c!important;
+}
+
+.ui.message {
+  background-color:rgba(0,0,0,.04);
+}

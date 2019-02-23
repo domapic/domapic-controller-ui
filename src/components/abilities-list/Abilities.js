@@ -4,8 +4,13 @@ import PropTypes from "prop-types";
 import { Grid, Segment } from "semantic-ui-react";
 import { Component as Responsive } from "src/components/responsive";
 import { Component as ErrorComponent } from "src/components/error";
+import { Message } from "semantic-ui-react";
 
 import "./abilities.css";
+
+export const NoResults = () => {
+  return <Message size="large">No abilities found</Message>;
+};
 
 export const Abilities = ({
   abilities,
@@ -28,16 +33,22 @@ export const Abilities = ({
   );
   return (
     <Segment basic loading={abilitiesLoading} className="abilities__container">
-      <Responsive device="mobile-and-tablet">
-        <Grid stackable columns={2}>
-          {content}
-        </Grid>
-      </Responsive>
-      <Responsive device="desktop">
-        <Grid stackable columns={3}>
-          {content}
-        </Grid>
-      </Responsive>
+      {abilities.length < 1 && !abilitiesLoading ? (
+        <NoResults />
+      ) : (
+        <React.Fragment>
+          <Responsive device="mobile-and-tablet">
+            <Grid stackable columns={2}>
+              {content}
+            </Grid>
+          </Responsive>
+          <Responsive device="desktop">
+            <Grid stackable columns={3}>
+              {content}
+            </Grid>
+          </Responsive>
+        </React.Fragment>
+      )}
     </Segment>
   );
 };

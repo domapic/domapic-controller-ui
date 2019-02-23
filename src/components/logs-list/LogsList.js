@@ -3,6 +3,12 @@ import PropTypes from "prop-types";
 
 import { Table } from "semantic-ui-react";
 
+export const NoResults = () => (
+  <Table.Row>
+    <Table.Cell colSpan="5">No results</Table.Cell>
+  </Table.Row>
+);
+
 export const Log = ({ module, ability, type, data, dateTime }) => (
   <Table.Row>
     <Table.Cell>{dateTime}</Table.Cell>
@@ -22,7 +28,7 @@ Log.propTypes = {
 };
 
 export const LogsList = ({ logs = [] }) => (
-  <Table unstackable compact="very">
+  <Table unstackable compact basic size="small">
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell>At</Table.HeaderCell>
@@ -33,6 +39,7 @@ export const LogsList = ({ logs = [] }) => (
       </Table.Row>
     </Table.Header>
     <Table.Body>
+      {logs.length < 1 ? <NoResults /> : null}
       {logs.map(log => (
         <Log
           key={log._id}
