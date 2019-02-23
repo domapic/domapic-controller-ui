@@ -22,15 +22,11 @@ export class SettingsMenuDropdown extends Component {
         <Dropdown.Menu>
           <Dropdown.Header>Settings</Dropdown.Header>
           <Dropdown.Divider />
-          <Dropdown.Item>
-            <Link to={this.context.configuration}>
-              <Icon name="configure" /> Configuration
-            </Link>
+          <Dropdown.Item as={Link} to={this.context.configuration}>
+            <Icon name="configure" /> Configuration
           </Dropdown.Item>
-          <Dropdown.Item>
-            <Link to={this.context.users}>
-              <Icon name="users" /> Users
-            </Link>
+          <Dropdown.Item as={Link} to={this.context.users}>
+            <Icon name="users" /> Users
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

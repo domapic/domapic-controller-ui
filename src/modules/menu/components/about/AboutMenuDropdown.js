@@ -20,15 +20,11 @@ export class AboutMenuDropdown extends Component {
         <Dropdown.Menu>
           <Dropdown.Header>About</Dropdown.Header>
           <Dropdown.Divider />
-          <Dropdown.Item>
-            <Link to={this.context.about}>
-              <Icon name="info circle" /> Package info
-            </Link>
+          <Dropdown.Item as={Link} to={this.context.about}>
+            <Icon name="info circle" /> Package info
           </Dropdown.Item>
-          <Dropdown.Item>
-            <Link to={this.context.swagger} target="_blank">
-              <Icon name="power cord" /> Api Swagger
-            </Link>
+          <Dropdown.Item as={Link} to={this.context.swagger} target="_blank">
+            <Icon name="power cord" /> Api Swagger
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

@@ -29,15 +29,11 @@ export class UserMenuDropdown extends Component {
         <Dropdown.Menu>
           <Dropdown.Header>User</Dropdown.Header>
           <Dropdown.Divider />
-          <Dropdown.Item>
-            <Link to={this.context.account}>
-              <Icon name="user" /> Account
-            </Link>
+          <Dropdown.Item as={Link} to={this.context.account}>
+            <Icon name="user" /> Account
           </Dropdown.Item>
-          <Dropdown.Item>
-            <Link to="" onClick={this.props.logoutHandler}>
-              <Icon name="shutdown" /> Logout
-            </Link>
+          <Dropdown.Item as={Link} to="" onClick={this.props.logoutHandler}>
+            <Icon name="shutdown" /> Logout
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
