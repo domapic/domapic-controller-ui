@@ -52,7 +52,13 @@ export class ApiKey extends Component {
               placeholder="Api key"
               onChange={this.handleApiKeyChange}
             />
-            <Button color="blue" fluid size="large" disabled={this.state.disabled}>
+            <Button
+              color="blue"
+              fluid
+              size="large"
+              disabled={this.state.disabled}
+              className="login-form__button"
+            >
               Login
             </Button>
           </Segment>

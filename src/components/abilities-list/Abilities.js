@@ -4,20 +4,17 @@ import PropTypes from "prop-types";
 import { Grid, Segment } from "semantic-ui-react";
 import { Component as Responsive } from "src/components/responsive";
 import { Component as ErrorComponent } from "src/components/error";
-import { Message } from "semantic-ui-react";
+import { Component as NoResults } from "src/components/no-results";
 
 import "./abilities.css";
-
-export const NoResults = () => {
-  return <Message size="large">No abilities found</Message>;
-};
 
 export const Abilities = ({
   abilities,
   abilitiesLoading,
   abilitiesError,
   baseUrl,
-  AbilityCard
+  AbilityCard,
+  avoidShowLoading
 }) => {
   if (abilitiesError) {
     return <ErrorComponent>{abilitiesError.message}</ErrorComponent>;
@@ -32,9 +29,13 @@ export const Abilities = ({
     </React.Fragment>
   );
   return (
-    <Segment basic loading={abilitiesLoading} className="abilities__container">
+    <Segment
+      basic
+      loading={abilitiesLoading && !avoidShowLoading}
+      className="abilities__container"
+    >
       {abilities.length < 1 && !abilitiesLoading ? (
-        <NoResults />
+        <NoResults text="No abilities found" />
       ) : (
         <React.Fragment>
           <Responsive device="mobile-and-tablet">
@@ -58,5 +59,6 @@ Abilities.propTypes = {
   abilities: PropTypes.array,
   abilitiesError: PropTypes.instanceOf(Error),
   abilitiesLoading: PropTypes.bool,
+  avoidShowLoading: PropTypes.bool,
   baseUrl: PropTypes.string
 };

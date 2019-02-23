@@ -43,7 +43,7 @@ export const DashboardLayout = ({
           {logsError ? (
             <ErrorComponent>{logsError.message}</ErrorComponent>
           ) : (
-            <LogsList logs={logs} />
+            <LogsList logs={logs} logsLoading={logsLoading} />
           )}
         </Segment>
       </Container.Content>

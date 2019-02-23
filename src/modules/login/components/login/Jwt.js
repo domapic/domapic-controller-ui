@@ -85,6 +85,7 @@ export class Jwt extends Component {
               size="large"
               loading={this.props.loading}
               disabled={this.state.disabled || this.props.loading}
+              className="login-form__button"
             >
               Login
             </Button>

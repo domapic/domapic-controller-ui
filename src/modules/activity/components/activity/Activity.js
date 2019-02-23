@@ -12,7 +12,7 @@ export const Activity = ({ loading, error, logs = [] }) => {
         <Breadcrumbs sections={[{ text: "Activity", icon: "history" }]} />
       </Container.Header>
       <Container.Content>
-        <LogsList logs={logs} />
+        <LogsList logs={logs} logsLoading={loading} />
       </Container.Content>
     </Container>
   );

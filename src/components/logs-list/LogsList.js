@@ -27,7 +27,7 @@ Log.propTypes = {
   type: PropTypes.string.isRequired
 };
 
-export const LogsList = ({ logs = [] }) => (
+export const LogsList = ({ logs = [], logsLoading }) => (
   <Table unstackable compact basic size="small">
     <Table.Header>
       <Table.Row>
@@ -39,7 +39,7 @@ export const LogsList = ({ logs = [] }) => (
       </Table.Row>
     </Table.Header>
     <Table.Body>
-      {logs.length < 1 ? <NoResults /> : null}
+      {logs.length < 1 && !logsLoading ? <NoResults /> : null}
       {logs.map(log => (
         <Log
           key={log._id}
@@ -55,5 +55,6 @@ export const LogsList = ({ logs = [] }) => (
 );
 
 LogsList.propTypes = {
-  logs: PropTypes.array
+  logs: PropTypes.array,
+  logsLoading: PropTypes.bool
 };

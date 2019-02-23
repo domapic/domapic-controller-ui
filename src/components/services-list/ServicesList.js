@@ -2,13 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { Card, Icon, Label, Message } from "semantic-ui-react";
+import { Card, Icon, Label } from "semantic-ui-react";
+import { Component as NoResults } from "src/components/no-results";
 
 import "./servicesList.css";
-
-export const NoResults = () => {
-  return <Message size="large">No results</Message>;
-};
 
 export const Service = ({ baseUrl, item }) => {
   const icon = item.type === "module" ? "cube" : "plug";
@@ -42,7 +39,7 @@ Service.propTypes = {
 
 export const ServicesList = ({ list, listLoading, baseUrl }) => (
   <React.Fragment>
-    {list.length < 1 && !listLoading ? <NoResults /> : null}
+    {list.length < 1 && !listLoading ? <NoResults text="No results" /> : null}
     {list.map(item => (
       <Service key={item._id} item={item} baseUrl={baseUrl} />
     ))}

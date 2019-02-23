@@ -25,7 +25,7 @@ export const Ability = ({
 }) => {
   const subsection =
     display === ACTIVITY ? (
-      <LogsList logs={logs} />
+      <LogsList logs={logs} logsLoading={logsLoading} />
     ) : (
       <AbilityInfo ability={ability} loading={abilityLoading} />
     );

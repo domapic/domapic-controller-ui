@@ -439,7 +439,7 @@ export class User extends Component {
               {deleteButton}
               <Button
                 floated="right"
-                color="blue"
+                color="green"
                 disabled={!submitEnabled || submitLoading || userDeleteLoading}
                 loading={submitLoading}
               >

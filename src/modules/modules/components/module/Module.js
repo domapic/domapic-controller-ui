@@ -39,6 +39,8 @@ export class Module extends Component {
           baseUrl={abilitiesLinkBaseUrl}
           abilities={abilities}
           AbilityCard={AbilityCard}
+          abilitiesLoading={abilitiesLoading}
+          avoidShowLoading={true}
         />
       );
     const background = display === INFO;

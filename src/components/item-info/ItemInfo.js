@@ -18,7 +18,7 @@ Detail.propTypes = {
 };
 
 export const ItemInfo = ({ data }) => (
-  <Table basic className="table-info" striped unstackable>
+  <Table basic className="table-info" striped unstackable size="small">
     <Table.Body>
       {data.map(detail => (
         <Detail key={detail.label} label={detail.label} value={detail.value} />
