@@ -5,6 +5,7 @@ import { debounce } from "lodash";
 import { Button, Input, Dropdown } from "semantic-ui-react";
 
 import { AbilityActionError } from "./AbilityActionError";
+import { AbilityActionValidationError } from "./AbilityActionValidationError";
 
 import "./abilityAction.css";
 
@@ -200,6 +201,7 @@ export class SelectAction extends AbilityActionValidated {
           Send
         </Button>
         {actionErrorComponent}
+        <AbilityActionValidationError showError={this.state.showError} error={this.state.error} />
       </div>
     );
   }
@@ -251,6 +253,7 @@ export class StringAction extends AbilityActionValidated {
           Send
         </Button>
         {actionErrorComponent}
+        <AbilityActionValidationError showError={this.state.showError} error={this.state.error} />
       </Input>
     );
   }
@@ -298,6 +301,7 @@ export class NumericAction extends AbilityActionValidated {
           Send
         </Button>
         {actionErrorComponent}
+        <AbilityActionValidationError showError={this.state.showError} error={this.state.error} />
       </Input>
     );
   }
