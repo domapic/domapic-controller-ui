@@ -295,9 +295,6 @@ export class User extends Component {
       deleteConfirmOpen
     } = this.state;
 
-    console.log("breadcrumbS");
-    console.log(breadcrumbs);
-
     const repeatedPasswordErrorMessage = passwordsValid ? (
       <FieldValidationMessage valid />
     ) : this.repeatedPasswordError() ? (

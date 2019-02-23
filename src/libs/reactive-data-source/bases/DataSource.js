@@ -1,5 +1,4 @@
-import isEqual from "lodash.isequal";
-import cloneDeep from "lodash.clonedeep";
+import { isEqual, cloneDeep } from "lodash";
 
 import { Base } from "./Base";
 import { Cache } from "./Cache";

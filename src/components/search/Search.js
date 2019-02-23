@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import debounce from "lodash.debounce";
+import { debounce } from "lodash";
 import PropTypes from "prop-types";
 
 import { Menu, Dropdown, Input, Icon } from "semantic-ui-react";

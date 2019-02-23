@@ -1,4 +1,4 @@
-import sortBy from "lodash.sortby";
+import { sortBy } from "lodash";
 
 export const searchByNameAndDescription = (servicesResults, search) => {
   if (!search) {

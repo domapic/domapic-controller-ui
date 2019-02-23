@@ -1,5 +1,4 @@
-import once from "lodash.once";
-import isFunction from "lodash.isfunction";
+import { once, isFunction } from "lodash";
 import isPromise from "is-promise";
 
 import { Base } from "./Base";

@@ -1,6 +1,6 @@
 import React from "react";
 import hoistNonReactStatics from "hoist-non-react-statics";
-import isEqual from "lodash.isequal";
+import { isEqual } from "lodash";
 
 import { READ_METHOD } from "../bases/helpers";
 

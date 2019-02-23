@@ -1,5 +1,4 @@
-import snakeCase from "lodash.snakecase";
-import toUpper from "lodash.toupper";
+import { snakeCase, toUpper } from "lodash";
 
 const DATA_SOURCE_PREFIX = "DATA_SOURCE";
 

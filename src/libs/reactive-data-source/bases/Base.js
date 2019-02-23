@@ -1,6 +1,4 @@
-import isFunction from "lodash.isfunction";
-import merge from "lodash.merge";
-import cloneDeep from "lodash.clonedeep";
+import { isFunction, merge, cloneDeep } from "lodash";
 
 import { EventEmitter } from "./EventEmitter";
 import {

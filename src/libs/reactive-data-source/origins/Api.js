@@ -1,4 +1,4 @@
-import once from "lodash.once";
+import { once } from "lodash";
 import pathToRegexp from "path-to-regexp";
 
 import { DataSource } from "../bases/DataSource";
