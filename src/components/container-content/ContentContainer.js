@@ -146,6 +146,11 @@ export class ContentContainer extends Component {
                 {search}
                 {hasMenu ? <Menu.Menu position="right">{menu}</Menu.Menu> : null}
               </Menu>
+              {this.state.fixedMenu ? (
+                <Menu className="content-container__menu--top">
+                  <Menu.Item />
+                </Menu>
+              ) : null}
             </Visibility>
           ) : null}
         </Responsive>

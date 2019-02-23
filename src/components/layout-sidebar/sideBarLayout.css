@@ -10,3 +10,9 @@
   max-height: 100vh;
   height: 100%;
 }
+
+.ui.top.fixed.sidebar-layout__header-menu.menu,.ui.bottom.fixed.menu {
+  z-index:1200;
+}
+
+

@@ -25,3 +25,7 @@
 .content-container__header {
   min-height: 30px;
 }
+
+.ui.top.fixed.content-container__menu--top.menu, .ui.bottom.fixed.content-container__menu--bottom--search.menu {
+  z-index:1100;
+}
