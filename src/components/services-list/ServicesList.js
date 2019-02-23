@@ -6,9 +6,6 @@ import { Card, Icon, Label } from "semantic-ui-react";
 
 import "./servicesList.css";
 
-//plug
-//heartbeat | tachometer alternate
-
 export const Service = ({ baseUrl, item }) => {
   const icon = item.type === "module" ? "cube" : "plug";
   return (

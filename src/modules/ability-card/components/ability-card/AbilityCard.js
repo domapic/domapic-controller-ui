@@ -21,7 +21,7 @@ export const AbilityCard = ({
   actionLoading
 }) => (
   <Card fluid>
-    <Card.Content>
+    <Card.Content as={Link} to={`${baseUrl}/${ability._id}`} className="ability__content">
       <div className="ability__data">
         <Card.Header className="ability__name">{ability.serviceName}</Card.Header>
         <Card.Meta className="ability__description">
@@ -29,9 +29,9 @@ export const AbilityCard = ({
         </Card.Meta>
         <div className="ability__settings">
           <Icon name="signal" floated="right" />
-          <a>
+          {/* <a>
             <Icon name="star outline" />
-          </a>
+          </a> */}
           <Link to={`${baseUrl}/${ability._id}`}>
             <Icon name="setting" />
           </Link>

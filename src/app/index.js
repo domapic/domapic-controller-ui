@@ -22,7 +22,9 @@ const routesContext = {
   users: sections.users.route,
   account: sections.account.route,
   about: routes.about.route,
-  swagger: routes.swagger.route
+  swagger: routes.swagger.route,
+  modules: sections.modules.route,
+  plugins: sections.plugins.route
 };
 
 const history = createHistory({

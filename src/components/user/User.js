@@ -6,6 +6,7 @@ import { Form, Button, Divider, Message, Confirm, Header, Icon } from "semantic-
 
 import { Component as Container } from "src/components/container-content";
 import { Component as UserAvatar } from "src/components/user-avatar";
+import { Component as Breadcrumbs } from "src/components/breadcrumbs";
 
 import { Component as FieldValidationMessage } from "src/components/field-validation-message";
 
@@ -278,7 +279,8 @@ export class User extends Component {
       submitError,
       isNew,
       userDeleteError,
-      userDeleteLoading
+      userDeleteLoading,
+      breadcrumbs
     } = this.props;
     const {
       submitted,
@@ -292,6 +294,9 @@ export class User extends Component {
       fromCreation,
       deleteConfirmOpen
     } = this.state;
+
+    console.log("breadcrumbS");
+    console.log(breadcrumbs);
 
     const repeatedPasswordErrorMessage = passwordsValid ? (
       <FieldValidationMessage valid />
@@ -397,7 +402,11 @@ export class User extends Component {
     );
     return (
       <Container loading={userLoading || userDeleteLoading} error={userError} background={true}>
-        <Container.Header as="h3">{isNew ? "Create" : "Modify"} User</Container.Header>
+        <Container.Header>
+          <Breadcrumbs
+            sections={breadcrumbs.concat({ text: `${isNew ? "Create" : "Modify"} User` })}
+          />
+        </Container.Header>
         <Container.Content>
           <Form
             loading={userLoading}
@@ -464,6 +473,7 @@ export class User extends Component {
 }
 
 User.propTypes = {
+  breadcrumbs: PropTypes.array,
   currentUserIsAdmin: PropTypes.bool,
   fromCreation: PropTypes.bool,
   isNew: PropTypes.bool,

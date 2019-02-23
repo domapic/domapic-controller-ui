@@ -31,6 +31,10 @@ export const AbilityLayout = ({ match }) => {
     <Ability
       id={match.params.id}
       display={match.params.display}
+      baseUrl={baseUrl
+        .split(ROUTE_SEP)
+        .slice(0, 2)
+        .join(ROUTE_SEP)}
       activityUrl={`${baseUrl}${ROUTE_SEP}${ACTIVITY}`}
       infoUrl={`${baseUrl}${ROUTE_SEP}${INFO}`}
     />

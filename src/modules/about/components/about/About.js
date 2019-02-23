@@ -3,11 +3,21 @@ import PropTypes from "prop-types";
 
 import { Component as Container } from "src/components/container-content";
 import { Component as ItemInfo } from "src/components/item-info";
+import { Component as Breadcrumbs } from "src/components/breadcrumbs";
 
 export const About = ({ loading, error, about = {} }) => {
   return (
     <Container loading={loading} error={error} background={true}>
-      <Container.Header as="h3">About this package</Container.Header>
+      <Container.Header>
+        <Breadcrumbs
+          sections={[
+            {
+              text: "About this package",
+              icon: "info circle"
+            }
+          ]}
+        />
+      </Container.Header>
       <Container.Content>
         <ItemInfo
           loading={loading}

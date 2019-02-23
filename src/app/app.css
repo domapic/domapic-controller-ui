@@ -24,3 +24,31 @@ body: {
 .ui.form .disabled.field, .ui.form .disabled.fields .field, .ui.form .field :disabled {
   opacity:0.6;
 }
+
+/* Green */
+.action-primary {
+  color:#21ba45
+}
+
+/* Domapic purples */
+
+/* Logo. Texts, etc.. */
+.brand-primary {
+  color:#393553;
+}
+/* Icons, etc. */
+.brand-secondary {
+  color:#554f7c;
+}
+/* Brightness */
+.brand-terciary {
+  color:#8579c0;
+}
+
+a {
+  color:#554f7c;
+}
+
+a:hover {
+  color:#8579c0;
+}

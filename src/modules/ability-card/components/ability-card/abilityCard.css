@@ -27,3 +27,11 @@
 .ability__settings i.icon {
   margin-right:10px;
 }
+
+.ability__settings i.icon.signal {
+  color:#21ba45;
+}
+
+.ability__content,.ability__content:hover {
+  color:#393553;
+}

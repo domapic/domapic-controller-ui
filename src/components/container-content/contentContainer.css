@@ -22,3 +22,6 @@
 .ui.content-container__segment.basic.loading:before {
   background: none;
 }
+.content-container__header {
+  min-height: 30px;
+}

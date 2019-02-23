@@ -9,6 +9,7 @@
   border-top-right-radius:0!important;
   border-bottom-right-radius:0!important;
 }
+
 .ui.button.ability-action__select__button {
   width:25%;
   border-top-left-radius:0!important;
@@ -29,4 +30,3 @@
   top:-20px;
   left:calc(100% + 47px);
 }
-

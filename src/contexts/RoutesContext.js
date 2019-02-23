@@ -8,7 +8,9 @@ export const defaultRoutes = {
   configuration: defaultRoute,
   users: defaultRoute,
   account: defaultRoute,
-  about: defaultRoute
+  about: defaultRoute,
+  modules: defaultRoute,
+  plugins: defaultRoute
 };
 
 export const RoutesContext = React.createContext(defaultRoutes);

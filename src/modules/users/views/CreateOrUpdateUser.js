@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { pickBy, identity } from "lodash";
 
+import { RoutesContext } from "src/contexts/RoutesContext";
+import { usersCollection, userModels, usersCollectionExactFiltered } from "src/data-layer/users";
+
 import { UpdateUser } from "./UpdateUser";
 import { CreateUser } from "./CreateUser";
-import { usersCollection, userModels, usersCollectionExactFiltered } from "src/data-layer/users";
 
 export class CreateOrUpdateUser extends Component {
   constructor(props) {
@@ -58,6 +60,13 @@ export class CreateOrUpdateUser extends Component {
 
   render() {
     const userId = this.state.newId || this.props.id;
+    const breadcrumbs = [
+      {
+        url: this.context.users,
+        text: "Users",
+        icon: "user"
+      }
+    ];
 
     return userId ? (
       <UpdateUser
@@ -66,12 +75,21 @@ export class CreateOrUpdateUser extends Component {
         fromCreation={!!this.state.newId}
         onDelete={this.onDelete}
         deleting={this.state.deleting}
+        breadcrumbs={breadcrumbs}
       />
     ) : (
-      <CreateUser onCancel={this.props.goBack} onSubmit={this.createUser} isNew={true} user={{}} />
+      <CreateUser
+        onCancel={this.props.goBack}
+        onSubmit={this.createUser}
+        isNew={true}
+        user={{}}
+        breadcrumbs={breadcrumbs}
+      />
     );
   }
 }
+
+CreateOrUpdateUser.contextType = RoutesContext;
 
 CreateOrUpdateUser.propTypes = {
   goBack: PropTypes.func,

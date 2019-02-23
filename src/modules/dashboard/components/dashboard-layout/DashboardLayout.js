@@ -5,6 +5,7 @@ import { Segment } from "semantic-ui-react";
 
 import { Component as Container } from "src/components/container-content";
 import { Component as AbilitiesList } from "src/components/abilities-list";
+import { Component as Breadcrumbs } from "src/components/breadcrumbs";
 import { Component as LogsList } from "src/components/logs-list";
 import { Component as ErrorComponent } from "src/components/error";
 
@@ -20,7 +21,16 @@ export const DashboardLayout = ({
 }) => {
   return (
     <Container>
-      <Container.Header as="h3">Dashboard</Container.Header>
+      <Container.Header>
+        <Breadcrumbs
+          sections={[
+            {
+              text: "Dashboard",
+              icon: "tachometer alternate"
+            }
+          ]}
+        />
+      </Container.Header>
       <Container.Content>
         <AbilitiesList
           abilities={abilities}

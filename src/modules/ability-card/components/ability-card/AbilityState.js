@@ -81,6 +81,6 @@ AbilityState.propTypes = {
     name: PropTypes.string
   }),
   state: PropTypes.any,
-  stateError: PropTypes.bool,
+  stateError: PropTypes.instanceOf(Error),
   stateLoading: PropTypes.bool
 };

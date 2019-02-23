@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Checkbox, Menu, Button, Icon } from "semantic-ui-react";
 
+import { RoutesContext } from "src/contexts/RoutesContext";
+
 import { Component as Container } from "src/components/container-content";
 import { Component as SearchableList } from "src/components/searchable-list";
+import { Component as Breadcrumbs } from "src/components/breadcrumbs";
 
 import "./usersListContainer.css";
 
@@ -40,7 +43,15 @@ export class UsersListContainer extends Component {
     const UsersList = this.props.UsersList;
     const header = (
       <React.Fragment>
-        Users
+        <Breadcrumbs
+          sections={[
+            {
+              url: this.context.users,
+              text: "Users",
+              icon: "user"
+            }
+          ]}
+        />
         <Button floated="right" positive onClick={this.props.onClickNew}>
           <Icon name="plus" /> New
         </Button>
@@ -62,6 +73,8 @@ export class UsersListContainer extends Component {
     );
   }
 }
+
+UsersListContainer.contextType = RoutesContext;
 
 UsersListContainer.propTypes = {
   UsersList: PropTypes.func,

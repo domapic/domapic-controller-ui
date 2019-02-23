@@ -15,7 +15,7 @@ const SEARCH = "ContentSearch";
 const MENU = "ContentMenu";
 
 export const ContentHeader = ({ children, as, loading }) => {
-  const type = as || "h2";
+  const type = as || "h4";
   return loading ? (
     <Placeholder as={type}>
       <Placeholder.Paragraph>
@@ -23,7 +23,9 @@ export const ContentHeader = ({ children, as, loading }) => {
       </Placeholder.Paragraph>
     </Placeholder>
   ) : (
-    <Header as={type}>{children}</Header>
+    <Header as={type} className="content-container__header">
+      {children}
+    </Header>
   );
 };
 

@@ -11,6 +11,14 @@ let _allDataSources = [];
 
 export const configDataSource = dataSource => {
   _allDataSources.push(dataSource);
+  dataSource.config({
+    ..._config,
+    authErrorHandler: null
+  });
+};
+
+export const configAuthDataSource = dataSource => {
+  _allDataSources.push(dataSource);
   dataSource.config(_config);
 };
 
@@ -25,7 +33,7 @@ export const baseConfig = {
 };
 
 export const authConfig = {
-  ...baseConfig,
+  onceBeforeRequest: configAuthDataSource,
   onBeforeRequest: authDataSource
 };
 
