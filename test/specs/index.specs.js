@@ -27,7 +27,7 @@ test.describe("Home page", function() {
   });
 
   test.it("should render dashboard", async () => {
-    const helloContainer = "body h2";
+    const helloContainer = "body h4";
     await page.waitForSelector(helloContainer);
     const elementText = await page.$eval(helloContainer, element => element.textContent);
     return test.expect(elementText).to.contain("Dashboard");
