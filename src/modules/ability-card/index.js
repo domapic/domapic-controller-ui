@@ -1,3 +1,3 @@
-import { AbilityCard } from "./views/AbilityCard";
+import { AbilityCard } from "./Layouts";
 
 export const Module = AbilityCard;

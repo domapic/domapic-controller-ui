@@ -18,10 +18,11 @@ export const AbilityCard = ({
   validateAbilityData,
   sendAbilityAction,
   actionError,
-  actionLoading
+  actionLoading,
+  onClick
 }) => (
   <Card fluid>
-    <Card.Content as={Link} to={`${baseUrl}/${ability._id}`} className="ability__content">
+    <Card.Content className="ability__content" onClick={onClick}>
       <div className="ability__data">
         <Card.Header className="ability__name">{ability.serviceName}</Card.Header>
         <Card.Meta className="ability__description">
@@ -65,6 +66,7 @@ AbilityCard.propTypes = {
   actionError: PropTypes.instanceOf(Error),
   actionLoading: PropTypes.bool,
   baseUrl: PropTypes.string,
+  onClick: PropTypes.func,
   sendAbilityAction: PropTypes.func,
   state: PropTypes.any,
   stateError: PropTypes.instanceOf(Error),

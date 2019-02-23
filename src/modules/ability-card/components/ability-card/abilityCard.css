@@ -35,3 +35,7 @@
 .ability__content,.ability__content:hover {
   color:#393553;
 }
+
+.ability__content {
+  cursor: pointer;
+}

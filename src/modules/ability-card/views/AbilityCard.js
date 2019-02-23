@@ -4,9 +4,13 @@ import { Component as AbilityCardComponent } from "../components/ability-card";
 
 import { abilityStates, abilityActions, validateAbilityData } from "src/data-layer/services";
 
-export const mapDataSourceToProps = ({ ability }) => {
+export const mapDataSourceToProps = ({ ability, history, baseUrl }) => {
   const readAbilityState = ability.state && abilityStates.byId(ability._id).read;
   const abilityAction = abilityActions.byId(ability._id).create;
+
+  const onClick = () => {
+    history.push(`${baseUrl}/${ability._id}`);
+  };
 
   const sendAbilityAction = data => {
     if (ability.type === "number") {
@@ -22,7 +26,8 @@ export const mapDataSourceToProps = ({ ability }) => {
     validateAbilityData,
     sendAbilityAction,
     actionError: abilityAction.getters.error,
-    actionLoading: abilityAction.getters.loading
+    actionLoading: abilityAction.getters.loading,
+    onClick
   };
 };
 
