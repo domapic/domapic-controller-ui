@@ -20,6 +20,10 @@ const ROLES = [
   {
     name: "service-registerer",
     isSystem: true
+  },
+  {
+    name: "anonymous",
+    isSystem: true
   }
 ];
 

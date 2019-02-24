@@ -24,6 +24,6 @@ export const userMeWithExtraData = new Selector(
 
 export const userMeIsAdmin = new Selector(
   userMe,
-  userMeData => userMeData.role === "admin",
+  userMeData => userMeData.role === "admin" || userMeData.role === "anonymous",
   false
 );

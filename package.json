@@ -21,7 +21,8 @@
     "mocks": "node mocks/server/bin.js --features=mocks/features"
   },
   "files": [
-    "/dist"
+    "/dist",
+    "index.js"
   ],
   "dependencies": {
     "validator": "^10.11.0"

@@ -20,7 +20,7 @@ export const User = ({ user, onClickUser, UserAvatar }) => {
   return (
     <Table.Row onClick={onClick} className={user.isSystemRole ? "users-list__row--system" : ""}>
       <Table.Cell textAlign="center" className="users-list__cell--avatar">
-        <UserAvatar email={user.email} />
+        <UserAvatar email={user.email} role={user.role} />
       </Table.Cell>
       <Table.Cell>{user.name}</Table.Cell>
       <Table.Cell>{user.email}</Table.Cell>
