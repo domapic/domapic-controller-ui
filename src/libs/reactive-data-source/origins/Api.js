@@ -1,5 +1,6 @@
 import { once } from "lodash";
 import pathToRegexp from "path-to-regexp";
+import isPromise from "is-promise";
 
 import { DataSource } from "../bases/DataSource";
 
@@ -27,6 +28,7 @@ const defaultConfig = {
   cache: true,
   fullResponse: false,
   validateStatus: status => status >= 200 && status < 300,
+  validateResponse: null,
   errorHandler: error => {
     const errorMessage =
       (error.response && error.response.statusText) || error.message || "Request error";
@@ -64,6 +66,7 @@ export class Api extends DataSource {
     this._useCache = configuration.cache;
     this._fullResponse = configuration.fullResponse;
     this._validateStatus = configuration.validateStatus;
+    this._validateResponse = configuration.validateResponse;
     this._errorHandler = configuration.errorHandler;
     this._baseUrl = configuration.baseUrl;
     this._onBeforeRequest = configuration.onBeforeRequest;
@@ -140,6 +143,12 @@ export class Api extends DataSource {
 
     return this.client(requestOptions)
       .then(response => (this._fullResponse ? response : response.data))
+      .then(customResponse => {
+        if (this._validateResponse) {
+          return this._validateResponse(customResponse);
+        }
+        return Promise.resolve(customResponse);
+      })
       .catch(error => {
         if (
           !isAuthRetry &&

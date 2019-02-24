@@ -1,8 +1,16 @@
 const JWT_HEADER = "Authorization";
 const API_KEY_HEADER = "X-Api-Key";
 
+const validateResponse = response => {
+  if (typeof response === "string") {
+    return Promise.reject(new Error("Not valid response. Expected json"));
+  }
+  return Promise.resolve(response);
+};
+
 let _config = {
-  baseUrl: ""
+  baseUrl: "",
+  validateResponse
 };
 
 let _headers = {};

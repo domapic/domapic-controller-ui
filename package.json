@@ -90,7 +90,7 @@
     "regenerator-runtime": "^0.13.1",
     "require-all": "3.0.0",
     "route-parser": "0.0.5",
-    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-css": "2.4.1",
     "semantic-ui-react": "^0.84.0",
     "serve": "^10.1.1",
     "sinon": "^7.2.2",

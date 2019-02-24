@@ -12,7 +12,6 @@ import { setupDataSources } from "./setup/dataSources";
 import { setupStore } from "./setup/store";
 import { setupModules } from "./setup/modules";
 
-import "semantic-ui-css/semantic.min.css";
 import "./app.css";
 
 const routesContext = {

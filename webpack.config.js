@@ -90,6 +90,16 @@ module.exports = env => {
           to: "",
           context: "public/",
           ignore: ["*.html"]
+        },
+        {
+          from: "**",
+          to: "semantic/themes",
+          context: "node_modules/semantic-ui-css/themes"
+        },
+        {
+          from: "semantic.min.css",
+          to: "semantic/semantic.min.css",
+          context: "node_modules/semantic-ui-css"
         }
       ]),
       new HtmlWebpackPlugin({
