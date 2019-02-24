@@ -10,3 +10,14 @@ export const logs = new origins.Api(
     defaultValue: []
   }
 );
+
+export const countLogs = new origins.Api(
+  "/logs/count",
+  {},
+  {
+    ...authConfig,
+    defaultValue: {
+      total: 0
+    }
+  }
+);

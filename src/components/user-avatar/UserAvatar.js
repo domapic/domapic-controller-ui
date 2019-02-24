@@ -14,7 +14,9 @@ export const UserAvatar = ({ loading, user, role }) => {
       <Loader active={loading} />
       {!loading ? (
         <Icon
-          name={`user ${user && user.role === "anonymous" || role === "anonymous" ? "secret" : "circle"}`}
+          name={`user ${
+            (user && user.role === "anonymous") || role === "anonymous" ? "secret" : "circle"
+          }`}
           size="big"
           className="user-avatar__icon"
         />
@@ -25,6 +27,7 @@ export const UserAvatar = ({ loading, user, role }) => {
 
 UserAvatar.propTypes = {
   loading: PropTypes.bool,
+  role: PropTypes.string,
   user: PropTypes.shape({
     avatar: PropTypes.string
   })

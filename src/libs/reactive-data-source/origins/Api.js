@@ -1,6 +1,5 @@
 import { once } from "lodash";
 import pathToRegexp from "path-to-regexp";
-import isPromise from "is-promise";
 
 import { DataSource } from "../bases/DataSource";
 

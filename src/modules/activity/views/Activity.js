@@ -1,14 +1,17 @@
 import { plugins } from "reactive-data-source";
 
 import { Component as ActivityComponent } from "../components/activity";
+import { Logs } from "./Logs";
 
-import { lastLogsDetails } from "src/data-layer/services";
+import { countLogs } from "src/data-layer/services";
 
 export const mapDataSourceToProps = () => {
+  const getLogsCount = countLogs.read.getters;
   return {
-    logs: lastLogsDetails.read.getters.value,
-    error: lastLogsDetails.read.getters.error,
-    loading: lastLogsDetails.read.getters.loading
+    LogsList: Logs,
+    pageSize: 10,
+    logsCount: getLogsCount.value,
+    logsCountLoading: getLogsCount.loading
   };
 };
 

@@ -45,6 +45,25 @@ const logs = [
     _ability: "ability-id-2",
     type: "event",
     createdAt: "2019-02-06T18:49:50.296Z"
+  },
+  {
+    _id: "5c3812eac0acb663efqweqwe",
+    _ability: "ability-id-2",
+    type: "event",
+    data: false,
+    createdAt: "2019-01-11T03:52:10.827Z"
+  },
+  {
+    _id: "5c5b2c4eb8f9f4a6547asd",
+    _ability: "ability-id-2",
+    type: "action",
+    createdAt: "2019-02-06T18:49:50.265Z"
+  },
+  {
+    _id: "5c5b2c4eb8f9f4a65473ewre",
+    _ability: "ability-id-2",
+    type: "event",
+    createdAt: "2019-02-06T18:49:50.296Z"
   }
 ];
 
@@ -57,6 +76,18 @@ const getLogsSuccess = {
   }
 };
 
+const countLogsSuccess = {
+  url: "/api/logs/count",
+  method: "GET",
+  response: {
+    status: 200,
+    body: {
+      total: 100
+    }
+  }
+};
+
 module.exports = {
-  getLogsSuccess
+  getLogsSuccess,
+  countLogsSuccess
 };

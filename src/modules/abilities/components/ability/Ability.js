@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import { Component as Container } from "src/components/container-content";
+import { Component as LogsListTable } from "src/components/logs-list-table";
 import { Component as LogsList } from "src/components/logs-list";
 import { Component as Breadcrumbs } from "src/components/breadcrumbs";
 import { Component as AbilityInfo } from "../ability-info";
@@ -25,7 +26,9 @@ export const Ability = ({
 }) => {
   const subsection =
     display === ACTIVITY ? (
-      <LogsList logs={logs} logsLoading={logsLoading} />
+      <LogsListTable>
+        <LogsList logs={logs} logsLoading={logsLoading} />
+      </LogsListTable>
     ) : (
       <AbilityInfo ability={ability} loading={abilityLoading} />
     );

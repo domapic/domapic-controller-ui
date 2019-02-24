@@ -6,6 +6,7 @@ import { Segment } from "semantic-ui-react";
 import { Component as Container } from "src/components/container-content";
 import { Component as AbilitiesList } from "src/components/abilities-list";
 import { Component as Breadcrumbs } from "src/components/breadcrumbs";
+import { Component as LogsListTable } from "src/components/logs-list-table";
 import { Component as LogsList } from "src/components/logs-list";
 import { Component as ErrorComponent } from "src/components/error";
 
@@ -43,7 +44,9 @@ export const DashboardLayout = ({
           {logsError ? (
             <ErrorComponent>{logsError.message}</ErrorComponent>
           ) : (
-            <LogsList logs={logs} logsLoading={logsLoading} />
+            <LogsListTable>
+              <LogsList logs={logs} logsLoading={logsLoading} />
+            </LogsListTable>
           )}
         </Segment>
       </Container.Content>

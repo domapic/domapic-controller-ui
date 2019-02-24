@@ -1,12 +1,11 @@
 import { Selector } from "reactive-data-source";
 
-import { displayValue, formatDate } from "../../helpers";
-
 import { abilitiesCollection } from "../abilities/origins";
 import { servicesCollection } from "../services/origins";
 import { logs } from "./origins";
+import { addLogsDetails } from "./filters";
 
-const NUMBER_OF_LOGS = 100;
+const NUMBER_OF_LOGS = 10;
 
 export const lastLogs = new Selector(
   logs,
@@ -14,23 +13,40 @@ export const lastLogs = new Selector(
   []
 );
 
+export const logsPage = new Selector(
+  {
+    source: logs,
+    filter: filter => {
+      if (filter) {
+        return {
+          query: {
+            page: filter.page
+          }
+        };
+      }
+      return null;
+    }
+  },
+  logsResults => logsResults,
+  []
+);
+
+export const logsPageWithDetails = new Selector(
+  abilitiesCollection,
+  servicesCollection,
+  {
+    source: logsPage,
+    filter: filter => filter
+  },
+  addLogsDetails,
+  []
+);
+
 export const lastLogsDetails = new Selector(
   abilitiesCollection,
   servicesCollection,
   lastLogs,
-  (abilitiesResults, servicesResults, logsResults) => {
-    return logsResults.map(log => {
-      const ability = abilitiesResults.find(ability => ability._id === log._ability);
-      const service = servicesResults.find(service => service._id === ability._service);
-      return {
-        ...log,
-        dateTime: formatDate(log.createdAt),
-        module: (service && service.name) || "-",
-        ability: (ability && ability.name) || "-",
-        data: displayValue(log.data)
-      };
-    });
-  },
+  addLogsDetails,
   []
 );
 

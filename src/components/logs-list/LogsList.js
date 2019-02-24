@@ -3,14 +3,16 @@ import PropTypes from "prop-types";
 
 import { Table } from "semantic-ui-react";
 
+import "./logsList.css";
+
 export const NoResults = () => (
   <Table.Row>
     <Table.Cell colSpan="5">No results</Table.Cell>
   </Table.Row>
 );
 
-export const Log = ({ module, ability, type, data, dateTime }) => (
-  <Table.Row>
+export const Log = ({ module, ability, type, data, dateTime, loading }) => (
+  <Table.Row className={loading ? "logs__row--loading" : ""}>
     <Table.Cell>{dateTime}</Table.Cell>
     <Table.Cell>{type}</Table.Cell>
     <Table.Cell>{module}</Table.Cell>
@@ -20,25 +22,24 @@ export const Log = ({ module, ability, type, data, dateTime }) => (
 );
 
 Log.propTypes = {
-  ability: PropTypes.string.isRequired,
+  ability: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  dateTime: PropTypes.string.isRequired,
-  module: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired
+  dateTime: PropTypes.string,
+  loading: PropTypes.bool,
+  module: PropTypes.string,
+  type: PropTypes.string
 };
 
-export const LogsList = ({ logs = [], logsLoading }) => (
-  <Table unstackable compact basic size="small">
-    <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell>At</Table.HeaderCell>
-        <Table.HeaderCell>Type</Table.HeaderCell>
-        <Table.HeaderCell>Module</Table.HeaderCell>
-        <Table.HeaderCell>Ability</Table.HeaderCell>
-        <Table.HeaderCell>Data</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
-    <Table.Body>
+export const LogsList = ({ logs = [], logsLoading, showPlaceHolders }) => {
+  const placeHolders = [];
+  if (logsLoading && showPlaceHolders) {
+    for (let i = 0; i < showPlaceHolders + 1; i++) {
+      placeHolders.push(<Log key={i} loading={true} dateTime="..." ability=" " />);
+    }
+    return <React.Fragment>{placeHolders.map(placeHolder => placeHolder)}</React.Fragment>;
+  }
+  return (
+    <React.Fragment>
       {logs.length < 1 && !logsLoading ? <NoResults /> : null}
       {logs.map(log => (
         <Log
@@ -50,11 +51,12 @@ export const LogsList = ({ logs = [], logsLoading }) => (
           dateTime={log.dateTime}
         />
       ))}
-    </Table.Body>
-  </Table>
-);
+    </React.Fragment>
+  );
+};
 
 LogsList.propTypes = {
   logs: PropTypes.array,
-  logsLoading: PropTypes.bool
+  logsLoading: PropTypes.bool,
+  showPlaceHolders: PropTypes.number
 };
