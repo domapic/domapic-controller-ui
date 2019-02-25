@@ -1,27 +1,25 @@
 import { Selector } from "reactive-data-source";
 
+import { displayValue, formatDate } from "../../helpers";
+
 import { abilitiesCollection } from "../abilities/origins";
 import { servicesCollection } from "../services/origins";
 import { logs } from "./origins";
-import { addLogsDetails } from "./filters";
-
-const NUMBER_OF_LOGS = 10;
-
-export const lastLogs = new Selector(
-  logs,
-  logsResults => [...logsResults].reverse().slice(0, NUMBER_OF_LOGS),
-  []
-);
 
 export const logsPage = new Selector(
   {
     source: logs,
     filter: filter => {
+      const query = {};
       if (filter) {
+        if (filter.page) {
+          query.page = filter.page;
+        }
+        if (filter.ability) {
+          query.ability = filter.ability;
+        }
         return {
-          query: {
-            page: filter.page
-          }
+          query
         };
       }
       return null;
@@ -38,20 +36,18 @@ export const logsPageWithDetails = new Selector(
     source: logsPage,
     filter: filter => filter
   },
-  addLogsDetails,
-  []
-);
-
-export const lastLogsDetails = new Selector(
-  abilitiesCollection,
-  servicesCollection,
-  lastLogs,
-  addLogsDetails,
-  []
-);
-
-export const logsOfAbility = new Selector(
-  lastLogsDetails,
-  (lastLogsResults, abilityId) => lastLogsResults.filter(log => log._ability === abilityId),
+  (abilitiesResults, servicesResults, logsResults) => {
+    return logsResults.map(log => {
+      const ability = abilitiesResults.find(ability => ability._id === log._ability);
+      const service = servicesResults.find(service => service._id === ability._service);
+      return {
+        ...log,
+        dateTime: formatDate(log.createdAt),
+        module: (service && service.name) || "-",
+        ability: (ability && ability.name) || "-",
+        data: displayValue(log.data)
+      };
+    });
+  },
   []
 );

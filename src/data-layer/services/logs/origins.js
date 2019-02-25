@@ -12,7 +12,7 @@ export const logs = new origins.Api(
 );
 
 export const countLogs = new origins.Api(
-  "/logs/count",
+  "/logs/stats",
   {},
   {
     ...authConfig,
@@ -21,3 +21,11 @@ export const countLogs = new origins.Api(
     }
   }
 );
+
+countLogs.addCustomFilter({
+  ofAbility: abilityId => ({
+    query: {
+      ability: abilityId
+    }
+  })
+});

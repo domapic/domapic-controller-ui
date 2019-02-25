@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import { Component as Container } from "src/components/container-content";
+import { Component as ScrollPaginatedList } from "src/components/scroll-paginated-list";
 import { Component as LogsListTable } from "src/components/logs-list-table";
-import { Component as LogsList } from "src/components/logs-list";
 import { Component as Breadcrumbs } from "src/components/breadcrumbs";
 import { Component as AbilityInfo } from "../ability-info";
 import { Menu, Icon } from "semantic-ui-react";
@@ -13,27 +13,34 @@ const ACTIVITY = "activity";
 const INFO = "info";
 
 export const Ability = ({
-  logs = [],
-  logsError,
-  logsLoading,
+  LogsList,
+  abilityId,
   ability = {},
   abilityLoading,
   abilityError,
   display = INFO,
   activityUrl,
   infoUrl,
-  baseUrl
+  baseUrl,
+  logsPageSize,
+  logsCount,
+  logsCountLoading
 }) => {
   const subsection =
     display === ACTIVITY ? (
-      <LogsListTable>
-        <LogsList logs={logs} logsLoading={logsLoading} />
-      </LogsListTable>
+      <ScrollPaginatedList
+        List={LogsList}
+        ListWrapper={LogsListTable}
+        pageSize={logsPageSize}
+        itemsCount={logsCount}
+        itemsCountLoading={logsCountLoading}
+        extraFilter={{ abilityId }}
+      />
     ) : (
       <AbilityInfo ability={ability} loading={abilityLoading} />
     );
-  const loading = display === ACTIVITY ? logsLoading : abilityLoading;
-  const error = display === ACTIVITY ? logsError : abilityError;
+  const loading = display === ACTIVITY ? null : abilityLoading;
+  const error = display === ACTIVITY ? null : abilityError;
   return (
     <Container loading={loading} error={error} background={true}>
       <Container.Header loading={abilityLoading}>
@@ -67,14 +74,16 @@ export const Ability = ({
 };
 
 Ability.propTypes = {
+  LogsList: PropTypes.func,
   ability: PropTypes.any.isRequired,
   abilityError: PropTypes.instanceOf(Error),
+  abilityId: PropTypes.string,
   abilityLoading: PropTypes.bool.isRequired,
   activityUrl: PropTypes.string,
   baseUrl: PropTypes.string,
   display: PropTypes.oneOf([ACTIVITY, INFO]),
   infoUrl: PropTypes.string,
-  logs: PropTypes.any.isRequired,
-  logsError: PropTypes.instanceOf(Error),
-  logsLoading: PropTypes.bool.isRequired
+  logsCount: PropTypes.any,
+  logsCountLoading: PropTypes.bool,
+  logsPageSize: PropTypes.number
 };

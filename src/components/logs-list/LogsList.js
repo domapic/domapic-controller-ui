@@ -40,7 +40,7 @@ export const LogsList = ({ logs = [], logsLoading, showPlaceHolders }) => {
   }
   return (
     <React.Fragment>
-      {logs.length < 1 && !logsLoading ? <NoResults /> : null}
+      {!showPlaceHolders && logs.length < 1 && !logsLoading ? <NoResults /> : null}
       {logs.map(log => (
         <Log
           key={log._id}

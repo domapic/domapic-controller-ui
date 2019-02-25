@@ -4,7 +4,7 @@ import InfiniteScroll from "react-infinite-scroller";
 
 import { ScrollContext } from "src/contexts/ScrollContext";
 
-export class PaginatedList extends Component {
+export class ScrollPaginatedList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,21 +20,33 @@ export class PaginatedList extends Component {
   }
 
   hasMore() {
-    return this.state.currentPage * this.props.pageSize < this.props.itemsCount.total;
+    return this.state.currentPage * this.props.pageSize < this.props.itemsCount.total + 1;
   }
 
   render() {
     const List = this.props.List;
     const ListWrapper = this.props.ListWrapper;
     const pages = [];
-    for (let i = 0; i < this.state.currentPage + 1; i++) {
+    for (let i = 1; i < this.state.currentPage; i++) {
       pages.push(
-        <List page={i} key={`paginated-list-${i}`} showPlaceHolders={this.props.pageSize} />
+        <List
+          page={i}
+          key={`paginated-list-${i}`}
+          showPlaceHolders={this.props.pageSize}
+          extraFilter={this.props.extraFilter}
+        />
+      );
+    }
+    if (!this.props.itemsCountLoading && this.props.itemsCount.total === 0) {
+      return (
+        <ListWrapper>
+          <List page={1} showPlaceHolders={0} extraFilter={this.props.extraFilter} />
+        </ListWrapper>
       );
     }
     return (
       <InfiniteScroll
-        pageStart={0}
+        pageStart={1}
         loadMore={this.loadMore}
         hasMore={this.hasMore()}
         initialLoad={true}
@@ -48,12 +60,13 @@ export class PaginatedList extends Component {
   }
 }
 
-PaginatedList.contextType = ScrollContext;
+ScrollPaginatedList.contextType = ScrollContext;
 
-PaginatedList.propTypes = {
+ScrollPaginatedList.propTypes = {
   List: PropTypes.func,
   ListWrapper: PropTypes.func,
+  extraFilter: PropTypes.any,
   itemsCount: PropTypes.any,
-  // itemsCountLoading: PropTypes.bool,
+  itemsCountLoading: PropTypes.bool,
   pageSize: PropTypes.number
 };

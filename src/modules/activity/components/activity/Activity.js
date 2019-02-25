@@ -1,30 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { Component as PaginatedList } from "src/components/paginated-list";
+import { Component as ScrollPaginatedList } from "src/components/scroll-paginated-list";
 import { Component as Container } from "src/components/container-content";
 import { Component as Breadcrumbs } from "src/components/breadcrumbs";
-
-import { Table } from "semantic-ui-react";
-
-const ListWrapper = ({ children }) => (
-  <Table unstackable compact basic size="small">
-    <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell>At</Table.HeaderCell>
-        <Table.HeaderCell>Type</Table.HeaderCell>
-        <Table.HeaderCell>Module</Table.HeaderCell>
-        <Table.HeaderCell>Ability</Table.HeaderCell>
-        <Table.HeaderCell>Data</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
-    <Table.Body>{children}</Table.Body>
-  </Table>
-);
-
-ListWrapper.propTypes = {
-  children: PropTypes.node
-};
+import { Component as LogsListTable } from "src/components/logs-list-table";
 
 export const Activity = ({ LogsList, pageSize, logsCount, logsCountLoading }) => {
   return (
@@ -33,9 +13,9 @@ export const Activity = ({ LogsList, pageSize, logsCount, logsCountLoading }) =>
         <Breadcrumbs sections={[{ text: "Activity", icon: "history" }]} />
       </Container.Header>
       <Container.Content>
-        <PaginatedList
+        <ScrollPaginatedList
           List={LogsList}
-          ListWrapper={ListWrapper}
+          ListWrapper={LogsListTable}
           pageSize={pageSize}
           itemsCount={logsCount}
           itemsCountLoading={logsCountLoading}

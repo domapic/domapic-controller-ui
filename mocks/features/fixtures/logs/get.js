@@ -77,7 +77,7 @@ const getLogsSuccess = {
 };
 
 const countLogsSuccess = {
-  url: "/api/logs/count",
+  url: "/api/logs/stats",
   method: "GET",
   response: {
     status: 200,

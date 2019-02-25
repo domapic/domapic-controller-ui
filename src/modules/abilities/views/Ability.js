@@ -3,15 +3,19 @@ import { plugins } from "reactive-data-source";
 import { Component as AbilityComponent } from "../components/ability";
 
 import { abilityModelsWithExtraData } from "src/data-layer/services";
-import { logsOfAbility } from "src/data-layer/services";
+import { countLogs } from "src/data-layer/services";
+
+import { Logs } from "./Logs";
 
 export const mapDataSourceToProps = ({ id }) => {
   const ability = abilityModelsWithExtraData.byId(id).read;
-  const logs = logsOfAbility.filter(id).read;
+  const getLogsCount = countLogs.ofAbility(id).read.getters;
   return {
-    logs: logs.getters.value,
-    logsError: logs.getters.error,
-    logsLoading: logs.getters.loading,
+    LogsList: Logs,
+    logsPageSize: 10,
+    logsCount: getLogsCount.value,
+    logsCountLoading: getLogsCount.loading,
+    abilityId: id,
     ability: ability.getters.value,
     abilityError: ability.getters.error,
     abilityLoading: ability.getters.loading
