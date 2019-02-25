@@ -8,7 +8,7 @@ export class ScrollPaginatedList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 0
+      currentPage: 1
     };
     this.loadMore = this.loadMore.bind(this);
   }
@@ -27,7 +27,7 @@ export class ScrollPaginatedList extends Component {
     const List = this.props.List;
     const ListWrapper = this.props.ListWrapper;
     const pages = [];
-    for (let i = 1; i < this.state.currentPage; i++) {
+    for (let i = 1; i < this.state.currentPage + 1; i++) {
       pages.push(
         <List
           page={i}

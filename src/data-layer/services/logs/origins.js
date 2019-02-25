@@ -7,7 +7,8 @@ export const logs = new origins.Api(
   {},
   {
     ...authConfig,
-    defaultValue: []
+    defaultValue: [],
+    expirationTime: 10000
   }
 );
 
@@ -18,7 +19,8 @@ export const countLogs = new origins.Api(
     ...authConfig,
     defaultValue: {
       total: 0
-    }
+    },
+    expirationTime: 10000
   }
 );
 
