@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { Table } from "semantic-ui-react";
@@ -30,33 +30,53 @@ Log.propTypes = {
   type: PropTypes.string
 };
 
-export const LogsList = ({ logs = [], logsLoading, showPlaceHolders }) => {
-  const placeHolders = [];
-  if (logsLoading && showPlaceHolders) {
-    for (let i = 0; i < showPlaceHolders + 1; i++) {
-      placeHolders.push(<Log key={i} loading={true} dateTime="..." ability=" " />);
-    }
-    return <React.Fragment>{placeHolders.map(placeHolder => placeHolder)}</React.Fragment>;
+export class LogsList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loaded: props.logsLoading
+    };
   }
-  return (
-    <React.Fragment>
-      {!showPlaceHolders && logs.length < 1 && !logsLoading ? <NoResults /> : null}
-      {logs.map(log => (
-        <Log
-          key={log._id}
-          module={log.module}
-          ability={log.ability}
-          type={log.type}
-          data={log.data}
-          dateTime={log.dateTime}
-        />
-      ))}
-    </React.Fragment>
-  );
-};
+
+  componentDidUpdate() {
+    if (!this.state.loaded && this.props.logsLoading === false && this.props.onLoaded) {
+      this.setState({
+        loaded: true
+      });
+      this.props.onLoaded();
+    }
+  }
+
+  render() {
+    const placeHolders = [];
+    const { logs = [], logsLoading, showPlaceHolders } = this.props;
+    if (logsLoading && showPlaceHolders) {
+      for (let i = 0; i < showPlaceHolders + 1; i++) {
+        placeHolders.push(<Log key={i} loading={true} dateTime="..." ability=" " />);
+      }
+      return <React.Fragment>{placeHolders.map(placeHolder => placeHolder)}</React.Fragment>;
+    }
+    return (
+      <React.Fragment>
+        {!showPlaceHolders && logs.length < 1 && !logsLoading ? <NoResults /> : null}
+        {logs.map(log => (
+          <Log
+            key={log._id}
+            module={log.module}
+            ability={log.ability}
+            type={log.type}
+            data={log.data}
+            dateTime={log.dateTime}
+          />
+        ))}
+      </React.Fragment>
+    );
+  }
+}
 
 LogsList.propTypes = {
   logs: PropTypes.array,
   logsLoading: PropTypes.bool,
+  onLoaded: PropTypes.func,
   showPlaceHolders: PropTypes.number
 };

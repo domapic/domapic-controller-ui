@@ -8,15 +8,29 @@ export class ScrollPaginatedList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 1
+      currentPage: 1,
+      hasLoaded: {}
     };
     this.loadMore = this.loadMore.bind(this);
+    this.setLoaded = this.setLoaded.bind(this);
   }
 
   loadMore(page) {
-    this.setState({
+    this.setState(state => ({
+      ...state,
       currentPage: page
-    });
+    }));
+  }
+
+  setLoaded(listId) {
+    console.log("loaded", listId);
+    this.setState(state => ({
+      ...state,
+      hasLoaded: {
+        ...state.hasLoaded,
+        [listId]: true
+      }
+    }));
   }
 
   hasMore() {
@@ -28,12 +42,18 @@ export class ScrollPaginatedList extends Component {
     const ListWrapper = this.props.ListWrapper;
     const pages = [];
     for (let i = 1; i < this.state.currentPage + 1; i++) {
+      const listId = `paginated-list-${i}`;
       pages.push(
         <List
           page={i}
-          key={`paginated-list-${i}`}
-          showPlaceHolders={this.props.pageSize}
+          key={listId}
+          showPlaceHolders={this.state.hasLoaded[listId] ? 0 : this.props.pageSize}
           extraFilter={this.props.extraFilter}
+          onLoaded={() => {
+            if (!this.state.hasLoaded[listId]) {
+              this.setLoaded(listId);
+            }
+          }}
         />
       );
     }
