@@ -47,7 +47,6 @@ class Login {
           return Promise.reject(error);
         }
       });
-    return this._loginPromise;
   }
 
   _configDataSources() {
