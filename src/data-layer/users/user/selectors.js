@@ -24,7 +24,8 @@ export const userModelsWithExtraData = new Selector(
     return {
       ...userResults,
       ...avatarResult,
-      isSystemRole: isSystemRole(userResults, rolesResults)
+      isSystemRole: isSystemRole(userResults, rolesResults),
+      isAnonymous: userResults.role === "anonymous"
     };
   },
   {}

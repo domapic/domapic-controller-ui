@@ -318,7 +318,7 @@ export class User extends Component {
     const submitEnabled = this.submitEnabled();
 
     const deleteButton =
-      user._id && user.role !== "anonymous" && currentUserIsAdmin ? (
+      user._id && !user.isAnonymous && currentUserIsAdmin ? (
         <Button
           color="red"
           loading={userDeleteLoading}
