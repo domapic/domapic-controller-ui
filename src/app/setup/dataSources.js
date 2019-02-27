@@ -11,5 +11,5 @@ export const setupDataSources = history => {
   });
 
   login.setup(history, routes.login.route);
-  socket.setup(environment.baseApi);
+  socket.setup(environment.baseSocket);
 };

@@ -1,14 +1,17 @@
+import { debounce } from "lodash";
 import { origins } from "reactive-data-source";
 
 import { authConfig } from "../../setup";
+import { socket } from "../../socket";
+
+const REFRESH_LOGS_MAX_INTERVAL = 10000;
 
 export const logs = new origins.Api(
   "/logs",
   {},
   {
     ...authConfig,
-    defaultValue: [],
-    expirationTime: 10000
+    defaultValue: []
   }
 );
 
@@ -19,8 +22,7 @@ export const countLogs = new origins.Api(
     ...authConfig,
     defaultValue: {
       total: 0
-    },
-    expirationTime: 10000
+    }
   }
 );
 
@@ -31,3 +33,17 @@ countLogs.addCustomFilter({
     }
   })
 });
+
+socket.addListener(
+  "log:created",
+  debounce(
+    () => {
+      countLogs.clean();
+      logs.clean();
+    },
+    REFRESH_LOGS_MAX_INTERVAL,
+    {
+      maxWait: REFRESH_LOGS_MAX_INTERVAL
+    }
+  )
+);

@@ -5,6 +5,13 @@ import { Component as LogsList } from "src/components/logs-list";
 import { logsPageWithDetails } from "src/data-layer/services";
 
 export const mapDataSourceToProps = ({ page }) => {
+  if (!page) {
+    return {
+      logs: [],
+      error: null,
+      logsLoading: false
+    };
+  }
   const readLogs = logsPageWithDetails.filter({
     page: page
   }).read.getters;

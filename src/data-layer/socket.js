@@ -2,6 +2,10 @@ import { debounce } from "lodash";
 import { authSession } from "./users";
 
 const DEBOUNCE_TIME = 500;
+const AUTH_METHODS = {
+  JWT: "jwt",
+  API_KEY: "apiKey"
+};
 
 class Socket {
   constructor() {
@@ -9,44 +13,47 @@ class Socket {
     this._listeners = [];
     this._refreshToken = authSession.refreshToken();
     this._apiKey = authSession.apiKey();
-    this._doJwtLogin = debounce(this._doJwtLogin.bind(this), DEBOUNCE_TIME);
-    this._doApiKeyLogin = debounce(this._doApiKeyLogin.bind(this), DEBOUNCE_TIME);
+    this._doJwtLogin = debounce(this._doLogin.bind(this), DEBOUNCE_TIME);
     this._doLogout = debounce(this._doLogout.bind(this), DEBOUNCE_TIME);
     this._getCurrentAuth = debounce(this._getCurrentAuth.bind(this), DEBOUNCE_TIME);
+
+    this._currentToken = null;
+    this._currentAuthMethod = null;
   }
 
   _handleDataSources() {
     this._listeners.forEach(listener => {
+      console.log("Adding listener", listener.eventName);
       this._socket.on(listener.eventName, listener.callback);
     });
-    /* 
-    this._socket.on("service:created", data => {
-      servicesCollection.type(data.type).clean();
-    });
-    */
   }
 
-  _doJwtLogin() {
-    console.log("doing jwt login");
-  }
-
-  _doApiKeyLogin() {
-    console.log("doing api key login");
+  _doLogin(refreshToken) {
+    if (this._currentToken !== refreshToken) {
+      if (this._socket.connected) {
+        this._socket.close();
+      }
+      this._currentToken = refreshToken;
+      console.log("Connecting socket");
+      this._socket.connect();
+    }
   }
 
   _doLogout() {
-    console.log("doing logout");
+    this._currentToken = null;
+    this._currentAuthMethod = null;
+    this._socket.close();
   }
 
   _getCurrentAuth() {
     return Promise.all([this._refreshToken.read(), this._apiKey.read()]).then(results => {
-      console.log("New refresh token value", results[0]);
-      console.log("New api key value", results[1]);
       if (results[0]) {
-        return this._doJwtLogin();
+        this._currentAuthMethod = AUTH_METHODS.JWT;
+        return this._doLogin(results[0]);
       }
       if (results[1]) {
-        return this._doApiKeyLogin();
+        this._currentAuthMethod = AUTH_METHODS.API_KEY;
+        return this._doLogin(results[1]);
       }
       return this._doLogout();
     });
@@ -55,6 +62,28 @@ class Socket {
   _addAuthListeners() {
     this._refreshToken.onChange(this._getCurrentAuth);
     this._apiKey.onChange(this._getCurrentAuth);
+    this._socket.on("authenticated", () => {
+      console.log("Socket authenticated");
+    });
+    this._socket.on("unauthorized", error => {
+      console.log("Error in socket authentication:", error.message);
+    });
+    this._socket.on("disconnect", () => {
+      console.log("Socket disconnected");
+    });
+    this._socket.on("error", error => {
+      console.log("Socket error");
+      console.log(error);
+    });
+    this._socket.on("connect", () => {
+      console.log("Socket connected");
+      if (this._currentToken) {
+        console.log("Emitting authentication");
+        this._socket.emit("authentication", {
+          [this._currentAuthMethod]: this._currentToken
+        });
+      }
+    });
   }
 
   // DataSources will add their listeners using this method
@@ -70,6 +99,7 @@ class Socket {
     if (this._socket) {
       this._handleDataSources();
       this._addAuthListeners();
+      this._getCurrentAuth();
     } else {
       console.error("Sockets are not available");
     }

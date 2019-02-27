@@ -34,8 +34,11 @@ export class LogsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loaded: props.logsLoading
+      loaded: props.logs.length > 0
     };
+    if (this.state.loaded && props.onLoaded) {
+      props.onLoaded();
+    }
   }
 
   componentDidUpdate() {
@@ -49,8 +52,8 @@ export class LogsList extends Component {
 
   render() {
     const placeHolders = [];
-    const { logs = [], logsLoading, showPlaceHolders } = this.props;
-    if (logsLoading && showPlaceHolders) {
+    const { logs = [], logsLoading, showPlaceHolders, showNoResults } = this.props;
+    if (logs.length < 1 && logsLoading && showPlaceHolders) {
       for (let i = 0; i < showPlaceHolders + 1; i++) {
         placeHolders.push(<Log key={i} loading={true} dateTime="..." ability=" " />);
       }
@@ -58,7 +61,7 @@ export class LogsList extends Component {
     }
     return (
       <React.Fragment>
-        {!showPlaceHolders && logs.length < 1 && !logsLoading ? <NoResults /> : null}
+        {showNoResults && logs.length < 1 && !logsLoading ? <NoResults /> : null}
         {logs.map(log => (
           <Log
             key={log._id}
@@ -78,5 +81,6 @@ LogsList.propTypes = {
   logs: PropTypes.array,
   logsLoading: PropTypes.bool,
   onLoaded: PropTypes.func,
+  showNoResults: PropTypes.bool,
   showPlaceHolders: PropTypes.number
 };

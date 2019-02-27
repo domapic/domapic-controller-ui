@@ -23,7 +23,6 @@ export class ScrollPaginatedList extends Component {
   }
 
   setLoaded(listId) {
-    console.log("loaded", listId);
     this.setState(state => ({
       ...state,
       hasLoaded: {
@@ -60,7 +59,7 @@ export class ScrollPaginatedList extends Component {
     if (!this.props.itemsCountLoading && this.props.itemsCount.total === 0) {
       return (
         <ListWrapper>
-          <List page={1} showPlaceHolders={0} extraFilter={this.props.extraFilter} />
+          <List showNoResults={true} />
         </ListWrapper>
       );
     }

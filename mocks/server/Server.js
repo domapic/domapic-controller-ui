@@ -18,6 +18,7 @@ const { defaultOptions } = require("./common/options");
 const { FUNCTION_TYPE, WATCH_RELOAD } = require("./common/constants");
 
 const socketIo = require("socket.io");
+const socketIoAuth = require("socketio-auth");
 
 class ServerEmitter extends EventEmitter {}
 
@@ -75,13 +76,31 @@ class Server {
     // Socket io mocks
     this._io = socketIo(this._server);
 
+    socketIoAuth(this._io, {
+      authenticate: (socket, data, callback) => {
+        console.log("Authenticating with data", data);
+        socket.userData = {
+          _id: "foo-id",
+          name: "foo-name"
+        };
+        callback(null, true);
+      }
+    });
+
     this._io.on("connection", function(socket) {
       console.log("a user connected");
-      setInterval(() => {
-        socket.emit("service:created", {
-          type: "module"
-        });
-      }, 30000);
+      const interval = setInterval(() => {
+        if (socket.auth) {
+          socket.emit("log:created", {
+            type: "action"
+          });
+        }
+      }, 1000);
+      socket.on("disconnect", () => {
+        clearInterval(interval);
+        console.log("user disconnected");
+        console.log(socket.userData);
+      });
     });
   }
 

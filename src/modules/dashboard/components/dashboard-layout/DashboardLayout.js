@@ -14,7 +14,7 @@ export class DashboardLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      logsLoaded: props.logsLoading
+      logsLoaded: props.logs.length > 0
     };
   }
 
@@ -62,7 +62,7 @@ export class DashboardLayout extends Component {
               <ErrorComponent>{logsError.message}</ErrorComponent>
             ) : (
               <LogsListTable>
-                <LogsList logs={logs} />
+                <LogsList logs={logs} showNoResults={true} />
               </LogsListTable>
             )}
           </Segment>
