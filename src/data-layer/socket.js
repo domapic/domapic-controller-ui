@@ -95,14 +95,20 @@ class Socket {
   }
 
   setup(url) {
-    this._socket = window && window.io && window.io(url);
-    if (this._socket) {
-      this._handleDataSources();
-      this._addAuthListeners();
-      this._getCurrentAuth();
-    } else {
-      console.error("Sockets are not available");
+    const script = document.createElement("script");
+    script.type = "text/javascript"
+    script.onload = () => {
+      this._socket = window && window.io && window.io(url);
+      if (this._socket) {
+        this._handleDataSources();
+        this._addAuthListeners();
+        this._getCurrentAuth();
+      } else {
+        console.error("Sockets are not available");
+      }
     }
+    script.src = `${url}/socket.io/socket.io.js`;
+    document.head.appendChild(script);
   }
 }
 

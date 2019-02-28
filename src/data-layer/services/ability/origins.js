@@ -1,6 +1,7 @@
 import { origins } from "reactive-data-source";
 
 import { authConfig } from "../../setup";
+import { socket } from "../../socket";
 
 import { byIdFilter } from "../../helpers";
 
@@ -45,4 +46,8 @@ export const abilityActions = new origins.Api(
 
 abilityActions.addCustomFilter({
   byId: byIdFilter
+});
+
+socket.addListener("ability:event", eventData => {
+  abilityStates.byId(eventData._id).clean();
 });
