@@ -22,7 +22,7 @@ export class ApiKey extends Component {
     this.setState(state => ({
       ...state,
       apiKey: data.value,
-      disabled: !(data.value.length > 0)
+      disabled: data.value.length <= 0
     }));
   }
 

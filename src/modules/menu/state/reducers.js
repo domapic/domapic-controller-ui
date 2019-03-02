@@ -6,7 +6,7 @@ const initialState = {
   position: 0
 };
 
-export const historyChanged = (state = initialState, action) => {
+export const historyChanged = (state = initialState, action = {}) => {
   switch (action.type) {
     case HISTORY_PUSHED:
       return { ...state, position: state.position + 1 };
