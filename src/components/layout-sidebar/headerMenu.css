@@ -3,10 +3,6 @@
   padding-bottom: 0px;
 }
 
-.sidebar-layout__header-menu__container {
-  border-bottom: 4px solid #8579c0;
-}
-
 .ui.menu .item.sidebar-layout__header-menu__item--right {
   padding: 0px 0px 2px 0px;
 }
@@ -17,6 +13,7 @@
 }
 
 .sidebar-layout__header-menu__container {
+  border-bottom: 4px solid #8579c0;
   display: inline-flex;
   width:100%;
   padding-right:10px;
