@@ -20,6 +20,10 @@ abilityModels.addCustomFilter({
   byId: byIdFilter
 });
 
+socket.addListener(["ability:updated", "ability:deleted"], eventData => {
+  abilityModels.byId(eventData._id).clean();
+});
+
 export const abilityStates = new origins.Api(
   "/abilities/:id/state",
   {},
@@ -31,6 +35,10 @@ export const abilityStates = new origins.Api(
 
 abilityStates.addCustomFilter({
   byId: byIdFilter
+});
+
+socket.addListener("ability:event", eventData => {
+  abilityStates.byId(eventData._id).clean();
 });
 
 export const abilityActions = new origins.Api(
@@ -46,8 +54,4 @@ export const abilityActions = new origins.Api(
 
 abilityActions.addCustomFilter({
   byId: byIdFilter
-});
-
-socket.addListener("ability:event", eventData => {
-  abilityStates.byId(eventData._id).clean();
 });

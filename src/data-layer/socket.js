@@ -1,10 +1,11 @@
-import { debounce } from "lodash";
-import { authSession } from "./users";
+import { debounce, isArray } from "lodash";
+import { authSession } from "./authentication";
 
 const DEBOUNCE_TIME = 500;
 const AUTH_METHODS = {
   JWT: "jwt",
-  API_KEY: "apiKey"
+  API_KEY: "apiKey",
+  ANONYMOUS: "anonymous"
 };
 
 class Socket {
@@ -55,7 +56,8 @@ class Socket {
         this._currentAuthMethod = AUTH_METHODS.API_KEY;
         return this._doLogin(results[1]);
       }
-      return this._doLogout();
+      this._currentAuthMethod = AUTH_METHODS.ANONYMOUS;
+      return this._doLogin(AUTH_METHODS.ANONYMOUS);
     });
   }
 
@@ -67,6 +69,7 @@ class Socket {
     });
     this._socket.on("unauthorized", error => {
       console.log("Error in socket authentication:", error.message);
+      this._doLogout();
     });
     this._socket.on("disconnect", () => {
       console.log("Socket disconnected");
@@ -88,15 +91,18 @@ class Socket {
 
   // DataSources will add their listeners using this method
   addListener(eventName, callback) {
-    this._listeners.push({
-      eventName,
-      callback
+    const eventNames = isArray(eventName) ? eventName : [eventName];
+    eventNames.forEach(eventName => {
+      this._listeners.push({
+        eventName,
+        callback
+      });
     });
   }
 
   setup(url) {
     const script = document.createElement("script");
-    script.type = "text/javascript"
+    script.type = "text/javascript";
     script.onload = () => {
       this._socket = window && window.io && window.io(url);
       if (this._socket) {
@@ -106,7 +112,7 @@ class Socket {
       } else {
         console.error("Sockets are not available");
       }
-    }
+    };
     script.src = `${url}/socket.io/socket.io.js`;
     document.head.appendChild(script);
   }

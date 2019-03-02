@@ -1,6 +1,7 @@
 import { origins } from "reactive-data-source";
 
 import { authConfig } from "../../setup";
+import { socket } from "../../socket";
 
 import { byIdFilter } from "../../helpers";
 
@@ -17,4 +18,8 @@ export const serviceModels = new origins.Api(
 
 serviceModels.addCustomFilter({
   byId: byIdFilter
+});
+
+socket.addListener(["service:updated", "service:deleted"], eventData => {
+  serviceModels.byId(eventData._id).clean();
 });

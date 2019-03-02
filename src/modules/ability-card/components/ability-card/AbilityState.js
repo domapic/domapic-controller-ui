@@ -57,21 +57,22 @@ StateDisplay.propTypes = {
   state: PropTypes.any
 };
 
-export const AbilityState = ({ ability, stateLoading, stateError, state }) => {
-  const stateValue = !stateLoading ? (
-    !stateError ? (
-      <StateDisplay state={state} ability={ability} />
-    ) : (
-      <Statistic.Value className="icon error">
-        <Icon name="warning sign" color="red" />
-      </Statistic.Value>
-    )
-  ) : null;
+export const AbilityState = ({ ability, stateLoading, stateLoaded, stateError, state }) => {
+  const stateValue =
+    !stateLoading || stateLoaded ? (
+      !stateError ? (
+        <StateDisplay state={state} ability={ability} />
+      ) : (
+        <Statistic.Value className="icon error">
+          <Icon name="warning sign" color="red" />
+        </Statistic.Value>
+      )
+    ) : null;
   return (
     <Statistic className="ability__state" floated="right">
       <Statistic.Label>{ability.name}</Statistic.Label>
       {stateValue}
-      <Loader active={stateLoading} />
+      <Loader active={stateLoading && !stateLoaded} />
     </Statistic>
   );
 };
@@ -82,5 +83,6 @@ AbilityState.propTypes = {
   }),
   state: PropTypes.any,
   stateError: PropTypes.instanceOf(Error),
+  stateLoaded: PropTypes.bool,
   stateLoading: PropTypes.bool
 };

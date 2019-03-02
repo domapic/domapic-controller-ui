@@ -1,6 +1,5 @@
 import "./listeners";
 
-export * from "./authentication/origins";
 export * from "./avatar/origins";
 export * from "./avatar/selectors";
 export * from "./me/origins";

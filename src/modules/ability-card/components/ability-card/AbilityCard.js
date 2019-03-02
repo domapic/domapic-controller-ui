@@ -14,6 +14,7 @@ export const AbilityCard = ({
   baseUrl,
   state,
   stateError,
+  stateLoaded,
   stateLoading,
   validateAbilityData,
   sendAbilityAction,
@@ -43,6 +44,7 @@ export const AbilityCard = ({
         state={state}
         stateError={stateError}
         stateLoading={stateLoading}
+        stateLoaded={stateLoaded}
       />
     </Card.Content>
     <Card.Content extra>
@@ -70,6 +72,7 @@ AbilityCard.propTypes = {
   sendAbilityAction: PropTypes.func,
   state: PropTypes.any,
   stateError: PropTypes.instanceOf(Error),
+  stateLoaded: PropTypes.bool,
   stateLoading: PropTypes.bool,
   validateAbilityData: PropTypes.func
 };

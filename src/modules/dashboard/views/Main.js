@@ -1,7 +1,7 @@
 import { plugins } from "reactive-data-source";
 
 import { Module as AbilityCard } from "src/modules/ability-card";
-import { logsPageWithDetails } from "src/data-layer/services";
+import { logsPageWithDetails, logsPageWithDetailsLoaded } from "src/data-layer/services";
 
 import { Component as DashboardLayout } from "../components/dashboard-layout";
 
@@ -15,9 +15,11 @@ export const init = configuration => {
 
 export const mapDataSourceToProps = () => {
   const abilities = dashboardAbilities.read;
-  const readlogsPage = logsPageWithDetails.filter({
+  const filter = {
     page: 1
-  }).read.getters;
+  };
+  const readlogsPage = logsPageWithDetails.filter(filter).read.getters;
+  const readLogsLoaded = logsPageWithDetailsLoaded.filter(filter).read.getters;
   return {
     abilities: abilities.getters.value,
     abilitiesError: abilities.getters.error,
@@ -25,6 +27,7 @@ export const mapDataSourceToProps = () => {
     logs: readlogsPage.value,
     logsError: readlogsPage.error,
     logsLoading: readlogsPage.loading,
+    logsLoaded: readLogsLoaded.value,
     AbilityCard,
     abilitiesBaseUrl: config.abilitiesBaseUrl
   };

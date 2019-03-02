@@ -11,21 +11,6 @@ import { Component as LogsList } from "src/components/logs-list";
 import { Component as ErrorComponent } from "src/components/error";
 
 export class DashboardLayout extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      logsLoaded: props.logs.length > 0
-    };
-  }
-
-  componentDidUpdate() {
-    if (!this.state.logsLoaded && this.props.logsLoading === false) {
-      this.setState({
-        logsLoaded: true
-      });
-    }
-  }
-
   render() {
     const {
       abilities,
@@ -33,6 +18,7 @@ export class DashboardLayout extends Component {
       abilitiesLoading,
       abilitiesError,
       logs,
+      logsLoaded,
       logsLoading,
       logsError,
       AbilityCard
@@ -57,12 +43,18 @@ export class DashboardLayout extends Component {
             AbilityCard={AbilityCard}
             baseUrl={abilitiesBaseUrl}
           />
-          <Segment loading={this.state.logsLoaded ? false : logsLoading}>
+          <Segment loading={logsLoading && !logsLoaded}>
             {logsError ? (
               <ErrorComponent>{logsError.message}</ErrorComponent>
             ) : (
               <LogsListTable>
-                <LogsList logs={logs} showNoResults={true} />
+                <LogsList
+                  logs={logs}
+                  logsLoading={logsLoading}
+                  logsLoaded={logsLoaded}
+                  showNoResults={true}
+                  showPlaceHolders={10}
+                />
               </LogsListTable>
             )}
           </Segment>
@@ -80,5 +72,6 @@ DashboardLayout.propTypes = {
   abilitiesLoading: PropTypes.bool,
   logs: PropTypes.array,
   logsError: PropTypes.instanceOf(Error),
+  logsLoaded: PropTypes.bool,
   logsLoading: PropTypes.bool
 };

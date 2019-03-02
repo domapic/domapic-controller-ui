@@ -76,6 +76,19 @@ const getLogsSuccess = {
   }
 };
 
+const getLogsError = {
+  url: "/api/logs",
+  method: "GET",
+  response: {
+    status: 500,
+    body: {
+      statusCode: 500,
+      error: "Internal server error",
+      message: "Internal server error"
+    }
+  }
+};
+
 const countLogsSuccess = {
   url: "/api/logs/stats",
   method: "GET",
@@ -89,5 +102,6 @@ const countLogsSuccess = {
 
 module.exports = {
   getLogsSuccess,
+  getLogsError,
   countLogsSuccess
 };

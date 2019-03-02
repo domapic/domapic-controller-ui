@@ -4,7 +4,7 @@ import { byIdFilter } from "../../helpers";
 import { modulesCollection } from "../services/selectors";
 import { addAbilityExtraData } from "./helpers";
 
-import { abilityModels } from "./origins";
+import { abilityModels, abilityStates } from "./origins";
 
 export const abilityModelsWithExtraData = new Selector(
   {
@@ -19,5 +19,20 @@ export const abilityModelsWithExtraData = new Selector(
 );
 
 abilityModelsWithExtraData.addCustomFilter({
+  byId: id => id
+});
+
+export const abilityStatesLoaded = new Selector(
+  {
+    source: abilityStates,
+    filter: id => byIdFilter(id)
+  },
+  () => {
+    return true;
+  },
+  false
+);
+
+abilityStatesLoaded.addCustomFilter({
   byId: id => id
 });

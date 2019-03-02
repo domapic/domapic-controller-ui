@@ -1,10 +1,10 @@
-import { debounce } from "lodash";
+import { throttle } from "lodash";
 import { origins } from "reactive-data-source";
 
 import { authConfig } from "../../setup";
 import { socket } from "../../socket";
 
-const REFRESH_LOGS_MAX_INTERVAL = 10000;
+const REFRESH_LOGS_MAX_INTERVAL = 5000;
 
 export const logs = new origins.Api(
   "/logs",
@@ -36,14 +36,8 @@ countLogs.addCustomFilter({
 
 socket.addListener(
   "log:created",
-  debounce(
-    () => {
-      countLogs.clean();
-      logs.clean();
-    },
-    REFRESH_LOGS_MAX_INTERVAL,
-    {
-      maxWait: REFRESH_LOGS_MAX_INTERVAL
-    }
-  )
+  throttle(() => {
+    countLogs.clean();
+    logs.clean();
+  }, REFRESH_LOGS_MAX_INTERVAL)
 );

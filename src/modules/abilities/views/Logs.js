@@ -2,24 +2,30 @@ import { plugins } from "reactive-data-source";
 
 import { Component as LogsList } from "src/components/logs-list";
 
-import { logsPageWithDetails } from "src/data-layer/services";
+import { logsPageWithDetails, logsPageWithDetailsLoaded } from "src/data-layer/services";
 
 export const mapDataSourceToProps = ({ page, extraFilter }) => {
   if (!page) {
     return {
       logs: [],
       error: null,
-      logsLoading: false
+      logsLoading: false,
+      logsLoaded: true,
+      logsError: false
     };
   }
-  const readLogs = logsPageWithDetails.filter({
+  const filter = {
     page: page,
     ability: extraFilter.abilityId
-  }).read.getters;
+  };
+  const readLogs = logsPageWithDetails.filter(filter).read.getters;
+  const readLogsLoaded = logsPageWithDetailsLoaded.filter(filter).read.getters;
   return {
     logs: readLogs.value,
     error: readLogs.error,
-    logsLoading: readLogs.loading
+    logsLoading: readLogs.loading,
+    logsLoaded: readLogsLoaded.value,
+    logsError: readLogs.error
   };
 };
 

@@ -1,6 +1,7 @@
 import { origins } from "reactive-data-source";
 
 import { authConfig } from "../../setup";
+import { socket } from "../../socket";
 
 import { typeFilter } from "./filters";
 
@@ -17,4 +18,8 @@ export const servicesCollection = new origins.Api(
 
 servicesCollection.addCustomFilter({
   type: typeFilter
+});
+
+socket.addListener(["service:created", "service:updated", "service:deleted"], () => {
+  servicesCollection.clean();
 });

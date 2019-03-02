@@ -1,6 +1,7 @@
 import { origins } from "reactive-data-source";
 
 import { authConfig } from "../../setup";
+import { socket } from "../../socket";
 import { byIdFilter } from "../../helpers";
 
 export const userModels = new origins.Api(
@@ -17,4 +18,8 @@ export const userModels = new origins.Api(
 
 userModels.addCustomFilter({
   byId: byIdFilter
+});
+
+socket.addListener(["user:updated", "user:deleted"], userData => {
+  userModels.byId(userData._id).clean();
 });

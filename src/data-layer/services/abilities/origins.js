@@ -1,6 +1,7 @@
 import { origins } from "reactive-data-source";
 
 import { authConfig } from "../../setup";
+import { socket } from "../../socket";
 
 import { ofService } from "./filters";
 
@@ -17,4 +18,8 @@ export const abilitiesCollection = new origins.Api(
 
 abilitiesCollection.addCustomFilter({
   ofService
+});
+
+socket.addListener(["ability:created", "ability:deleted", "ability:updated"], () => {
+  abilitiesCollection.clean();
 });

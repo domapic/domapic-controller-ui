@@ -4,29 +4,25 @@ import { displayValue, formatDate } from "../../helpers";
 
 import { abilitiesCollection } from "../abilities/origins";
 import { servicesCollection } from "../services/origins";
+import { byPageAndAbility } from "./filters";
 import { logs } from "./origins";
 
 export const logsPage = new Selector(
   {
     source: logs,
-    filter: filter => {
-      const query = {};
-      if (filter) {
-        if (filter.page) {
-          query.page = filter.page;
-        }
-        if (filter.ability) {
-          query.ability = filter.ability;
-        }
-        return {
-          query
-        };
-      }
-      return null;
-    }
+    filter: byPageAndAbility
   },
   logsResults => logsResults,
   []
+);
+
+export const logsPageLoaded = new Selector(
+  {
+    source: logs,
+    filter: byPageAndAbility
+  },
+  () => true,
+  false
 );
 
 export const logsPageWithDetails = new Selector(
@@ -50,4 +46,15 @@ export const logsPageWithDetails = new Selector(
     });
   },
   []
+);
+
+export const logsPageWithDetailsLoaded = new Selector(
+  {
+    source: logsPageWithDetails,
+    filter: filter => filter
+  },
+  () => {
+    return true;
+  },
+  false
 );

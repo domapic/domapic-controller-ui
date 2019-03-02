@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroller";
+import { throttle } from "lodash";
 
 import { ScrollContext } from "src/contexts/ScrollContext";
 
@@ -8,28 +9,15 @@ export class ScrollPaginatedList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 1,
-      hasLoaded: {}
+      currentPage: 1
     };
-    this.loadMore = this.loadMore.bind(this);
-    this.setLoaded = this.setLoaded.bind(this);
+    this.loadMore = throttle(this.loadMore.bind(this), 500);
   }
 
   loadMore(page) {
-    this.setState(state => ({
-      ...state,
+    this.setState({
       currentPage: page
-    }));
-  }
-
-  setLoaded(listId) {
-    this.setState(state => ({
-      ...state,
-      hasLoaded: {
-        ...state.hasLoaded,
-        [listId]: true
-      }
-    }));
+    });
   }
 
   hasMore() {
@@ -46,20 +34,16 @@ export class ScrollPaginatedList extends Component {
         <List
           page={i}
           key={listId}
-          showPlaceHolders={this.state.hasLoaded[listId] ? 0 : this.props.pageSize}
+          showPlaceHolders={this.props.pageSize}
           extraFilter={this.props.extraFilter}
-          onLoaded={() => {
-            if (!this.state.hasLoaded[listId]) {
-              this.setLoaded(listId);
-            }
-          }}
+          showError={i === 1}
         />
       );
     }
     if (!this.props.itemsCountLoading && this.props.itemsCount.total === 0) {
       return (
         <ListWrapper>
-          <List showNoResults={true} />
+          <List showNoResults={true} showError={true} />
         </ListWrapper>
       );
     }

@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import { Table } from "semantic-ui-react";
+import { Component as ErrorComponent } from "src/components/error";
 
 import "./logsList.css";
 
@@ -10,6 +11,18 @@ export const NoResults = () => (
     <Table.Cell colSpan="5">No results</Table.Cell>
   </Table.Row>
 );
+
+export const ResultsError = ({ message }) => (
+  <Table.Row>
+    <Table.Cell colSpan="5">
+      <ErrorComponent>{message}</ErrorComponent>
+    </Table.Cell>
+  </Table.Row>
+);
+
+ResultsError.propTypes = {
+  message: PropTypes.string
+};
 
 export const Log = ({ module, ability, type, data, dateTime, loading }) => (
   <Table.Row className={loading ? "logs__row--loading" : ""}>
@@ -30,57 +43,48 @@ Log.propTypes = {
   type: PropTypes.string
 };
 
-export class LogsList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loaded: props.logs.length > 0
-    };
-    if (this.state.loaded && props.onLoaded) {
-      props.onLoaded();
-    }
+export const LogsList = ({
+  logs = [],
+  logsLoading,
+  logsError,
+  logsLoaded,
+  showPlaceHolders,
+  showNoResults,
+  showError
+}) => {
+  const placeHolders = [];
+  if (logsError) {
+    return showError ? <ResultsError message={logsError.message} /> : null;
   }
-
-  componentDidUpdate() {
-    if (!this.state.loaded && this.props.logsLoading === false && this.props.onLoaded) {
-      this.setState({
-        loaded: true
-      });
-      this.props.onLoaded();
+  if (!logsLoaded && logsLoading && showPlaceHolders) {
+    for (let i = 0; i < showPlaceHolders + 1; i++) {
+      placeHolders.push(<Log key={i} loading={true} dateTime="..." ability=" " />);
     }
+    return <React.Fragment>{placeHolders.map(placeHolder => placeHolder)}</React.Fragment>;
   }
-
-  render() {
-    const placeHolders = [];
-    const { logs = [], logsLoading, showPlaceHolders, showNoResults } = this.props;
-    if (logs.length < 1 && logsLoading && showPlaceHolders) {
-      for (let i = 0; i < showPlaceHolders + 1; i++) {
-        placeHolders.push(<Log key={i} loading={true} dateTime="..." ability=" " />);
-      }
-      return <React.Fragment>{placeHolders.map(placeHolder => placeHolder)}</React.Fragment>;
-    }
-    return (
-      <React.Fragment>
-        {showNoResults && logs.length < 1 && !logsLoading ? <NoResults /> : null}
-        {logs.map(log => (
-          <Log
-            key={log._id}
-            module={log.module}
-            ability={log.ability}
-            type={log.type}
-            data={log.data}
-            dateTime={log.dateTime}
-          />
-        ))}
-      </React.Fragment>
-    );
-  }
-}
+  return (
+    <React.Fragment>
+      {showNoResults && logs.length < 1 && !logsLoading ? <NoResults /> : null}
+      {logs.map(log => (
+        <Log
+          key={log._id}
+          module={log.module}
+          ability={log.ability}
+          type={log.type}
+          data={log.data}
+          dateTime={log.dateTime}
+        />
+      ))}
+    </React.Fragment>
+  );
+};
 
 LogsList.propTypes = {
   logs: PropTypes.array,
+  logsError: PropTypes.instanceOf(Error),
+  logsLoaded: PropTypes.bool,
   logsLoading: PropTypes.bool,
-  onLoaded: PropTypes.func,
+  showError: PropTypes.bool,
   showNoResults: PropTypes.bool,
   showPlaceHolders: PropTypes.number
 };
