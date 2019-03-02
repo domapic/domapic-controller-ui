@@ -5,5 +5,6 @@ export const environment = {
   baseRoute: process.env.BASE_ROUTE,
   staticsRoute: process.env.STATICS_ROUTE,
   baseApi: process.env.BASE_API || `${currentHost}/api`,
-  baseSocket: process.env.BASE_SOCKET || currentHost
+  baseSocket: process.env.BASE_SOCKET || currentHost,
+  socketVersion: process.env.SOCKET_IO_VERSION
 };

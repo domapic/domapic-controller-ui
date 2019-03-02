@@ -24,7 +24,6 @@ class Socket {
 
   _handleDataSources() {
     this._listeners.forEach(listener => {
-      console.log("Adding listener", listener.eventName);
       this._socket.on(listener.eventName, listener.callback);
     });
   }
@@ -100,7 +99,7 @@ class Socket {
     });
   }
 
-  setup(url) {
+  setup(url, version) {
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.onload = () => {
@@ -113,7 +112,7 @@ class Socket {
         console.error("Sockets are not available");
       }
     };
-    script.src = `${url}/socket.io/socket.io.js`;
+    script.src = `${url}/socket.io/socket.io.js?v=${version}`;
     document.head.appendChild(script);
   }
 }
