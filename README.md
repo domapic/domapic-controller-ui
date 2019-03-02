@@ -23,8 +23,8 @@ Domapic Controller includes it as a dependency, and it is started automatically 
 
 [coveralls-image]: https://coveralls.io/repos/github/domapic/domapic-controller-ui/badge.svg
 [coveralls-url]: https://coveralls.io/github/domapic/domapic-controller-ui
-[travisci-image]: https://travis-ci.org/domapic/domapic-controller-ui.svg?branch=master
-[travisci-url]: https://travis-ci.org/domapic/domapic-controller-ui
+[travisci-image]: https://travis-ci.com/domapic/domapic-controller-ui.svg?branch=master
+[travisci-url]: https://travis-ci.com/domapic/domapic-controller-ui
 [last-commit-image]: https://img.shields.io/github/last-commit/domapic/domapic-controller-ui.svg
 [last-commit-url]: https://github.com/domapic/domapic-controller-ui/commits
 [license-image]: https://img.shields.io/npm/l/domapic-controller-ui.svg
