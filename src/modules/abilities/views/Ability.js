@@ -15,6 +15,7 @@ export const mapDataSourceToProps = ({ id }) => {
     logsPageSize: 10,
     logsCount: getLogsCount.value,
     logsCountLoading: getLogsCount.loading,
+    logsCountError: getLogsCount.error,
     abilityId: id,
     ability: ability.getters.value,
     abilityError: ability.getters.error,

@@ -6,7 +6,7 @@ import { Component as Container } from "src/components/container-content";
 import { Component as Breadcrumbs } from "src/components/breadcrumbs";
 import { Component as LogsListTable } from "src/components/logs-list-table";
 
-export const Activity = ({ LogsList, pageSize, logsCount, logsCountLoading }) => {
+export const Activity = ({ LogsList, pageSize, logsCount, logsCountError, logsCountLoading }) => {
   return (
     <Container background={true}>
       <Container.Header>
@@ -19,6 +19,7 @@ export const Activity = ({ LogsList, pageSize, logsCount, logsCountLoading }) =>
           pageSize={pageSize}
           itemsCount={logsCount}
           itemsCountLoading={logsCountLoading}
+          itemsCountError={logsCountError}
         />
       </Container.Content>
     </Container>
@@ -28,6 +29,7 @@ export const Activity = ({ LogsList, pageSize, logsCount, logsCountLoading }) =>
 Activity.propTypes = {
   LogsList: PropTypes.func,
   logsCount: PropTypes.any,
+  logsCountError: PropTypes.instanceOf(Error),
   logsCountLoading: PropTypes.bool,
   pageSize: PropTypes.number
 };

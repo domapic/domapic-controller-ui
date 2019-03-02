@@ -11,7 +11,8 @@ export const mapDataSourceToProps = () => {
     LogsList: Logs,
     pageSize: 10,
     logsCount: getLogsCount.value,
-    logsCountLoading: getLogsCount.loading
+    logsCountLoading: getLogsCount.loading,
+    logsCountError: getLogsCount.error
   };
 };
 

@@ -24,7 +24,8 @@ export const Ability = ({
   baseUrl,
   logsPageSize,
   logsCount,
-  logsCountLoading
+  logsCountLoading,
+  logsCountError
 }) => {
   const subsection =
     display === ACTIVITY ? (
@@ -34,6 +35,7 @@ export const Ability = ({
         pageSize={logsPageSize}
         itemsCount={logsCount}
         itemsCountLoading={logsCountLoading}
+        itemsCountError={logsCountError}
         extraFilter={{ abilityId }}
       />
     ) : (
@@ -84,6 +86,7 @@ Ability.propTypes = {
   display: PropTypes.oneOf([ACTIVITY, INFO]),
   infoUrl: PropTypes.string,
   logsCount: PropTypes.any,
+  logsCountError: PropTypes.instanceOf(Error),
   logsCountLoading: PropTypes.bool,
   logsPageSize: PropTypes.number
 };

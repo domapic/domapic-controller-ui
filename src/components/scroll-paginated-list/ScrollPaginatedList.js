@@ -4,6 +4,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import { throttle } from "lodash";
 
 import { ScrollContext } from "src/contexts/ScrollContext";
+import { Component as ErrorComponent } from "src/components/error";
 
 export class ScrollPaginatedList extends Component {
   constructor(props) {
@@ -28,6 +29,9 @@ export class ScrollPaginatedList extends Component {
     const List = this.props.List;
     const ListWrapper = this.props.ListWrapper;
     const pages = [];
+    if (this.props.itemsCountError) {
+      return <ErrorComponent>{this.props.itemsCountError.message}</ErrorComponent>;
+    }
     for (let i = 1; i < this.state.currentPage + 1; i++) {
       const listId = `paginated-list-${i}`;
       pages.push(
@@ -70,6 +74,7 @@ ScrollPaginatedList.propTypes = {
   ListWrapper: PropTypes.func,
   extraFilter: PropTypes.any,
   itemsCount: PropTypes.any,
+  itemsCountError: PropTypes.instanceOf(Error),
   itemsCountLoading: PropTypes.bool,
   pageSize: PropTypes.number
 };
