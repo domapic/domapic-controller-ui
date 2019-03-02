@@ -18,11 +18,6 @@ Domapic Controller includes it as a dependency, and it is started automatically 
 
 * `getAbsoluteDistPath` Returns the absolute path of the "dist" folder, which contains all static assets ready to be served.
 
-```js
-const ui = require('domapic-controller-ui')
-
-console.log(path.resolve(ui.getAbsoluteDistPath(), "index.html"));
-```
 
 [domapic-base-logo-image]: http://domapic.com/assets/domapic-logo.png
 
