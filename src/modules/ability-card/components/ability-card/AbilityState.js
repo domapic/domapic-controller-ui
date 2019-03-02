@@ -36,10 +36,7 @@ export const StateDisplay = ({ state, ability }) => {
   let stateClass = "";
   if (!state || !state.hasOwnProperty("data")) {
     value = "-";
-  } else if (ability.type === "number") {
-    stateClass = stateClassName(state.data);
-    value = stripValue(state.data);
-  } else if (ability.type === "string") {
+  } else if (ability.type === "number" || ability.type === "string") {
     stateClass = stateClassName(state.data);
     value = stripValue(state.data);
   } else if (ability.type === "boolean") {
