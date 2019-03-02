@@ -36,4 +36,4 @@ script:
   - npm run build
 #  - npm run test-acceptance
   - npm run coveralls
-  - sonar-scanner
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sonar-scanner; fi'
