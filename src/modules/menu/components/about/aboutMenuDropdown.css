@@ -1,0 +1,13 @@
+.ui.dropdown.about-menu-dropdown  {
+  margin-left:10px;
+  font-size:1em;
+}
+
+.ui.secondary.inverted.menu .about-menu-dropdown:hover i.about-menu-dropdown__icon {
+  color:white;
+}
+
+.ui.inverted.menu .about-menu-dropdown .item>a:not(.ui) {
+  color: black;
+}
+

@@ -1,0 +1,3 @@
+.ui.inverted.menu .sections-menu__item.item>a:hover:not(.ui) {
+  color: white;
+}

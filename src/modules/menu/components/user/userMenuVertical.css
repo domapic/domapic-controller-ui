@@ -1,0 +1,7 @@
+.ui.inverted.menu .menu .user-menu-vertical__item.item>a:hover:not(.ui) {
+  color: white;
+}
+
+.user-menu-vertical__avatar .ui.avatar.image {
+  margin-right: 15px;
+}

@@ -1,7 +1,21 @@
+sudo: required
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.19.0
+
 language: node_js
 
 node_js:
   - "10.15.0"
+
+services:
+  - docker
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 
 cache:
   directories:
@@ -18,7 +32,8 @@ addons:
 
 script:
   - npm run lint
-  # - npm run test
+  - npm run test-ci
   - npm run build
-  # - npm run coveralls
-  - sonar-scanner
+#  - npm run test-acceptance
+  - npm run coveralls
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sonar-scanner; fi'

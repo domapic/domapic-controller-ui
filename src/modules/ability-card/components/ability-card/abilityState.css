@@ -1,0 +1,53 @@
+.ui[class*="right floated"].statistic.ability__state {
+  margin-left:0;
+  max-width:40%;
+  position:relative;
+}
+
+.ui[class*="right floated"].statistic.ability__state .label {
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size:0.9em;
+  text-align: right;
+}
+
+.ui.statistic.ability__state .value {
+  text-align: right;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height:50px;
+}
+
+.ui.statistic.ability__state .value i {
+  padding-top:6px;
+}
+
+.ui.statistic.ability__state .value.icon {
+  font-size:3.2em!important;
+}
+
+.ui.statistic.ability__state .value.icon.error {
+  font-size:3em!important;
+}
+
+.ui.statistic.ability__state .value.small {
+  font-size:3em!important;
+}
+
+.ui.statistic.ability__state .value.tiny {
+  font-size:2.5em!important;
+}
+
+.ui.statistic.ability__state .value.mini {
+  font-size:1.5em!important;
+}
+
+.ability__state .ui.loader {
+  position:absolute;
+  left:auto;
+  top:45px;
+  right:0px;
+}

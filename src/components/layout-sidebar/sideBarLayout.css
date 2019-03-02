@@ -1,0 +1,18 @@
+.pushable.sidebar-layout--mobile {
+  min-height: 100vh;
+}
+
+.pushable>.pusher.sidebar-layout__sidebar-pusher {
+  min-height: 100vh;
+}
+
+.pushable>.pusher.dimmed.sidebar-layout__sidebar-pusher {
+  max-height: 100vh;
+  height: 100%;
+}
+
+.ui.top.fixed.sidebar-layout__header-menu.menu,.ui.bottom.fixed.menu {
+  z-index:1200;
+}
+
+

@@ -1,0 +1,76 @@
+body: {
+  height:100%;
+}
+
+#root {
+  min-height:100vh;
+  background: rgb(247, 247, 247);
+}
+
+.app {
+  font-size:1em;
+}
+
+.ui.placeholder .line {
+  background-color: rgb(247, 247, 247);
+  font-size:1.5em;
+  line-height: 0.5em;
+}
+
+.ui.form .field.disabled>label, .ui.form .fields.disabled>label, .ui.disabled.input, .ui.disabled.dropdown {
+  opacity:1;
+}
+
+.ui.form .disabled.field, .ui.form .disabled.fields .field, .ui.form .field :disabled {
+  opacity:0.6;
+}
+
+/* Green */
+.action-primary {
+  color:#21ba45
+}
+
+/* Domapic purples */
+
+/* Logo. Texts, etc.. */
+.brand-primary {
+  color:#393553;
+}
+/* Icons, etc. */
+.brand-secondary {
+  color:#554f7c;
+}
+/* Brightness */
+.brand-terciary {
+  color:#8579c0;
+}
+
+a {
+  color:#554f7c;
+}
+
+a:hover {
+  color:#8579c0;
+}
+
+/* TABLES */
+
+.ui.small.table {
+  font-size: 1em;
+}
+.ui.basic.table thead th {
+  padding-top: 0.7em;
+  padding-bottom: 0.7em;
+  background: rgba(0,0,0,.03)
+}
+
+.ui.table tr td {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ui.toggle.checkbox input:checked~.box:before, .ui.toggle.checkbox input:checked~label:before, .ui.toggle.checkbox input:focus:checked~.box:before, .ui.toggle.checkbox input:focus:checked~label:before {
+  background-color:#554f7c!important;
+}

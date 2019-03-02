@@ -1,0 +1,9 @@
+.ui.basic.segment.abilities__container {
+  min-height: 150px;
+  padding:1em 0;
+}
+
+.ui.basic.segment.abilities__container:before {
+  background: none;
+}
+

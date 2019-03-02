@@ -1,0 +1,37 @@
+.ui.dropdown.user-menu-dropdown>.dropdown.icon {
+  position:absolute;
+  top:8px;
+  margin-left:2px;
+  font-size:1.2em;
+}
+
+.ui.dropdown.user-menu-dropdown {
+  margin-left:16px;
+  margin-right:16px;
+}
+
+.ui.dropdown.user-menu-dropdown:hover>.dropdown.icon {
+  color:#fff;
+}
+
+.ui.dropdown.user-menu-dropdown:hover>.ui.button.user-menu-dropdown__button {
+  background-color: #fff;
+}
+
+.ui.menu .item button.user-menu-dropdown__button {
+  padding:2px;
+}
+
+.user-menu-dropdown .ui.avatar.image.user-avatar {
+  margin-right: 0px;
+}
+
+i.icon.user-avatar__icon {
+  margin-right: 19px;
+  width:20px;
+  height:20px;
+}
+
+.ui.inverted.menu .user-menu-dropdown .item>a:not(.ui) {
+  color: black;
+}

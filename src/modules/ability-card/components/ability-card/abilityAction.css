@@ -1,0 +1,32 @@
+.ability-action__no-action {
+  height:35px;
+  text-align: center;
+  font-size: 3em;
+}
+
+.ability-action__select__dropdown{
+  width:75%;
+  border-top-right-radius:0!important;
+  border-bottom-right-radius:0!important;
+}
+
+.ui.button.ability-action__select__button {
+  width:25%;
+  border-top-left-radius:0!important;
+  border-bottom-left-radius:0!important;
+  margin-right:0;
+  padding: .84821429em 1.5em .84821429em;
+}
+
+.ui.input.ability-action__input, .ability-action__container {
+  position:relative;
+}
+
+.ui.input.ability-action__input.disabled,.ui.selection.ability-action__select__dropdown.disabled  {
+  opacity:0.5;
+}
+
+.ui.floating.label.ability-action__label {
+  top:-20px;
+  left:calc(100% + 47px);
+}

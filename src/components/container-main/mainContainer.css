@@ -1,0 +1,18 @@
+.main-container__mobile-wrapper {
+  height:100vh;
+  overflow-y:auto;
+}
+
+.main-container__mobile-wrapper.dimmed {
+  height:100vh;
+  overflow-y:hidden;
+}
+
+.main-container__mobile-wrapper .main-container {
+  padding-bottom:70px;
+}
+
+.main-container {
+  padding-bottom:40px;
+  padding-top:74px;
+}

@@ -1,0 +1,27 @@
+.login-form {
+  height:60vh;
+  margin-top:100px;
+}
+
+.login-form__grid {
+  height:100%;
+}
+
+.login-form__column {
+  max-width: 450px;
+}
+
+.login-form__message {
+  text-align: right;
+}
+.login-form__message a{
+  cursor: pointer;
+}
+
+.ui.blue.button.login-form__button {
+  background-color: #554f7c;
+}
+
+.ui.blue.button.login-form__button:hover {
+  background-color:#8579c0;
+}

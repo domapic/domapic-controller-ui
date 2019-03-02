@@ -1,0 +1,4 @@
+.ui.inverted.menu .menu .about-menu-vertical__item.item>a:hover:not(.ui) {
+  color: white;
+}
+
