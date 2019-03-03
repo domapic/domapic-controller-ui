@@ -1,6 +1,6 @@
 {
   "name": "domapic-controller-ui",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Web user interface for Domapic Controller",
   "main": "index.js",
   "keywords": [

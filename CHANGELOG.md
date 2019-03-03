@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 ### Removed
 
-## [1.0.0-alpha.1] - 2019-03-02
+## [1.0.0-beta.2] - 2019-03-03
+### Fixed
+- Fix url validator. Now it is configured as in api.
+
+## [1.0.0-beta.1] - 2019-03-02
 ### Added
 - First pre-release
