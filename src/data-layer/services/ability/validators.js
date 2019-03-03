@@ -34,7 +34,14 @@ export const validateAbilityData = (ability, value) => {
       errors.push("Not valid ipv4");
     } else if (ability.format === "ipv6" && !validator.isIP(value, 6)) {
       errors.push("Not valid ipv6");
-    } else if (ability.format === "uri" && !validator.isURL(value)) {
+    } else if (
+      ability.format === "uri" &&
+      !validator.isURL(value, {
+        require_tld: false,
+        allow_underscores: true,
+        require_protocol: true
+      })
+    ) {
       errors.push("Not valid uri");
     }
     if (ability.maxLength && value.length > ability.maxLength) {
