@@ -4,12 +4,13 @@ import { debounce } from "lodash";
 
 import { Form, Button, Divider, Message, Checkbox } from "semantic-ui-react";
 
-import { Component as Container } from "components/container-content";
-import { Component as UserAvatar } from "components/user-avatar";
-import { Component as Breadcrumbs } from "components/breadcrumbs";
-import { Component as FieldValidationMessage } from "components/field-validation-message";
-import { Component as ConfirmDelete } from "components/confirm-delete";
-import { isPassword } from "helpers/validators";
+import { Component as Container } from "src/components/container-content";
+import { Component as UserAvatar } from "src/components/user-avatar";
+import { Component as Breadcrumbs } from "src/components/breadcrumbs";
+import { Component as FieldValidationMessage } from "src/components/field-validation-message";
+import { Component as ConfirmDelete } from "src/components/confirm-delete";
+
+const isPassword = password => password.length > 5
 
 import "./user.css";
 

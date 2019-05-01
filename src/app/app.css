@@ -74,3 +74,20 @@ a:hover {
 .ui.toggle.checkbox input:checked~.box:before, .ui.toggle.checkbox input:checked~label:before, .ui.toggle.checkbox input:focus:checked~.box:before, .ui.toggle.checkbox input:focus:checked~label:before {
   background-color:#554f7c!important;
 }
+
+@media (max-width: 767px) {
+  .ui.form .fields {
+    margin-top:1em;
+  }
+}
+
+.form-help {
+  font-size: 0.9em;
+  color:#999;
+  font-style: italic;
+  padding-left: .5em;
+}
+
+.form--buttons-container {
+  min-height: 40px;
+}
