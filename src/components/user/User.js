@@ -10,7 +10,7 @@ import { Component as Breadcrumbs } from "src/components/breadcrumbs";
 import { Component as FieldValidationMessage } from "src/components/field-validation-message";
 import { Component as ConfirmDelete } from "src/components/confirm-delete";
 
-const isPassword = password => password.length > 5
+const isPassword = password => password.length > 5;
 
 import "./user.css";
 
