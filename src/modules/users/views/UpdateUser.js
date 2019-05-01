@@ -1,4 +1,4 @@
-import { pickBy, identity } from "lodash";
+import { pickBy, isNil } from "lodash";
 
 import { plugins } from "reactive-data-source";
 
@@ -21,7 +21,7 @@ export const mapDataSourceToProps = ({ id, deleting }) => {
   const updateUser = user.update;
   const deleteUser = user.delete;
 
-  const submitUpdateUser = userData => updateUser(pickBy(userData, identity));
+  const submitUpdateUser = userData => updateUser(pickBy(userData, value => !isNil(value)));
 
   return {
     currentUserIsAdmin: userMeIsAdmin.read.getters.value,

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { pickBy, identity } from "lodash";
+import { pickBy, isNil } from "lodash";
 
 import { RoutesContext } from "src/contexts/RoutesContext";
 import { usersCollection, userModels, usersCollectionExactFiltered } from "src/data-layer/users";
@@ -20,7 +20,7 @@ export class CreateOrUpdateUser extends Component {
   }
 
   createUser(userData) {
-    return usersCollection.create(pickBy(userData, identity)).then(() => {
+    return usersCollection.create(pickBy(userData, value => !isNil(value))).then(() => {
       return usersCollectionExactFiltered
         .filter({
           name: userData.name
