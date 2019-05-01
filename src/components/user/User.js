@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { debounce } from "lodash";
 
-import { Form, Button, Divider, Message, Confirm, Header, Icon } from "semantic-ui-react";
+import { Form, Button, Divider, Message, Checkbox } from "semantic-ui-react";
 
-import { Component as Container } from "src/components/container-content";
-import { Component as UserAvatar } from "src/components/user-avatar";
-import { Component as Breadcrumbs } from "src/components/breadcrumbs";
-
-import { Component as FieldValidationMessage } from "src/components/field-validation-message";
+import { Component as Container } from "components/container-content";
+import { Component as UserAvatar } from "components/user-avatar";
+import { Component as Breadcrumbs } from "components/breadcrumbs";
+import { Component as FieldValidationMessage } from "components/field-validation-message";
+import { Component as ConfirmDelete } from "components/confirm-delete";
+import { isPassword } from "helpers/validators";
 
 import "./user.css";
 
@@ -22,10 +23,12 @@ export class User extends Component {
       submitSuccess: props.fromCreation,
       submitted: false,
       fromCreation: props.fromCreation,
-      deleteConfirmOpen: false
+      deleteConfirmOpen: false,
+      adminPermissions: this.props.user && this.props.user.adminPermissions
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleAdminPermissionsChange = this.handleAdminPermissionsChange.bind(this);
     this.handleNameBlur = this.handleNameBlur.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handleEmailBlur = this.handleEmailBlur.bind(this);
@@ -37,6 +40,24 @@ export class User extends Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleDeleteCancel = this.handleDeleteCancel.bind(this);
     this.handleDeleteConfirm = this.handleDeleteConfirm.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.user && prevProps.user.adminPermissions !== this.props.user.adminPermissions) {
+      this.setState(state => ({
+        ...state,
+        adminPermissions: this.props.user.adminPermissions
+      }));
+    }
+  }
+
+  handleAdminPermissionsChange(event, data) {
+    this.setState(state => ({
+      ...state,
+      adminPermissions: data.checked,
+      adminPermissionsChanged: !!this.props.user.adminPermissions !== data.checked,
+      submitSuccess: false
+    }));
   }
 
   handleNameChange(event, data) {
@@ -77,7 +98,7 @@ export class User extends Component {
       ...state,
       password,
       submitSuccess: false,
-      passwordsValid: password.length && state.repeatPassword === password
+      passwordsValid: password.length && state.repeatPassword === password && isPassword(password)
     }));
   }
 
@@ -87,7 +108,8 @@ export class User extends Component {
       ...state,
       repeatPassword,
       submitSuccess: false,
-      passwordsValid: repeatPassword.length && state.password === repeatPassword
+      passwordsValid:
+        repeatPassword.length && state.password === repeatPassword && isPassword(repeatPassword)
     }));
   }
 
@@ -101,7 +123,7 @@ export class User extends Component {
 
   repeatedPasswordError() {
     if (this.hasChangedPassword() || this.hasChangedRepeatPassword()) {
-      return this.state.password !== this.state.repeatPassword;
+      return !isPassword(this.state.password) || this.state.password !== this.state.repeatPassword;
     }
     return false;
   }
@@ -131,12 +153,15 @@ export class User extends Component {
   }
 
   hasValidPassword() {
-    return this.state.email && this.state.email.length;
+    return this.state.password && isPassword(this.state.password);
   }
 
   submitEnabled() {
     if (!this.props.isNew) {
-      return (this.hasChangedPassword() || this.state.role) && !this.repeatedPasswordError();
+      return (
+        (this.hasChangedPassword() || this.state.role || this.state.adminPermissionsChanged) &&
+        !this.repeatedPasswordError()
+      );
     }
     return (
       this.hasChangedName() &&
@@ -203,7 +228,7 @@ export class User extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { name, email, password, role } = this.state;
+    const { name, email, password, role, adminPermissions } = this.state;
     this.setState(state => ({
       ...state,
       submitSuccess: false,
@@ -215,7 +240,8 @@ export class User extends Component {
         name,
         email,
         password,
-        role
+        role,
+        adminPermissions
       })
       .then(() => {
         if (!this.props.isNew) {
@@ -229,7 +255,8 @@ export class User extends Component {
             roleValid: null,
             passwordsValid: null,
             submitSuccess: true,
-            fromCreation: false
+            fromCreation: false,
+            adminPermissionsChanged: false
           }));
         }
       })
@@ -298,7 +325,7 @@ export class User extends Component {
     const repeatedPasswordErrorMessage = passwordsValid ? (
       <FieldValidationMessage valid />
     ) : this.repeatedPasswordError() ? (
-      <FieldValidationMessage message="Passwords are not equal" />
+      <FieldValidationMessage message="Passwords are not valid" />
     ) : null;
 
     const nameMessage = nameValid ? (
@@ -380,6 +407,18 @@ export class User extends Component {
       </Form.Group>
     );
 
+    const adminPermissionsField =
+      user.role === "plugin" ? (
+        <Form.Group>
+          <Form.Field
+            control={Checkbox}
+            checked={this.state.adminPermissions}
+            label="Grant admin permissions"
+            onChange={this.handleAdminPermissionsChange}
+          />
+        </Form.Group>
+      ) : null;
+
     const passwordFields = user.isSystemRole ? null : (
       <Form.Group>
         <Form.Input
@@ -430,9 +469,10 @@ export class User extends Component {
             {nameField}
             {emailField}
             {roleField}
+            {adminPermissionsField}
             {passwordFields}
             <Divider />
-            <div className="user--form--buttons-container" key={submitLoading}>
+            <div className="form--buttons-container" key={submitLoading}>
               {deleteButton}
               <Button
                 floated="right"
@@ -449,15 +489,9 @@ export class User extends Component {
               >
                 Cancel
               </Button>
-              <Confirm
-                open={deleteConfirmOpen}
-                header={
-                  <Header as="h2">
-                    <Icon name="warning" color="red" />
-                    <Header.Content>Danger zone</Header.Content>
-                  </Header>
-                }
-                content={`You are going to delete the "${user.name}" user. Are you sure?`}
+              <ConfirmDelete
+                isOpen={deleteConfirmOpen}
+                text={`"${user.name}" user`}
                 onCancel={this.handleDeleteCancel}
                 onConfirm={this.handleDeleteConfirm}
               />
